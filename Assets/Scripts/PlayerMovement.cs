@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
 	public float LastOnWallRightTime { get; private set; }
 	public float LastOnWallLeftTime { get; private set; }
 	
+	private InputControllerBase _inputController = null;
+	
 	private int jumpCount = 0;
 	private bool _isJumpCut;
 	private bool _isJumpFalling;
@@ -34,11 +36,11 @@ public class PlayerMovement : MonoBehaviour
 	private Vector2 _lastDashDir;
 	private bool _isDashAttacking;
 
+	private TrailRenderer _trailRenderer;
+
 	#endregion
 
 	#region INPUT PARAMETERS
-	private Vector2 _moveInput;
-
 	public float LastPressedJumpTime { get; private set; }
 	public float LastPressedDashTime { get; private set; }
 	public float LastPressedClimbTime { get; private set; }
@@ -62,6 +64,11 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
 	{
 		RB = GetComponent<Rigidbody2D>();
+		_trailRenderer = GetComponent<TrailRenderer>();
+		_inputController = GetComponent<LocalInputController>();
+		_inputController.OnJumpDown += OnJumpInput;
+		_inputController.OnJumpUp += OnJumpUpInput;
+		_inputController.OnDash += OnDashInput;
 	}
 
 	private void Start()
@@ -72,10 +79,8 @@ public class PlayerMovement : MonoBehaviour
 
 	private void Update()
 	{
-		Debug.Log(CanWallJumpCut().ToString());
-		
-		
-        #region TIMERS
+
+		#region TIMERS
         LastOnGroundTime -= Time.deltaTime;
 		LastOnWallTime -= Time.deltaTime;
 		LastOnWallRightTime -= Time.deltaTime;
@@ -87,31 +92,24 @@ public class PlayerMovement : MonoBehaviour
 		#endregion
 
 		#region INPUT HANDLER
-		_moveInput.x = Input.GetAxisRaw("Horizontal");
-		_moveInput.y = Input.GetAxisRaw("Vertical");
-
-		if (_moveInput.x != 0)
-			CheckDirectionToFace(_moveInput.x > 0);
-
-		if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.J))
-        {
-			OnJumpInput();
-        }
-
-		if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.C) || Input.GetKeyUp(KeyCode.J))
-		{
-			OnJumpUpInput();
-		}
-
-		if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.K))
-		{
-			OnDashInput();
-		}
 		
-		if (Input.GetKeyDown(KeyCode.UpArrow))
-		{
-			OnClimbInput();
-		}
+		if (_inputController.Horizontal != 0)
+			CheckDirectionToFace(_inputController.Horizontal > 0);
+
+		//if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.J))
+		// {
+		//		OnJumpInput();
+		//   }
+
+		//if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.C) || Input.GetKeyUp(KeyCode.J))
+		//{
+		//	OnJumpUpInput();
+		//}
+		
+		//	if (Input.GetKeyDown(KeyCode.UpArrow))
+		//{
+		//	OnClimbInput();
+	//	}
 		#endregion
 
 		#region COLLISION CHECKS
@@ -193,9 +191,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			Sleep(Data.dashSleepTime); 
 			
-			if (_moveInput != Vector2.zero)
-				_lastDashDir = _moveInput;
-			else
+
 				_lastDashDir = IsFacingRight ? Vector2.right : Vector2.left;
 			
 
@@ -228,7 +224,7 @@ public class PlayerMovement : MonoBehaviour
 		
 		#endregion
 		#region SLIDE CHECKS
-		if (CanSlide() && ((LastOnWallLeftTime > 0 && _moveInput.x < 0) || (LastOnWallRightTime > 0 && _moveInput.x > 0)))
+		if (CanSlide() && ((LastOnWallLeftTime > 0 && _inputController.Horizontal < 0) || (LastOnWallRightTime > 0 && _inputController.Horizontal > 0)))
 			IsSliding = true;
 		else
 			IsSliding = false;
@@ -241,7 +237,7 @@ public class PlayerMovement : MonoBehaviour
 			{
 				SetGravityScale(0);
 			}
-			else if (RB.velocity.y < 0 && _moveInput.y < 0)
+			else if (RB.velocity.y < 0 && _inputController.Vertical < 0)
 			{
 				SetGravityScale(Data.gravityScale * Data.fastFallGravityMult);
 				RB.velocity = new Vector2(RB.velocity.x, Mathf.Max(RB.velocity.y, -Data.maxFastFallSpeed));
@@ -271,6 +267,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 		#endregion
     }
+	
 
     private void FixedUpdate()
 	{
@@ -291,11 +288,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #region INPUT CALLBACKS
-    public void OnJumpInput()
+    private void OnJumpInput()
 	{
 		LastPressedJumpTime = Data.jumpInputBufferTime;
 	}
-
+    
 	public void OnJumpUpInput()
 	{
 		if (CanJumpCut() || CanWallJumpCut())
@@ -335,7 +332,7 @@ public class PlayerMovement : MonoBehaviour
     #region RUN METHODS
     private void Run(float lerpAmount)
 	{
-		float targetSpeed = _moveInput.x * Data.runMaxSpeed;
+		float targetSpeed = _inputController.Horizontal * Data.runMaxSpeed;
 		targetSpeed = Mathf.Lerp(RB.velocity.x, targetSpeed, lerpAmount);
 
 		#region Calculate AccelRate
@@ -453,6 +450,8 @@ public class PlayerMovement : MonoBehaviour
 		_isDashAttacking = true;
 
 		SetGravityScale(0);
+
+		_trailRenderer.emitting = true;
 		
 		while (Time.time - startTime <= Data.dashAttackTime)
 		{
@@ -471,6 +470,8 @@ public class PlayerMovement : MonoBehaviour
 		{
 			yield return null;
 		}
+		
+		_trailRenderer.emitting = false;
 		
 		IsDashing = false;
 	}

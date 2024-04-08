@@ -16,8 +16,8 @@ MonoBehaviour:
   gravityScale: 4.0774717
   fallGravityMult: 1.5
   maxFallSpeed: 25
-  fastFallGravityMult: 0
-  maxFastFallSpeed: 0
+  fastFallGravityMult: 3
+  maxFastFallSpeed: 100
   runMaxSpeed: 11
   runAcceleration: 2.5
   runAccelAmount: 11.363636
@@ -42,7 +42,7 @@ MonoBehaviour:
   climbSpeed: 0
   climbDistance: 0
   climbSleepTime: 0
-  climbInputBufferTime: 0
+  climbInputBufferTime: 0.01
   slideSpeed: -2
   slideAccel: 2
   coyoteTime: 0.1
