@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7531965420584856554, guid: 68b685fa102cf9a428bafbe9f0434d70, type: 2}
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -102,9 +102,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 53
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 68b685fa102cf9a428bafbe9f0434d70, type: 2}
-  m_sharedMaterial: {fileID: 7531965420584856554, guid: 68b685fa102cf9a428bafbe9f0434d70,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -188,9 +187,11 @@ MonoBehaviour:
   lifeTime: 1.5
   randomSpawn: 1
   spawnRandomRange: 0.3
+  isCritic: 0
+  prefabCritic: {fileID: 3583575028986842693, guid: ee9057c82638e874db317f0b75d74e36, type: 3}
   enableFadeIn: 1
   durationFadeIn: 0.4
-  offsetFadeIn: {x: 0.5, y: 1.5, z: 0}
+  offsetFadeIn: {x: 0, y: 1.5, z: 0}
   fadeAnimationCurve:
     serializedVersion: 2
     m_Curve:

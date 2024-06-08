@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e2a5b7f6-cb19-4f6d-a7c6-1c3450ab9416" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Lootervania/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Lootervania/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -99,6 +99,8 @@
       <workItem from="1714564945939" duration="470000" />
       <workItem from="1714565444565" duration="64000" />
       <workItem from="1714565517008" duration="39000" />
+      <workItem from="1717855318550" duration="624000" />
+      <workItem from="1717855957241" duration="6000" />
     </task>
     <servers />
   </component>
