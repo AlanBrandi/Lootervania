@@ -8,7 +8,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Lootervania/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Lootervania/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Dev/Alan/DevSceneAlan.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Dev/Alan/DevSceneAlan.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Gameplay/DummieEnemy/DummieEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Gameplay/DummieEnemy/DummieEnemy.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Gameplay/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Gameplay/Player/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/PlayerData/DefaultPlayer.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scriptable Objects/PlayerData/DefaultPlayer.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DummieEnemy/BulletPrefabDummie.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DummieEnemy/BulletPrefabDummie.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/DummieEnemy/EnemyDummieBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DummieEnemy/EnemyDummieBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Physics2DSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +108,8 @@
       <workItem from="1714565517008" duration="39000" />
       <workItem from="1717855318550" duration="624000" />
       <workItem from="1717855957241" duration="6000" />
-      <workItem from="1718451136100" duration="3978000" />
+      <workItem from="1718451136100" duration="6536000" />
+      <workItem from="1718471463718" duration="784000" />
     </task>
     <servers />
   </component>
