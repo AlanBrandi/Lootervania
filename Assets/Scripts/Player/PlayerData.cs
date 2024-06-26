@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Player Data")] 
 public class PlayerData : ScriptableObject
+
 {
 	[Header("Gravity")]
 	[HideInInspector] public float gravityStrength; 

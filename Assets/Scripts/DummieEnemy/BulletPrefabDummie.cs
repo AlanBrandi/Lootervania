@@ -7,6 +7,7 @@ using Utilities.Pool.Core;
 public class BulletPrefabDummie : MonoBehaviour
 {
     [SerializeField] private float damage = 5;
+
     private void OnBecameInvisible()
     {
         if (!gameObject) return;
