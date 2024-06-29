@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
 
 	#region COMPONENTS
     public Rigidbody2D RB { get; private set; }
+
+    [SerializeField] private GameObject turnableGameObject;
     #endregion
 
 	#region STATE PARAMETERS
@@ -96,20 +98,6 @@ public class PlayerMovement : MonoBehaviour
 		if (_inputController.Horizontal != 0)
 			CheckDirectionToFace(_inputController.Horizontal > 0);
 
-		//if(Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.J))
-		// {
-		//		OnJumpInput();
-		//   }
-
-		//if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.C) || Input.GetKeyUp(KeyCode.J))
-		//{
-		//	OnJumpUpInput();
-		//}
-		
-		//	if (Input.GetKeyDown(KeyCode.UpArrow))
-		//{
-		//	OnClimbInput();
-	//	}
 		#endregion
 
 		#region COLLISION CHECKS
@@ -368,9 +356,10 @@ public class PlayerMovement : MonoBehaviour
 
 	private void Turn()
 	{
-		Vector3 scale = transform.localScale; 
+		
+		Vector3 scale = turnableGameObject.transform.localScale; 
 		scale.x *= -1;
-		transform.localScale = scale;
+		turnableGameObject.transform.localScale = scale;
 
 		IsFacingRight = !IsFacingRight;
 	}

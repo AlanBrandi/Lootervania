@@ -1,10 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utilities.Pool.Core;
 
-public class BulletDefault : Bullet
+public class RicochetBullet : Bullet
 {
     private float speed;
     private float lifetime;
@@ -15,7 +14,7 @@ public class BulletDefault : Bullet
     [SerializeField] private SOBulletStats bulletStats;
     private void Update()
     {
-        rb.velocity = transform.right * speed;
+        rb.velocity = transform.up * speed;
         elapsedTime = Time.deltaTime;
         if (elapsedTime > lifetime)
         {

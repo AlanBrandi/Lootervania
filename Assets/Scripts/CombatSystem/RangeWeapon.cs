@@ -22,7 +22,7 @@ public class RangeWeapon : Weapon
     {
         if (!canShoot || Time.time < nextFireTime) return;
         
-        if (currentAmmoAmount < 0)
+        if (currentAmmoAmount > 0)
         {
             var bulletTmp = PoolManager.SpawnObject(bullet.gameObject, spawnPoint.position, spawnPoint.rotation);
             bulletTmp.GetComponent<Bullet>().Initialize(damage); //Ta errado fazendo isso mas nn tem o que fazer por agora

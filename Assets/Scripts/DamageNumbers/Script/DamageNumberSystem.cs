@@ -66,8 +66,8 @@ public class DamageNumberSystem : MonoBehaviour
     private float numberScale;
     private float combinationScale;
     private float destructionScale;
-    private float renderThroughWallsScale = 0.1f;
-    private float lastScaleFactor = 1f;
+    //private float renderThroughWallsScale = 0.1f;
+    //private float lastScaleFactor = 1f;
     private bool firstFrameScale;
 
     #endregion
