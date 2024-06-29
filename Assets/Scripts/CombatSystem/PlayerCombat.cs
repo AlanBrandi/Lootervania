@@ -1,14 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerCombat : MonoBehaviour
 {
-    //EXISTE UM SUPER B.O
-    //O Jeito que o thaigo fez o personagem virar com o scale da algumas merdas, tem q arrumar (anda para esquerda e aponta a arma lá)
-
     [SerializeField] private InputActionReference shootInput;
     [SerializeField] private InputActionReference switchWeapon;
     
@@ -20,33 +14,43 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Weapon[] rangeWeapons;
     private int currentWeapon;
 
-    [SerializeField] private Weapon meleeWeapon;
+    private bool isShooting;
 
     private void Awake()
     {
         shootInput.action.performed += Shoot;
+        shootInput.action.canceled += ShootDisable;
         switchWeapon.action.performed += SwitchWeaponOnperformed;
+    }
+
+    private void Shoot(InputAction.CallbackContext obj)
+    {
+        isShooting = true;
+    }
+
+    private void ShootDisable(InputAction.CallbackContext obj)
+    {
+        isShooting = false;
     }
 
     private void SwitchWeaponOnperformed(InputAction.CallbackContext obj)
     {
-        Debug.Log("Switch weapon");
         float value = obj.ReadValue<float>();
         bool isInverted = value < 0;
         int index = isInverted ? currentWeapon - 1 : currentWeapon + 1;
         currentWeapon = Mathf.Clamp(index, 0, rangeWeapons.Length - 1);
     }
 
-    private void Shoot(InputAction.CallbackContext obj)
-    {
-        Debug.Log("Shoot");
-        rangeWeapons[currentWeapon].Fire();
-    }
-
     private void Update()
     {
         HandleWeaponRotation();
+
+        if (isShooting)
+        {
+            rangeWeapons[currentWeapon].Fire();
+        }
     }
+
     private void HandleWeaponRotation()
     {
         mousePos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());

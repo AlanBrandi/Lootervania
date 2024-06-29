@@ -7,6 +7,6 @@ public class SOWeaponStats : ScriptableObject
 {
     public int damage;
     public float reloadTime;
-    public float fireRate;
+    public float fireRate_BPS;
     public int maxAmmoAmount;
 }

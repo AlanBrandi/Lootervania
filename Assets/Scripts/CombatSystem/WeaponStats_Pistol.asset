@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 25
   reloadTime: 1.5
-  fireRate: 0.75
+  fireRate_BPS: 5
   maxAmmoAmount: 10

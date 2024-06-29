@@ -16,9 +16,6 @@ public class HealthController : HealthModel
 
     public void ReduceHealth(int value)
     {
-        if (CurrentHealth <= 0)
-            return;
-            
         value = Math.Abs(value);
         CurrentHealth-=value;
             
