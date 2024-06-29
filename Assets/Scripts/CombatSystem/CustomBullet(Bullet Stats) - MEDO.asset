@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f36a323ecb421724c93a4ef2cc2fd923, type: 3}
-  m_Name: CustomBullet(Bullet Stats)
+  m_Name: CustomBullet(Bullet Stats) - MEDO
   m_EditorClassIdentifier: 
-  bulletSpeed: 1200
-  lifeTime: 4
-  IsRecochetShoot: 1
+  bulletSpeed: 890
+  lifeTime: 0.4
+  IsRecochetShoot: 0
   recochetAmount: 6
   isPiercingShoot: 1
   maxPiercingShoots: 5
