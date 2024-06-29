@@ -32,23 +32,11 @@ public class SOBulletStats : ScriptableObject
     [Space]
     
     public bool isShootGetBigByTime; 
-    [SerializeField] public int maxBulletSize;
+    [SerializeField] public float maxBulletSize;
     
-    public int MaxBulletSize
+    public float MaxBulletSize
     {
         get { return maxBulletSize; }
         set { maxBulletSize = value; }
     }
-    
-    [Space]
-    
-    public bool isDoubleAmmoAmount; 
-    [SerializeField] public float percentageRangeToChange;
-    
-    public float PercentageRangeToChange
-    {
-        get { return percentageRangeToChange; }
-        set { percentageRangeToChange = value; }
-    }
-
 }

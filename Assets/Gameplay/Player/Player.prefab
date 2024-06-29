@@ -162,7 +162,6 @@ GameObject:
   - component: {fileID: 4031988195781595963}
   - component: {fileID: 3397188164366980524}
   - component: {fileID: 4199209442688074443}
-  - component: {fileID: 5034962315634786720}
   - component: {fileID: 8717526593658710146}
   - component: {fileID: 8709412531908128806}
   - component: {fileID: 2341529305247647209}
@@ -300,20 +299,6 @@ MonoBehaviour:
   onHeal:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &5034962315634786720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3547138264848156508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a8eb9593a8e3444ea50c88d3c306dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
-  healthController: {fileID: 4199209442688074443}
 --- !u!114 &8717526593658710146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,7 +317,6 @@ MonoBehaviour:
   rangeWeapons:
   - {fileID: 385149791090943634}
   - {fileID: 385149791090943634}
-  meleeWeapon: {fileID: 0}
 --- !u!114 &8709412531908128806
 MonoBehaviour:
   m_ObjectHideFlags: 0

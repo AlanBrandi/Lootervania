@@ -8,7 +8,7 @@ public class RangeWeapon : Weapon
     [SerializeField] private Bullet bullet;
 
     private bool isReloading;
-    private float timeSinceLastFire; // Tempo decorrido desde o último disparo
+    private float timeSinceLastFire; 
 
     private void Start()
     {
@@ -19,7 +19,6 @@ public class RangeWeapon : Weapon
     {
         if (isReloading) return;
 
-        // Atualiza o tempo decorrido desde o último disparo
         timeSinceLastFire += Time.deltaTime;
     }
 
@@ -27,7 +26,6 @@ public class RangeWeapon : Weapon
     {
         if (!canShoot) return;
 
-        // Verifica se pode atirar com base no fireRate
         if (timeSinceLastFire >= 1f / fireRate)
         {
             ShootBullet();
@@ -41,15 +39,18 @@ public class RangeWeapon : Weapon
             var bulletTmp = PoolManager.SpawnObject(bullet.gameObject, spawnPoint.position, spawnPoint.rotation);
             bulletTmp.GetComponent<Bullet>().Initialize(damage);
             currentAmmoAmount--;
-            timeSinceLastFire = 0f; // Reinicia o tempo decorrido
+            timeSinceLastFire = 0f; 
         }
         else
         {
+            OnStartReload();
             canShoot = false;
             isReloading = true;
             Invoke(nameof(WeaponReload), reloadTime);   
         }
     }
+
+  
 
     private void InitializeWeapon()
     {
@@ -69,5 +70,13 @@ public class RangeWeapon : Weapon
         canShoot = true;
         isReloading = false;
         currentAmmoAmount = maxAmmoAmount;
+        OnReloadFinished();
+    }
+
+    private void OnStartReload()
+    {
+    }
+    private void OnReloadFinished()
+    {
     }
 }

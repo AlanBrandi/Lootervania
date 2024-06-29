@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 200
+  maxHealth: 100
   numberPrefab: {fileID: 6427142935168937163, guid: 2cc85691f9bd3c943af1b20364d31d15, type: 3}
   damageNumberOffSetPosition: {x: -5, y: 0, z: 0}
   onDeath:

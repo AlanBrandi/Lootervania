@@ -24,14 +24,19 @@ public class BulletCustom : Bullet
     private int recochetAmount;
     
     private bool isBulletGetBigByTime;
-    private int maxBulletSize;
+    private float maxBulletSize;
     private Vector3 initialSize;
     
     [SerializeField] private SOBulletStats bulletStats;
 
-    private void Start()
+    private void Awake()
     {
         initialSize = transform.localScale;
+    }
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void FixedUpdate()
@@ -130,7 +135,6 @@ public class BulletCustom : Bullet
 
     public override void Initialize(int damage)
     {
-        rb = GetComponent<Rigidbody2D>();
 
         transform.localScale = initialSize;
         
@@ -154,7 +158,7 @@ public class BulletCustom : Bullet
         
         //IsShootGetBigByTime
         isBulletGetBigByTime = bulletStats.isShootGetBigByTime;
-        maxBulletSize = bulletStats.maxBulletSize;
+        maxBulletSize = bulletStats.MaxBulletSize;
     }
 
     private void OnBecameInvisible()
