@@ -39,4 +39,8 @@ public class SOBulletStats : ScriptableObject
         get { return maxBulletSize; }
         set { maxBulletSize = value; }
     }
+    
+    [Space]
+    
+    public bool isBoomerangShoot; 
 }

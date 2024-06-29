@@ -6,16 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="e2a5b7f6-cb19-4f6d-a7c6-1c3450ab9416" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Lootervania/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Lootervania/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Dev/Alan/DevSceneAlan.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Dev/Alan/DevSceneAlan.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Gameplay/DummieEnemy/DummieEnemy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Gameplay/DummieEnemy/DummieEnemy.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Gameplay/Player/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Gameplay/Player/Player.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Inputs/PlayerControls.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Inputs/PlayerControls.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Inputs/PlayerControls.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Inputs/PlayerControls.inputactions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Editor/SOBulletStatsEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Editor/SOBulletStatsEditor.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CombatSystem/BulletCustom.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CombatSystem/BulletCustom.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CombatSystem/CustomBullet(Bullet Stats).asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CombatSystem/CustomBullet(Bullet Stats).asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CombatSystem/PlayerCombat.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CombatSystem/PlayerCombat.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CombatSystem/RangeWeapon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CombatSystem/RangeWeapon.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/CombatSystem/SOBulletStats.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CombatSystem/SOBulletStats.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Utilities/Singleton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Utilities/Singleton.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +43,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "feature__perk__bullets",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",

@@ -53,6 +53,12 @@ public class SOBulletStatsEditor : Editor
             }
         }
         
+        SerializedProperty isBoomerangShoot = serializedObject.FindProperty("isBoomerangShoot");
+        if (isShootGetBigByTime != null)
+        {
+            EditorGUILayout.PropertyField(isBoomerangShoot);
+        }
+
         serializedObject.ApplyModifiedProperties();
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,11 +13,10 @@ public class BulletCustom : Bullet
 
     private Rigidbody2D rb;
 
-
     private Vector2 direction;
 
     private bool isPiercingShoot;
-    private int  MaxPiercingShoots;
+    private int MaxPiercingShoots;
 
     private bool isRecochetShoot;
     private int recochetAmount;
@@ -28,6 +26,8 @@ public class BulletCustom : Bullet
     private Vector3 initialSize;
     
     [SerializeField] private SOBulletStats bulletStats;
+
+    private bool isBoomerangShoot; // Adicionado para controle de tiro boomerang
 
     private void Awake()
     {
@@ -41,7 +41,7 @@ public class BulletCustom : Bullet
 
     private void FixedUpdate()
     {
-        if(!gameObject.activeSelf) return;
+        if (!gameObject.activeSelf) return;
         Move();
         LifeTimeCount();
     }
@@ -66,6 +66,15 @@ public class BulletCustom : Bullet
 
             transform.localScale = new Vector3(currentScale, currentScale, 1f);
         }
+
+        if (isBoomerangShoot) //Socorro chega por hoje 29/06/2024 - Seria muito bom se eu NUNCA mais voltasse
+        {
+            if (elapsedTime >= lifetime / 2)
+            {
+                Vector2 directionToPlayer = transform.position - PlayerMovement.Instance.transform.position;
+                direction = directionToPlayer.normalized;
+            }
+        }
     }
 
     public override void Act()
@@ -79,22 +88,18 @@ public class BulletCustom : Bullet
         {
             other.GetComponent<HealthController>().ReduceHealth(bulletDamage);
             
-            //Piercing
-            if(!isPiercingShoot) OnBulletDestroy();
+            // Piercing
+            if (!isPiercingShoot) OnBulletDestroy();
             
             MaxPiercingShoots--;
             if (MaxPiercingShoots < 0)
             {
                 OnBulletDestroy();
             }
-
         }
-
-        
         
         if (other.CompareTag("Level"))
         {
-            
             if (!isRecochetShoot) return;
             
             if (recochetAmount <= 0)
@@ -110,7 +115,6 @@ public class BulletCustom : Bullet
 
             if (contactCount > 0)
             {
-
                 Vector2 normal = Vector2.zero;
                 foreach (ContactPoint2D contact in contacts)
                 {
@@ -125,40 +129,41 @@ public class BulletCustom : Bullet
 
     public override void OnShoot()
     {
+        // Lógica de disparo, se necessário
     }
 
     public override void OnBulletDestroy()
     {
-        if(!gameObject.activeSelf) return;
+        if (!gameObject.activeSelf) return;
         PoolManager.ReleaseObject(gameObject);
     }
 
     public override void Initialize(int damage)
     {
-
         transform.localScale = initialSize;
         
         speed = bulletStats.bulletSpeed;
         lifetime = bulletStats.lifeTime;
         elapsedTime = 0;
         
-        
         bulletDamage = damage;
 
         direction = transform.right;
         
-        
-        //Piercing
+        // Piercing
         isPiercingShoot = bulletStats.isPiercingShoot;
         MaxPiercingShoots = bulletStats.MaxPiercingShoots;
         
-        //Recochet
+        // Recochet
         isRecochetShoot = bulletStats.IsRecochetShoot;
         recochetAmount = bulletStats.RecochetAmount;
         
-        //IsShootGetBigByTime
+        // IsShootGetBigByTime
         isBulletGetBigByTime = bulletStats.isShootGetBigByTime;
         maxBulletSize = bulletStats.MaxBulletSize;
+
+        // Boomerang
+        isBoomerangShoot = bulletStats.isBoomerangShoot;
     }
 
     private void OnBecameInvisible()

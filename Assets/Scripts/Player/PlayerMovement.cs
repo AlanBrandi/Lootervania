@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D RB { get; private set; }
 
     [SerializeField] private GameObject turnableGameObject;
+
+    public static PlayerMovement Instance;
     #endregion
 
 	#region STATE PARAMETERS
@@ -65,6 +67,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
 	{
+		if (Instance)
+		{
+			Destroy(this);
+		}
+		else
+		{
+			Instance = this;
+		}
+		
+		
 		RB = GetComponent<Rigidbody2D>();
 		_trailRenderer = GetComponent<TrailRenderer>();
 		_inputController = GetComponent<LocalInputController>();

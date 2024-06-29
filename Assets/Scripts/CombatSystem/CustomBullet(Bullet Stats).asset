@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36a323ecb421724c93a4ef2cc2fd923, type: 3}
   m_Name: CustomBullet(Bullet Stats)
   m_EditorClassIdentifier: 
-  bulletSpeed: 2100
-  lifeTime: 5
+  bulletSpeed: 210
+  lifeTime: 4
   IsRecochetShoot: 1
   recochetAmount: 6
   isPiercingShoot: 1
   maxPiercingShoots: 5
   isShootGetBigByTime: 0
   maxBulletSize: 0.2
+  isBoomerangShoot: 1
