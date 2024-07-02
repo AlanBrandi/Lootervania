@@ -9,4 +9,12 @@ public class SOWeaponStats : ScriptableObject
     public float reloadTime;
     public float fireRate_BPS;
     public int maxAmmoAmount;
+
+
+    public bool isLessAmmoMorePower;
+    public float ammoPowerMultiplier;
+    
+    //Atirar as vezes nn conta munição (pensar em um nome melhor que meu amigo)
+    public bool isAmmoRandomCount;
+    public float ammoRandomCountPercentage;
 }

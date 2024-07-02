@@ -2594,29 +2594,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2341529305247647209, guid: a66f480133fed654cb445c636f470cde, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2480131644820734753, guid: a66f480133fed654cb445c636f470cde, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3397188164366980524, guid: a66f480133fed654cb445c636f470cde, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3547138264848156508, guid: a66f480133fed654cb445c636f470cde, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4199209442688074443, guid: a66f480133fed654cb445c636f470cde, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5640428467881833248, guid: a66f480133fed654cb445c636f470cde, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7303961745206797375, guid: a66f480133fed654cb445c636f470cde, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2657,14 +2637,6 @@ PrefabInstance:
     - target: {fileID: 7303961745206797375, guid: a66f480133fed654cb445c636f470cde, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8709412531908128806, guid: a66f480133fed654cb445c636f470cde, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8717526593658710146, guid: a66f480133fed654cb445c636f470cde, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

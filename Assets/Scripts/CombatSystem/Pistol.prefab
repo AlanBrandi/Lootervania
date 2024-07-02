@@ -131,9 +131,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e2a7d42c82380140bb9ca20e625b994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
+  reloadTime: 0
+  fireRate: 0
+  maxAmmoAmount: 0
+  currentAmmoAmount: 0
+  canShoot: 0
   spawnPoint: {fileID: 3163731988294193151}
   weaponStats: {fileID: 11400000, guid: b4a3bc8cbf0aef148b9b622f0936a07b, type: 2}
   bullet: {fileID: 0}
+  AmmoPanel: {fileID: 0}
+  ReloadPanel: {fileID: 0}
+  ammoText: {fileID: 0}
+  sliderReload: {fileID: 0}
+  isLessAmmoMorePower: 1
+  ammoPowerMultiplier: 1.2
+  isAmmoRandomCount: 0
+  ammoRandomCountPercentage: 0
 --- !u!1 &2217342271851178572
 GameObject:
   m_ObjectHideFlags: 0

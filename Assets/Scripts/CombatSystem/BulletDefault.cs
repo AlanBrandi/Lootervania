@@ -10,7 +10,7 @@ public class BulletDefault : Bullet
     private float lifetime;
     private float elapsedTime = 0;
     private Rigidbody2D rb;
-    private int bulletDamage;
+    private float bulletDamage;
     
     [SerializeField] private SOBulletStats bulletStats;
     private void Update()
@@ -42,7 +42,7 @@ public class BulletDefault : Bullet
         PoolManager.ReleaseObject(gameObject);
     }
 
-    public override void Initialize(int damage)
+    public override void Initialize(float damage)
     {
         rb = GetComponent<Rigidbody2D>();
         speed = bulletStats.bulletSpeed;

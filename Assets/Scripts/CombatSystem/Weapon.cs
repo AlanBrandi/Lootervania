@@ -7,7 +7,7 @@ public abstract class Weapon : MonoBehaviour
 {
     public abstract void Fire();
 
-    public int damage;
+    public float damage;
 
     public float reloadTime;
 

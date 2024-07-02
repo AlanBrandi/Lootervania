@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Bullet : MonoBehaviour
 {
-    public abstract void Initialize(int damage);
+    public abstract void Initialize(float damage);
     public abstract void Act();
     public abstract void OnBulletCollide(Collider2D other);
     public abstract void OnShoot();

@@ -7,7 +7,7 @@ using Utilities.Pool.Core;
 
 public class BulletCustom : Bullet
 {
-    private int bulletDamage;
+    private float bulletDamage;
     
     private float speed;
     private float lifetime;
@@ -103,7 +103,7 @@ public class BulletCustom : Bullet
     {
         if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<HealthController>().ReduceHealth(bulletDamage);
+            other.GetComponent<HealthController>().ReduceHealth((int)bulletDamage);
             
             // Piercing
             if (!isPiercingShoot) OnBulletDestroy();
@@ -166,7 +166,7 @@ public class BulletCustom : Bullet
         PoolManager.ReleaseObject(gameObject);
     }
 
-    public override void Initialize(int damage)
+    public override void Initialize(float damage)
     {
         transform.localScale = initialSize;
         

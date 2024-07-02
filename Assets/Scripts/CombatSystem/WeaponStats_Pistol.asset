@@ -16,3 +16,7 @@ MonoBehaviour:
   reloadTime: 1.5
   fireRate_BPS: 5
   maxAmmoAmount: 10
+  isLessAmmoMorePower: 0
+  ammoPowerMultiplier: 0.2
+  isAmmoRandomCount: 0
+  ammoRandomCountPercentage: 20
