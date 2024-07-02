@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: CustomBullet(Bullet Stats)
   m_EditorClassIdentifier: 
   bulletSpeed: 1200
-  lifeTime: 4
+  lifeTime: 1
   IsRecochetShoot: 1
   recochetAmount: 6
   isPiercingShoot: 1
-  maxPiercingShoots: 5
+  maxPiercingShoots: 3
   isShootGetBigByTime: 0
-  maxBulletSize: 0.2
+  maxBulletSize: 20
   isBoomerangShoot: 0
+  maxDistanceBoomerang: 5
+  isPersueShoot: 0
+  maxPersueRange: 5

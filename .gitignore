@@ -71,3 +71,7 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+.idea/.idea.Lootervania/.idea/workspace.xml
+ProjectSettings/ProjectVersion.txt
+ProjectSettings/ProjectVersion.txt
+Packages/packages-lock.json

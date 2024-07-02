@@ -42,5 +42,13 @@ public class SOBulletStats : ScriptableObject
     
     [Space]
     
-    public bool isBoomerangShoot; 
+    public bool isBoomerangShoot;
+
+    [SerializeField] public float maxDistanceBoomerang;
+    
+    public float MaxDistanceBoomerang
+    {
+        get { return maxDistanceBoomerang; }
+        set { maxDistanceBoomerang = value; }
+    }
 }

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Utilities.Pool.Core;
 
@@ -27,8 +29,19 @@ public class BulletCustom : Bullet
     
     [SerializeField] private SOBulletStats bulletStats;
 
-    private bool isBoomerangShoot; // Adicionado para controle de tiro boomerang
+    private bool isBoomerangShoot;
+    private Vector2 ongoingDirection;
+    private float maxDistance;
 
+    private Transform playerTransform;
+    
+    private int hitCountPlayer = 0;
+
+
+    private bool isPersueShoot;
+    private float maxPersueRange;
+    private Transform enemyTransform;
+    
     private void Awake()
     {
         initialSize = transform.localScale;
@@ -37,6 +50,7 @@ public class BulletCustom : Bullet
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        Vector2 ongoingDirection = direction;
     }
 
     private void FixedUpdate()
@@ -54,6 +68,7 @@ public class BulletCustom : Bullet
     private void LifeTimeCount()
     {
         elapsedTime += Time.deltaTime;
+        
         if (elapsedTime >= lifetime)
         {
             OnBulletDestroy();
@@ -65,16 +80,18 @@ public class BulletCustom : Bullet
             float currentScale = Mathf.Lerp(1f, maxBulletSize, scalePercentage);
 
             transform.localScale = new Vector3(currentScale, currentScale, 1f);
+            bulletDamage += (int)(0.2f * elapsedTime); //20% pensar melhor depois
         }
 
-        if (isBoomerangShoot) //Socorro chega por hoje 29/06/2024 - Seria muito bom se eu NUNCA mais voltasse
+        if (isBoomerangShoot)
         {
-            if (elapsedTime >= lifetime / 2)
+            if(elapsedTime >= lifetime / 2) 
             {
-                Vector2 directionToPlayer = transform.position - PlayerMovement.Instance.transform.position;
-                direction = directionToPlayer.normalized;
+                Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
+                direction = directionToPlayer;
             }
         }
+
     }
 
     public override void Act()
@@ -100,7 +117,7 @@ public class BulletCustom : Bullet
         
         if (other.CompareTag("Level"))
         {
-            if (!isRecochetShoot) return;
+            if (!isRecochetShoot) OnBulletDestroy();
             
             if (recochetAmount <= 0)
             {
@@ -125,11 +142,22 @@ public class BulletCustom : Bullet
                 direction = newDirection;
             }
         }
+
+        if (other.CompareTag("Player"))
+        {
+            if (hitCountPlayer == 0)
+            {
+                hitCountPlayer++;
+            }
+            else
+            {
+                OnBulletDestroy();
+            }
+        }
     }
 
     public override void OnShoot()
     {
-        // Lógica de disparo, se necessário
     }
 
     public override void OnBulletDestroy()
@@ -149,6 +177,8 @@ public class BulletCustom : Bullet
         bulletDamage = damage;
 
         direction = transform.right;
+
+        playerTransform = PlayerMovement.Instance.transform;
         
         // Piercing
         isPiercingShoot = bulletStats.isPiercingShoot;
@@ -164,10 +194,21 @@ public class BulletCustom : Bullet
 
         // Boomerang
         isBoomerangShoot = bulletStats.isBoomerangShoot;
+        maxDistance = bulletStats.maxDistanceBoomerang;
+
+        hitCountPlayer = 0;
+        
+        //Quando for fazer o código final melhorar isso
+        if (isBoomerangShoot)
+        {
+            bulletStats.isBoomerangShoot = true;
+            isPiercingShoot = true;
+        }
     }
 
     private void OnBecameInvisible()
     {
+        if(isBoomerangShoot) return;
         OnBulletDestroy();
     }
 

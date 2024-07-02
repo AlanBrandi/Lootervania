@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 890
   lifeTime: 0.4
-  IsRecochetShoot: 0
+  IsRecochetShoot: 1
   recochetAmount: 6
   isPiercingShoot: 1
   maxPiercingShoots: 5
   isShootGetBigByTime: 0
   maxBulletSize: 0.2
   isBoomerangShoot: 0
+  maxDistanceBoomerang: 5

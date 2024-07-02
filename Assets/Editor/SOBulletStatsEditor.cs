@@ -57,8 +57,13 @@ public class SOBulletStatsEditor : Editor
         if (isShootGetBigByTime != null)
         {
             EditorGUILayout.PropertyField(isBoomerangShoot);
+            if (bulletStats.isBoomerangShoot)
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("maxDistanceBoomerang"));
+                EditorGUI.indentLevel--;
+            }
         }
-
         serializedObject.ApplyModifiedProperties();
     }
 }
