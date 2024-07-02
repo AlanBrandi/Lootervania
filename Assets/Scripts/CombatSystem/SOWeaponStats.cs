@@ -10,7 +10,8 @@ public class SOWeaponStats : ScriptableObject
     public float fireRate_BPS;
     public int maxAmmoAmount;
 
-
+    [Space]
+    [Header("Perks")]
     public bool isLessAmmoMorePower;
     public float ammoPowerMultiplier;
     

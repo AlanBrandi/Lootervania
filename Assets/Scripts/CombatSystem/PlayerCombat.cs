@@ -41,10 +41,12 @@ public class PlayerCombat : MonoBehaviour
 
     private void SwitchWeaponOnperformed(InputAction.CallbackContext obj)
     {
+        rangeWeapons[currentWeapon].gameObject.SetActive(false);
         float value = obj.ReadValue<float>();
         bool isInverted = value < 0;
         int index = isInverted ? currentWeapon - 1 : currentWeapon + 1;
         currentWeapon = Mathf.Clamp(index, 0, rangeWeapons.Length - 1);
+        rangeWeapons[currentWeapon].gameObject.SetActive(true);
     }
 
     private void LookPerformed(InputAction.CallbackContext obj)
