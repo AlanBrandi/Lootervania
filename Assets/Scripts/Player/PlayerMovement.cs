@@ -19,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
 	public bool IsJumping { get; private set; }
 	public bool IsWallJumping { get; private set; }
 	public bool IsDashing { get; private set; }
-	public bool IsClimbing { get; private set; }
 	public bool IsSliding { get; private set; }
 	public float LastOnGroundTime { get; private set; }
 	public float LastOnWallTime { get; private set; }
@@ -28,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 	
 	private InputControllerBase _inputController = null;
 	
-	private int jumpCount = 0;
+
 	private bool _isJumpCut;
 	private bool _isJumpFalling;
 	
@@ -47,7 +46,6 @@ public class PlayerMovement : MonoBehaviour
 	#region INPUT PARAMETERS
 	public float LastPressedJumpTime { get; private set; }
 	public float LastPressedDashTime { get; private set; }
-	public float LastPressedClimbTime { get; private set; }
 	#endregion
 
 	#region CHECK PARAMETERS
@@ -102,7 +100,6 @@ public class PlayerMovement : MonoBehaviour
 
 		LastPressedJumpTime -= Time.deltaTime;
 		LastPressedDashTime -= Time.deltaTime;
-		LastPressedClimbTime -= Time.deltaTime;
 		#endregion
 
 		#region INPUT HANDLER
@@ -122,7 +119,6 @@ public class PlayerMovement : MonoBehaviour
 					//landAnimation
 				}
 
-				jumpCount = 0;
 				LastOnGroundTime = Data.coyoteTime;
             }		
 			
@@ -166,7 +162,6 @@ public class PlayerMovement : MonoBehaviour
 				IsWallJumping = false;
 				_isJumpCut = false;
 				_isJumpFalling = false;
-				IsClimbing = false;
 				Jump();
 
 				//call jump animation
@@ -189,40 +184,18 @@ public class PlayerMovement : MonoBehaviour
 		#region DASH CHECKS
 		if (CanDash() && LastPressedDashTime > 0)
 		{
-			Sleep(Data.dashSleepTime); 
-			
-
-				_lastDashDir = IsFacingRight ? Vector2.right : Vector2.left;
+			_lastDashDir = IsFacingRight ? Vector2.right : Vector2.left;
 			
 
 			IsDashing = true;
 			IsJumping = false;
 			IsWallJumping = false;
-			IsClimbing = false;
 			_isJumpCut = false;
 
 			StartCoroutine(nameof(StartDash), _lastDashDir);
 		}
 		#endregion
-		#region CLIMB CHECKS
-		
-		if (CanClimb() && LastPressedClimbTime > 0)
-		{
-			Sleep(Data.climbSleepTime);
 
-			
-			IsClimbing = true;
-			IsDashing = false;
-			IsJumping = false;
-			IsWallJumping = false;
-			_isJumpCut = false;
-
-			
-			Climb();
-			//StartCoroutine(nameof(StartDash), _lastDashDir);
-		}
-		
-		#endregion
 		#region SLIDE CHECKS
 		if (CanSlide() && ((LastOnWallLeftTime > 0 && _inputController.Horizontal < 0) || (LastOnWallRightTime > 0 && _inputController.Horizontal > 0)))
 			IsSliding = true;
@@ -304,28 +277,12 @@ public class PlayerMovement : MonoBehaviour
 		LastPressedDashTime = Data.dashInputBufferTime;
 	}
 	
-	public void OnClimbInput()
-	{
-		LastPressedDashTime = Data.climbInputBufferTime;
-	}
     #endregion
 
     #region GENERAL METHODS
     public void SetGravityScale(float scale)
 	{
 		RB.gravityScale = scale;
-	}
-
-	private void Sleep(float duration)
-    {
-	    StartCoroutine(nameof(PerformSleep), duration);
-    }
-
-	private IEnumerator PerformSleep(float duration)
-    {
-		Time.timeScale = 0;
-		yield return new WaitForSecondsRealtime(duration);
-		Time.timeScale = 1;
 	}
     #endregion
     
@@ -377,36 +334,12 @@ public class PlayerMovement : MonoBehaviour
 	}
     #endregion
 
-    #region CLIMB METHODS
-    
-    private void Climb()
-    {
-	    LastPressedClimbTime = 0;
-	    LastOnGroundTime = 0;
-
-	    #region Perform Climb
-	    float climbSpeed = Data.climbSpeed; 
-	    float climbDistance = Data.climbDistance;
-	    
-	    float adjustedClimbSpeed = climbSpeed * (1 / climbDistance);
-	    
-	    Vector2 climbVelocity = Vector2.up * adjustedClimbSpeed;
-	    RB.velocity = climbVelocity;
-	    
-	    // RB.gravityScale = 0f;
-	    
-	    #endregion
-    }
-    
-    #endregion
 
     #region JUMP METHODS
     private void Jump()
 	{
 		LastPressedJumpTime = 0;
 		LastOnGroundTime = 0;
-
-		jumpCount++;
 		
 		#region Perform Jump
 		float force = Data.jumpForce;
@@ -512,7 +445,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool CanJump()
     {
-	    return (LastOnGroundTime > 0 || jumpCount < Data.maxJumps) && !IsJumping;
+		return LastOnGroundTime > 0 && !IsJumping;
     }
 
     private bool CanWallJump()
@@ -547,10 +480,6 @@ public class PlayerMovement : MonoBehaviour
 		return _dashesLeft > 0;
 	}
 	
-	private bool CanClimb()
-	{
-		return false;
-	}
 
 	public bool CanSlide()
     {

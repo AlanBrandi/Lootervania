@@ -1,32 +1,29 @@
-using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Player Data")] 
 public class PlayerData : ScriptableObject
-
 {
 	[Header("Gravity")]
 	[HideInInspector] public float gravityStrength; 
-	[HideInInspector] public float gravityScale; 
-										  
+	[HideInInspector] public float gravityScale;
+										
 	[Space(5)]
 	public float fallGravityMult; 
 	public float maxFallSpeed;
 	[Space(5)]
-	public float fastFallGravityMult;
-									 
+	public float fastFallGravityMult; 
 	public float maxFastFallSpeed; 
 	
 	[Space(20)]
 
 	[Header("Run")]
-	public float runMaxSpeed;
+	public float runMaxSpeed; 
 	public float runAcceleration; 
-	[HideInInspector] public float runAccelAmount;
-	public float runDecceleration;
-	[HideInInspector] public float runDeccelAmount;
+	[HideInInspector] public float runAccelAmount; 
+	public float runDecceleration; 
+	[HideInInspector] public float runDeccelAmount; 
 	[Space(5)]
-	[Range(0f, 1)] public float accelInAir; 
+	[Range(0f, 1)] public float accelInAir;
 	[Range(0f, 1)] public float deccelInAir;
 	[Space(5)]
 	public bool doConserveMomentum = true;
@@ -34,46 +31,39 @@ public class PlayerData : ScriptableObject
 	[Space(20)]
 
 	[Header("Jump")]
-	public float jumpHeight; 
-	public float jumpTimeToApex;
-	public float maxJumps;
+	public float jumpHeight;
+	public float jumpTimeToApex; 
 	[HideInInspector] public float jumpForce; 
 
 	[Header("Both Jumps")]
-	public float jumpCutGravityMult;
-	[Range(0f, 1)] public float jumpHangGravityMult;
+	public float jumpCutGravityMult; 
+	[Range(0f, 1)] public float jumpHangGravityMult; 
 	public float jumpHangTimeThreshold; 
 	[Space(0.5f)]
 	public float jumpHangAccelerationMult; 
 	public float jumpHangMaxSpeedMult; 				
 
 	[Header("Wall Jump")]
-	public Vector2 wallJumpForce;
-	[Space(5)]
-	[Range(0f, 1f)] public float wallJumpRunLerp;
+	public Vector2 wallJumpForce; 
+	[Range(0f, 1f)] public float wallJumpRunLerp; 
 	[Range(0f, 1.5f)] public float wallJumpTime; 
-	public bool doTurnOnWallJump;
+	public bool doTurnOnWallJump; 
 
-	[Space(20)] [Header("Climbing")] 
-	public float climbSpeed;
-	public float climbDistance;
-	public float climbSleepTime;
-	[Range(0.01f, 0.5f)] public float climbInputBufferTime;
-	
+	[Space(20)]
+
 	[Header("Slide")]
 	public float slideSpeed;
 	public float slideAccel;
 
     [Header("Assists")]
 	[Range(0.01f, 0.5f)] public float coyoteTime; 
-	[Range(0.01f, 0.5f)] public float jumpInputBufferTime;
+	[Range(0.01f, 0.5f)] public float jumpInputBufferTime; 
 
 	[Space(20)]
 
 	[Header("Dash")]
 	public int dashAmount;
 	public float dashSpeed;
-	public float dashSleepTime;
 	[Space(5)]
 	public float dashAttackTime;
 	[Space(5)]
@@ -86,15 +76,17 @@ public class PlayerData : ScriptableObject
 	[Range(0.01f, 0.5f)] public float dashInputBufferTime;
 	
 
+	
     private void OnValidate()
     {
-	    gravityStrength = -(2 * jumpHeight) / (jumpTimeToApex * jumpTimeToApex);
-	    
-		gravityScale = gravityStrength / Physics2D.gravity.y;
 		
+		gravityStrength = -(2 * jumpHeight) / (jumpTimeToApex * jumpTimeToApex);
+		
+		gravityScale = gravityStrength / Physics2D.gravity.y;
+
 		runAccelAmount = (50 * runAcceleration) / runMaxSpeed;
 		runDeccelAmount = (50 * runDecceleration) / runMaxSpeed;
-		
+
 		jumpForce = Mathf.Abs(gravityStrength) * jumpTimeToApex;
 
 		#region Variable Ranges
