@@ -9,6 +9,7 @@ public class EnemyDummieBehaviour : MonoBehaviour
     //Colocar o inimigo apontando a arma para o player
     [Header("Dummie behaviour")]
     [SerializeField] private bool IsEnemyAgressive;
+    [SerializeField] private bool canMove;
     [SerializeField] private bool IsMoving = false;
 
     [Header("Movement configuration")]
@@ -54,6 +55,8 @@ public class EnemyDummieBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(!canMove) return;
+
         if (!IsMoving)
         {
             rb.velocity = Vector2.zero;
