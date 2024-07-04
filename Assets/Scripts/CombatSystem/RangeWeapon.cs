@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Utilities.Pool.Core;
@@ -10,7 +12,6 @@ public class RangeWeapon : Weapon
 {
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private SOWeaponStats weaponStats;
-    [SerializeField] private Bullet bullet;
 
     [SerializeField] private GameObject AmmoPanel;
     [SerializeField] private GameObject ReloadPanel;
@@ -20,6 +21,7 @@ public class RangeWeapon : Weapon
     private bool isReloading;
     private float timeSinceLastFire; 
     
+    private Bullet bullet;
     
     //Perks
     [Space]
@@ -40,6 +42,10 @@ public class RangeWeapon : Weapon
         if (isReloading) return;
 
         timeSinceLastFire += Time.deltaTime;
+    }
+
+    private void AddPerks()
+    {
     }
 
     public override void Fire()
@@ -92,10 +98,9 @@ public class RangeWeapon : Weapon
         }
     }
 
-  
-
     private void InitializeWeapon()
     {
+        bullet = weaponStats.bullet;
         damage = weaponStats.damage;
         
         reloadTime = weaponStats.reloadTime;
@@ -123,7 +128,7 @@ public class RangeWeapon : Weapon
         currentAmmoAmount = maxAmmoAmount;
         OnReloadFinished();
     }
-
+    
     private void OnStartReload()
     {
         StartCoroutine(ReloadRoutine());

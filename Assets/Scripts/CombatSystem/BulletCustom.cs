@@ -50,9 +50,7 @@ public class BulletCustom : Bullet
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        Vector2 ongoingDirection = direction;
     }
-
     private void FixedUpdate()
     {
         if (!gameObject.activeSelf) return;
@@ -168,17 +166,14 @@ public class BulletCustom : Bullet
 
     public override void Initialize(float damage)
     {
-        transform.localScale = initialSize;
-        
         speed = bulletStats.bulletSpeed;
         lifetime = bulletStats.lifeTime;
-        elapsedTime = 0;
-        
-        bulletDamage = damage;
-
         direction = transform.right;
-
         playerTransform = PlayerMovement.Instance.transform;
+        
+        transform.localScale = initialSize;
+        bulletDamage = damage;
+        elapsedTime = 0;
         
         // Piercing
         isPiercingShoot = bulletStats.isPiercingShoot;
@@ -204,6 +199,19 @@ public class BulletCustom : Bullet
             bulletStats.isBoomerangShoot = true;
             isPiercingShoot = true;
         }
+    }
+
+    public void ActivatePerks(List<string> selectedPerks)
+    {
+        if (selectedPerks.Contains("PiercingShoot"))
+        {
+            isPiercingShoot = true;
+        }
+        if (selectedPerks.Contains("RecochetShoot"))
+        {
+            isRecochetShoot = true;
+        }
+        // ... adicione mais condições conforme necessário
     }
 
     private void OnBecameInvisible()

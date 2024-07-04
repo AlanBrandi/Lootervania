@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc611d8021e4ac409707ef7d4542153, type: 3}
   m_Name: WeaponStats_Pistol
   m_EditorClassIdentifier: 
+  bullet: {fileID: 1942506858983192280, guid: 52573968194c8f646a1c26a7d0241b8b, type: 3}
+  bulletStats: {fileID: 0}
   damage: 25
   reloadTime: 1.5
   fireRate_BPS: 5
   maxAmmoAmount: 10
   isLessAmmoMorePower: 0
   ammoPowerMultiplier: 0.2
-  isAmmoRandomCount: 0
+  isAmmoRandomCount: 1
   ammoRandomCountPercentage: 20

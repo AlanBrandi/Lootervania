@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BulletsStats_", menuName = "Weapon/BulletsStats", order = 1)]
@@ -50,5 +51,33 @@ public class SOBulletStats : ScriptableObject
     {
         get { return maxDistanceBoomerang; }
         set { maxDistanceBoomerang = value; }
+    }
+    
+    public void ActivatePerks(List<string> selectedPerks)
+    {
+        if (selectedPerks.Contains("PiercingShoot"))
+        {
+            isPiercingShoot = true;
+        }
+        if (selectedPerks.Contains("RecochetShoot"))
+        {
+            IsRecochetShoot = true;
+        }
+        if (selectedPerks.Contains("BulletGetBigByTime"))
+        {
+            isShootGetBigByTime = true;
+        }
+        if (selectedPerks.Contains("BoomerangShoot"))
+        {
+            isBoomerangShoot = true;
+        }
+    }
+//Ignora isso que ta pessimo
+    public void DisableAllPerks()
+    {
+        isPiercingShoot = false;
+        IsRecochetShoot = false;
+        isShootGetBigByTime = false;
+        isBoomerangShoot = false;
     }
 }
