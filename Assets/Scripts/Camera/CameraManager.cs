@@ -39,7 +39,8 @@ public class CameraManager : MonoBehaviour
                 _framingTransposer = _currentCamera.GetCinemachineComponent<CinemachineFramingTransposer>();
             }
         }
-
+ 
+        _framingTransposer.m_TrackedObjectOffset = new Vector3(1f, 0f, 0f);
         _normYPanAmount = _framingTransposer.m_YDamping;
         _startingTrackedObjectOffset = _framingTransposer.m_TrackedObjectOffset;
     }
@@ -49,7 +50,6 @@ public class CameraManager : MonoBehaviour
     public void LerpYDamping(bool isPlayerFalling)
     {
         _lerpYPanCoroutine = StartCoroutine(LerpYAction(isPlayerFalling));
-        Debug.Log(_lerpYPanCoroutine.ToString());
     }
 
     private IEnumerator LerpYAction(bool isPlayerFalling)
@@ -74,7 +74,7 @@ public class CameraManager : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
 
-            float lerpedPanAmount = Mathf.Lerp(startDampAmount, endDampAmount, (elapsedTime / _fallYPanTime));
+            float lerpedPanAmount = Mathf.Lerp(startDampAmount, endDampAmount, elapsedTime / _fallYPanTime);
             _framingTransposer.m_YDamping = lerpedPanAmount;
 
             yield return null;
