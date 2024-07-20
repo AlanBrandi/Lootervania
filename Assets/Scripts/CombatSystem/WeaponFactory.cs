@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -31,6 +32,8 @@ public class WeaponFactory : MonoBehaviour
         "BulletGetBigByTime",
         "BoomerangShoot",
     };
+
+    private List<string> availablePerks = new List<string>();
 
     public List<string> selectedPerks = new List<string>();
     void Start()
@@ -94,12 +97,18 @@ public class WeaponFactory : MonoBehaviour
 
     public void RandomPerks()
     {
+        //Reset available perks list
+        availablePerks.Clear();
+        availablePerks.AddRange(perks);
+
         selectedPerks.Clear();
+
         System.Random rand = new System.Random();
         for (int i = 0; i < 2; i++)
         {
-            int randomIndex = rand.Next(perks.Count);
-            selectedPerks.Add(perks[randomIndex]);
+            int randomIndex = rand.Next(availablePerks.Count);
+            selectedPerks.Add(availablePerks[randomIndex]);
+            availablePerks.RemoveAt(randomIndex);
         }
     }
 }
