@@ -1,20 +1,14 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using Utilities.Pool.Core;
 
 public class BulletCustom : Bullet
 {
     private float bulletDamage;
-    
     private float speed;
     private float lifetime;
     private float elapsedTime;
 
     private Rigidbody2D rb;
-
     private Vector2 direction;
 
     private bool isPiercingShoot;
@@ -22,26 +16,25 @@ public class BulletCustom : Bullet
 
     private bool isRecochetShoot;
     private int recochetAmount;
-    
+
     private bool isBulletGetBigByTime;
     private float maxBulletSize;
     private Vector3 initialSize;
-    
-    [SerializeField] private SOBulletStats bulletStats;
 
     private bool isBoomerangShoot;
     private Vector2 ongoingDirection;
     private float maxDistance;
 
     private Transform playerTransform;
-    
     private int hitCountPlayer = 0;
 
+    // Parâmetros de explosão
+    private bool isExplosive;
+    private float explosionRadius;
+    private LayerMask damageableLayers;
 
-    private bool isPersueShoot;
-    private float maxPersueRange;
-    private Transform enemyTransform;
-    
+    [SerializeField] private SOBulletStats bulletStats;
+
     private void Awake()
     {
         initialSize = transform.localScale;
@@ -68,7 +61,7 @@ public class BulletCustom : Bullet
     private void LifeTimeCount()
     {
         elapsedTime += Time.deltaTime;
-        
+
         if (elapsedTime >= lifetime)
         {
             OnBulletDestroy();
@@ -80,18 +73,17 @@ public class BulletCustom : Bullet
             float currentScale = Mathf.Lerp(1f, maxBulletSize, scalePercentage);
 
             transform.localScale = new Vector3(currentScale, currentScale, 1f);
-            bulletDamage += (int)(0.2f * elapsedTime); //20% pensar melhor depois
+            bulletDamage += (int)(0.2f * elapsedTime); // 20% pensar melhor depois
         }
 
         if (isBoomerangShoot)
         {
-            if(elapsedTime >= lifetime / 2) 
+            if (elapsedTime >= lifetime / 2)
             {
                 Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
                 direction = directionToPlayer;
             }
         }
-
     }
 
     public override void Act()
@@ -99,14 +91,20 @@ public class BulletCustom : Bullet
         OnShoot();
     }
 
-    public override void OnBulletCollide(Collider2D other)
+   public override void OnBulletCollide(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
         {
             other.GetComponent<HealthController>().ReduceHealth((int)bulletDamage);
             
             // Piercing
-            if (!isPiercingShoot) OnBulletDestroy();
+            if (!isPiercingShoot)
+            {
+                if(isExplosive)
+                   Explode();
+                else
+                   OnBulletDestroy();   
+            }
             
             MaxPiercingShoots--;
             if (MaxPiercingShoots < 0)
@@ -117,7 +115,13 @@ public class BulletCustom : Bullet
         
         if (other.CompareTag("Level"))
         {
-            if (!isRecochetShoot) OnBulletDestroy();
+            if (!isRecochetShoot)
+            {
+                if(isExplosive)
+                   Explode();
+                else
+                   OnBulletDestroy();   
+            }
             
             if (recochetAmount <= 0)
             {
@@ -166,28 +170,31 @@ public class BulletCustom : Bullet
         PoolManager.ReleaseObject(gameObject);
     }
 
-    public override void Initialize(float damage)
+    public override void Initialize(float damage, Vector3 bulletSize)
     {
-        transform.localScale = initialSize;
-        
+        transform.localScale = bulletSize;
         speed = bulletStats.bulletSpeed;
         lifetime = bulletStats.lifeTime;
         elapsedTime = 0;
-        
-        bulletDamage = damage;
 
+        bulletDamage = damage;
         direction = transform.right;
 
         playerTransform = PlayerMovement.Instance.transform;
-        
+
+        // Inicialize os novos parâmetros
+        isExplosive = bulletStats.isExplosive;
+        explosionRadius = bulletStats.explosionRadius;
+        damageableLayers = bulletStats.damageableLayers;
+
         // Piercing
         isPiercingShoot = bulletStats.isPiercingShoot;
         MaxPiercingShoots = bulletStats.MaxPiercingShoots;
-        
+
         // Recochet
         isRecochetShoot = bulletStats.IsRecochetShoot;
         recochetAmount = bulletStats.RecochetAmount;
-        
+
         // IsShootGetBigByTime
         isBulletGetBigByTime = bulletStats.isShootGetBigByTime;
         maxBulletSize = bulletStats.MaxBulletSize;
@@ -197,8 +204,8 @@ public class BulletCustom : Bullet
         maxDistance = bulletStats.maxDistanceBoomerang;
 
         hitCountPlayer = 0;
-        
-        //Quando for fazer o código final melhorar isso
+
+        // Quando for fazer o código final melhorar isso
         if (isBoomerangShoot)
         {
             bulletStats.isBoomerangShoot = true;
@@ -208,12 +215,31 @@ public class BulletCustom : Bullet
 
     private void OnBecameInvisible()
     {
-        if(isBoomerangShoot) return;
+        if (isBoomerangShoot) return;
         OnBulletDestroy();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         OnBulletCollide(other);
+    }
+
+    private void Explode()
+    {
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Enemy"))
+            {
+                hitCollider.GetComponent<HealthController>().ReduceHealth((int)bulletDamage);
+            }
+        }
+
+        Debug.DrawLine(transform.position, transform.position + Vector3.up * explosionRadius, Color.red, 2f);
+        Debug.DrawLine(transform.position, transform.position + Vector3.down * explosionRadius, Color.red, 2f);
+        Debug.DrawLine(transform.position, transform.position + Vector3.left * explosionRadius, Color.red, 2f);
+        Debug.DrawLine(transform.position, transform.position + Vector3.right * explosionRadius, Color.red, 2f);
+
+        OnBulletDestroy();
     }
 }

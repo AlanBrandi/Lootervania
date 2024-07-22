@@ -3538,7 +3538,7 @@ PrefabInstance:
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: bullet
       value: 
-      objectReference: {fileID: 1942506858983192280, guid: 52573968194c8f646a1c26a7d0241b8b, type: 3}
+      objectReference: {fileID: 1942506858983192280, guid: 7020a4280221b9041971a5aac01c97a3, type: 3}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: ammoText
       value: 

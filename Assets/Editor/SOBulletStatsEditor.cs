@@ -27,7 +27,7 @@ public class SOBulletStatsEditor : Editor
                 EditorGUI.indentLevel--;
             }
         }
-     
+
         // Mostra isPiercingShoot e sua propriedade MaxPiercingShoots se for true
         SerializedProperty isPiercingShootProp = serializedObject.FindProperty("isPiercingShoot");
         if (isPiercingShootProp != null)
@@ -41,6 +41,7 @@ public class SOBulletStatsEditor : Editor
             }
         }
 
+        // Mostra isShootGetBigByTime e sua propriedade maxBulletSize se for true
         SerializedProperty isShootGetBigByTime = serializedObject.FindProperty("isShootGetBigByTime");
         if (isShootGetBigByTime != null)
         {
@@ -52,9 +53,10 @@ public class SOBulletStatsEditor : Editor
                 EditorGUI.indentLevel--;
             }
         }
-        
+
+        // Mostra isBoomerangShoot e sua propriedade maxDistanceBoomerang se for true
         SerializedProperty isBoomerangShoot = serializedObject.FindProperty("isBoomerangShoot");
-        if (isShootGetBigByTime != null)
+        if (isBoomerangShoot != null)
         {
             EditorGUILayout.PropertyField(isBoomerangShoot);
             if (bulletStats.isBoomerangShoot)
@@ -64,6 +66,21 @@ public class SOBulletStatsEditor : Editor
                 EditorGUI.indentLevel--;
             }
         }
+
+        // Mostra isExplosive e suas propriedades explosionRadius e damageableLayers se for true
+        SerializedProperty isExplosiveProp = serializedObject.FindProperty("isExplosive");
+        if (isExplosiveProp != null)
+        {
+            EditorGUILayout.PropertyField(isExplosiveProp);
+            if (bulletStats.isExplosive)
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("explosionRadius"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("damageableLayers"));
+                EditorGUI.indentLevel--;
+            }
+        }
+
         serializedObject.ApplyModifiedProperties();
     }
 }
