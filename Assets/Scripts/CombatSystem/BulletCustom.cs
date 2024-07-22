@@ -34,6 +34,7 @@ public class BulletCustom : Bullet
     private LayerMask damageableLayers;
 
     [SerializeField] private SOBulletStats bulletStats;
+    [SerializeField] private GameObject circlePrefab;
 
     private void Awake()
     {
@@ -227,19 +228,41 @@ public class BulletCustom : Bullet
     private void Explode()
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
+        bool hitEnemy = false;
+
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.CompareTag("Enemy"))
             {
                 hitCollider.GetComponent<HealthController>().ReduceHealth((int)bulletDamage);
+                hitEnemy = true;
             }
         }
 
-        Debug.DrawLine(transform.position, transform.position + Vector3.up * explosionRadius, Color.red, 2f);
-        Debug.DrawLine(transform.position, transform.position + Vector3.down * explosionRadius, Color.red, 2f);
-        Debug.DrawLine(transform.position, transform.position + Vector3.left * explosionRadius, Color.red, 2f);
-        Debug.DrawLine(transform.position, transform.position + Vector3.right * explosionRadius, Color.red, 2f);
+        DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
 
         OnBulletDestroy();
+    }
+
+    private void DrawExplosionCircle(Vector3 position, float radius, Color color)
+    {
+        GameObject circle = Instantiate(circlePrefab, position, Quaternion.identity);
+        LineRenderer lineRenderer = circle.GetComponent<LineRenderer>();
+
+        int segments = 50;
+        lineRenderer.positionCount = segments + 1;
+        lineRenderer.startColor = color;
+        lineRenderer.endColor = color;
+
+        float angle = 0f;
+        for (int i = 0; i <= segments; i++)
+        {
+            float x = Mathf.Sin(Mathf.Deg2Rad * angle) * radius;
+            float y = Mathf.Cos(Mathf.Deg2Rad * angle) * radius;
+            lineRenderer.SetPosition(i, new Vector3(x, y, 0) + position);
+            angle += 360f / segments;
+        }
+
+        Destroy(circle, 0.5f);
     }
 }

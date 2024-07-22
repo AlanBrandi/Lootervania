@@ -162,3 +162,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletStats: {fileID: 11400000, guid: 46ceead9f429e5d43a6f8e9a1d9932d7, type: 2}
+  circlePrefab: {fileID: 165832977858907626, guid: b3c23822facfb8446b7b99263f0515d3, type: 3}
