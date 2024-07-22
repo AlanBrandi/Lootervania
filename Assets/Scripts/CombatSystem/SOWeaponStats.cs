@@ -13,6 +13,8 @@ public class SOWeaponStats : ScriptableObject
     public float reloadTime;
     public float fireRate_BPS;
     public int maxAmmoAmount;
+    public Vector3 bulletSize;
+    public int amountShotsPerTrigger;
 
     [Space]
     [Header("Perks")]

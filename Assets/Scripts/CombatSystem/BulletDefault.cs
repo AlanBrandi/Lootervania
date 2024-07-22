@@ -42,7 +42,7 @@ public class BulletDefault : Bullet
         PoolManager.ReleaseObject(gameObject);
     }
 
-    public override void Initialize(float damage)
+    public override void Initialize(float damage, Vector3 bulletSize)
     {
         rb = GetComponent<Rigidbody2D>();
         speed = bulletStats.bulletSpeed;

@@ -54,23 +54,39 @@ public class RangeWeapon : Weapon
 
         if (timeSinceLastFire >= 1f / fireRate)
         {
-            ShootBullet();
+            ShootBullet(weaponStats.amountShotsPerTrigger);
         }
     }
 
-    private void ShootBullet()
+    private void ShootBullet(int amountShotsPerTrigger)
     {
         if (currentAmmoAmount > 0)
         {
+            int currentAmountShotsPerTrigger = amountShotsPerTrigger;
             damage = weaponStats.damage;
+            Vector3 bulletSize = weaponStats.bulletSize;
             if (isLessAmmoMorePower)
             {
                 float ammoRatio = (float)currentAmmoAmount / maxAmmoAmount;
                 damage *= (1 + ammoPowerMultiplier * (1 - ammoRatio));
             }
+            float spreadAngle = 15f;
+        float baseAngle = spawnPoint.rotation.eulerAngles.z;
+        float startAngle = baseAngle - spreadAngle / 2f;
+        float angleStep = spreadAngle / (currentAmountShotsPerTrigger - 1);
+
+        while(currentAmountShotsPerTrigger > 0)
+        {
+            for (int i = 0; i < currentAmountShotsPerTrigger; i++)
+            {
+                var bulletTmp = PoolManager.SpawnObject(bullet.gameObject, spawnPoint.position, spawnPoint.rotation);
+                float angle = currentAmountShotsPerTrigger > 1 ? startAngle + i * angleStep : baseAngle;
+                bulletTmp.transform.rotation = Quaternion.Euler(0, 0, angle);
+                bulletTmp.GetComponent<Bullet>().Initialize(damage, bulletSize);
+            }
+            currentAmountShotsPerTrigger = 0;
+        }
             
-            var bulletTmp = PoolManager.SpawnObject(bullet.gameObject, spawnPoint.position, spawnPoint.rotation);
-            bulletTmp.GetComponent<Bullet>().Initialize(damage);
             if (!isAmmoRandomCount)
             {
                 currentAmmoAmount--;

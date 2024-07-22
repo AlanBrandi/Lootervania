@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: WeaponStats_Bazzuka
   m_EditorClassIdentifier: 
   damage: 120
-  reloadTime: 5
+  reloadTime: 3.5
   fireRate_BPS: 1
   maxAmmoAmount: 1
+  bulletSize: {x: 1.6, y: 1.6, z: 1.6}
+  amountShotsPerTrigger: 1
   isLessAmmoMorePower: 0
   ammoPowerMultiplier: 0.2
   isAmmoRandomCount: 0

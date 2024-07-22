@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6201266283497970282}
   - component: {fileID: 1942506858983192280}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: BulletBazuca
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,5 +161,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f2d9f130fc85e44881be5967e1ef46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletStats: {fileID: 11400000, guid: 46ceead9f429e5d43a6f8e9a1d9932d7, type: 2}
+  bulletStats: {fileID: 11400000, guid: 0cae26e1d4fd47147aa261f3d068096e, type: 2}
   circlePrefab: {fileID: 165832977858907626, guid: b3c23822facfb8446b7b99263f0515d3, type: 3}

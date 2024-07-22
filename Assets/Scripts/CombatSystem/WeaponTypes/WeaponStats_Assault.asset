@@ -16,6 +16,8 @@ MonoBehaviour:
   reloadTime: 1.5
   fireRate_BPS: 10
   maxAmmoAmount: 35
+  bulletSize: {x: 0.28, y: 0.28, z: 0.28}
+  amountShotsPerTrigger: 1
   isLessAmmoMorePower: 0
   ammoPowerMultiplier: 0.2
   isAmmoRandomCount: 0
