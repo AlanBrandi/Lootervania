@@ -5,12 +5,17 @@ using UnityEngine;
 public class HealthController : HealthModel
 {
     [SerializeField] ParticleSystem hitEffect;
+    [SerializeField] ParticleSystem spikesHitEffect;
     [SerializeField] ParticleSystem deathEffect;
-    [SerializeField] Camera mainCamera; 
     [SerializeField] CameraShake cameraShake;
-    [SerializeField] Knockback knockback;
+    [SerializeField] private float offsetDistance = 1.0f;
+    private Knockback knockback;
+    private Animator anim;
+    private FlashDamage flashDamage;
     private void Start() 
     {
+        anim = GetComponentInChildren<Animator>();
+        flashDamage = GetComponentInChildren<FlashDamage>();
         knockback = GetComponent<Knockback>();
     }
 
@@ -26,7 +31,7 @@ public class HealthController : HealthModel
         onHeal?.Invoke(this, value);
     }
 
-    public void ReduceHealth(int value, Vector2 attackDiretion)
+    public void ReduceHealth(int value, Vector2 attackDirection)
     {
         value = Math.Abs(value);
         CurrentHealth -= value;
@@ -44,15 +49,23 @@ public class HealthController : HealthModel
 
         if (CurrentHealth <= 0)
         {
-            cameraShake.Shake(attackDiretion, 1);
+            cameraShake.Shake(attackDirection, 1);
             HandleDeath();
         }
         else
         {
-            knockback.StartKnockBack(attackDiretion);
-            cameraShake.Shake(attackDiretion, .1f);
-            Quaternion spawnRotation = Quaternion.FromToRotation(Vector2.right, attackDiretion);
-            Instantiate(hitEffect, transform.position, spawnRotation);
+            flashDamage.Flash();
+            anim.SetTrigger("Hit");
+            knockback.StartKnockBack(attackDirection);
+            cameraShake.Shake(attackDirection, .1f);
+
+            Quaternion spawnRotation = Quaternion.FromToRotation(Vector2.right, attackDirection);
+            Quaternion spikesSpawnRotation = Quaternion.FromToRotation(Vector2.right, -attackDirection);
+            Vector2 spawnOffset = attackDirection.normalized * offsetDistance;
+            Vector3 spawnPosition = transform.position + (Vector3)spawnOffset;
+
+            Instantiate(hitEffect, spawnPosition, spawnRotation);
+            Instantiate(spikesHitEffect, transform.position, spikesSpawnRotation);
         }
     }
 
