@@ -28,7 +28,7 @@ public class BulletDefault : Bullet
         OnShoot();
     }
 
-    public override void OnBulletCollide(Collider2D other)
+    public override void OnBulletCollide(Collider2D other, Vector2 direction)
     {
         OnBulletDestroy();
     }
@@ -57,6 +57,6 @@ public class BulletDefault : Bullet
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        OnBulletCollide(other);
+        OnBulletCollide(other, transform.right);
     }
 }
