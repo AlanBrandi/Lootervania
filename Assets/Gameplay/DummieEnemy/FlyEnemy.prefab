@@ -223,7 +223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2908841745330723765}
   - component: {fileID: 7119251300170380058}
-  - component: {fileID: 6314554521284192979}
+  - component: {fileID: 7310190665410521649}
   - component: {fileID: 1511705221501172229}
   - component: {fileID: 7293903628989769074}
   - component: {fileID: 7987779170525063961}
@@ -231,7 +231,6 @@ GameObject:
   - component: {fileID: 7913546252385079075}
   - component: {fileID: 4983295666344121448}
   - component: {fileID: 8829199208725263810}
-  - component: {fileID: 3737550176536755218}
   m_Layer: 6
   m_Name: FlyEnemy
   m_TagString: Enemy
@@ -291,7 +290,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 7.81
---- !u!114 &6314554521284192979
+--- !u!114 &7310190665410521649
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -300,17 +299,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1946811184431325652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3501d890a537104599cdbbf3eb800a4, type: 3}
+  m_Script: {fileID: 11500000, guid: fb24e88650639d04787fd0564f8edf86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsEnemyAgressive: 1
-  canMove: 0
-  IsMoving: 1
-  maxDistance: 3
-  speed: 5
-  prefabBullet: {fileID: 4499149631069460184, guid: 22a792aebc9958345aa810616efe9d80, type: 3}
-  timeToShoot: 5
-  bulletSpeed: 60
+  speed: 2
+  detectionRadius: 7
+  returnDelay: 2
 --- !u!114 &1511705221501172229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,7 +405,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.1091423, y: -0.08929825}
@@ -547,20 +541,6 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0, y: -1, z: 0}
---- !u!114 &3737550176536755218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946811184431325652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4449471be5602594db6fcdc0a3e5566f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _knockBackTime: 0.25
-  _knockBackForce: 3
 --- !u!1 &5217174243611930123
 GameObject:
   m_ObjectHideFlags: 0
