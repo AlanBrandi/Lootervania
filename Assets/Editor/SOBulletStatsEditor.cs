@@ -67,6 +67,22 @@ public class SOBulletStatsEditor : Editor
             }
         }
 
+        // Mostra isAuraShot e sua propriedade sizeAura e auraDamageInterval se for true
+        SerializedProperty isAuraShot = serializedObject.FindProperty("isAuraShot");
+        if (isAuraShot != null)
+        {
+            EditorGUILayout.PropertyField(isAuraShot);
+            if (bulletStats.isAuraShot)
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("auraGameObject"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("sizeAura"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("auraDamage"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("auraDamageInterval"));
+                EditorGUI.indentLevel--;
+            }
+        }
+
         // Mostra isExplosive e suas propriedades explosionRadius e damageableLayers se for true
         SerializedProperty isExplosiveProp = serializedObject.FindProperty("isExplosive");
         if (isExplosiveProp != null)

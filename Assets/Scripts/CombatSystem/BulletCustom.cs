@@ -26,6 +26,9 @@ public class BulletCustom : Bullet
     private Vector2 ongoingDirection;
     private float maxDistance;
 
+    private bool isAuraShot;
+    private GameObject auraGameObject;
+
     private Transform playerTransform;
     private int hitCountPlayer = 0;
 
@@ -40,6 +43,14 @@ public class BulletCustom : Bullet
     private void Awake()
     {
         initialSize = transform.localScale;
+    }
+
+    private void OnEnable()
+    {
+        if (isAuraShot)
+        {
+            GameObject aura = Instantiate(auraGameObject, transform);
+        }
     }
 
     private void Start()
@@ -91,47 +102,47 @@ public class BulletCustom : Bullet
         OnShoot();
     }
 
-   public override void OnBulletCollide(Collider2D other)
+    public override void OnBulletCollide(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
         {
             other.GetComponent<HealthController>().ReduceHealth((int)bulletDamage);
-            
+
             // Piercing
             if (!isPiercingShoot)
             {
-                if(isExplosive)
-                   Explode();
+                if (isExplosive)
+                    Explode();
                 else
-                   OnBulletDestroy();   
+                    OnBulletDestroy();
             }
-            
+
             MaxPiercingShoots--;
             if (MaxPiercingShoots < 0)
             {
                 OnBulletDestroy();
             }
         }
-        
+
         if (other.CompareTag("Level"))
         {
             if (!isRecochetShoot)
             {
-                if(isExplosive)
-                   Explode();
+                if (isExplosive)
+                    Explode();
                 else
-                   OnBulletDestroy();   
+                    OnBulletDestroy();
             }
-            
+
             if (recochetAmount <= 0)
             {
                 OnBulletDestroy();
                 return;
             }
-            
+
             recochetAmount--;
 
-            ContactPoint2D[] contacts = new ContactPoint2D[10]; 
+            ContactPoint2D[] contacts = new ContactPoint2D[10];
             int contactCount = other.GetContacts(contacts);
 
             if (contactCount > 0)
@@ -173,7 +184,7 @@ public class BulletCustom : Bullet
     public override void Initialize(float damage, Vector3 bulletSize)
     {
         transform.localScale = bulletSize;
-        
+
         speed = bulletStats.bulletSpeed;
         lifetime = bulletStats.lifeTime;
         elapsedTime = 0;
@@ -203,6 +214,10 @@ public class BulletCustom : Bullet
         // Boomerang
         isBoomerangShoot = bulletStats.isBoomerangShoot;
         maxDistance = bulletStats.maxDistanceBoomerang;
+
+        // Aura
+        isAuraShot = bulletStats.isAuraShot;
+        auraGameObject = bulletStats.auraGameObject;
 
         hitCountPlayer = 0;
 
