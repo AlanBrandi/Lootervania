@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WeaponStats_Shotgun
   m_EditorClassIdentifier: 
   bullet: {fileID: 1942506858983192280, guid: 52573968194c8f646a1c26a7d0241b8b, type: 3}
-  bulletStats: {fileID: 0}
+  bulletStats: {fileID: 11400000, guid: 46ceead9f429e5d43a6f8e9a1d9932d7, type: 2}
   damage: 30
   reloadTime: 2
   fireRate_BPS: 1

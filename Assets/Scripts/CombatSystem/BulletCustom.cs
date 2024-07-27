@@ -45,14 +45,6 @@ public class BulletCustom : Bullet
         initialSize = transform.localScale;
     }
 
-    private void OnEnable()
-    {
-        if (isAuraShot)
-        {
-            GameObject aura = Instantiate(auraGameObject, transform);
-        }
-    }
-
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -226,6 +218,13 @@ public class BulletCustom : Bullet
         {
             bulletStats.isBoomerangShoot = true;
             isPiercingShoot = true;
+        }
+
+        if (isAuraShot)
+        {
+            lifetime = lifetime * 2;
+            speed = speed / 2f;
+            GameObject aura = Instantiate(auraGameObject, transform);
         }
     }
 

@@ -12,7 +12,7 @@ public class HealthController : HealthModel
     private Knockback knockback;
     private Animator anim;
     private FlashDamage flashDamage;
-    private void Start() 
+    private void Start()
     {
         anim = GetComponentInChildren<Animator>();
         flashDamage = GetComponentInChildren<FlashDamage>();
@@ -35,7 +35,7 @@ public class HealthController : HealthModel
     {
         value = Math.Abs(value);
         CurrentHealth -= value;
-        
+
 
         if (value > 0)
         {
@@ -66,6 +66,32 @@ public class HealthController : HealthModel
 
             Instantiate(hitEffect, spawnPosition, spawnRotation);
             Instantiate(spikesHitEffect, transform.position, spikesSpawnRotation);
+        }
+    }
+
+    public void ReduceHealthNoKnockback(int value)
+    {
+        value = Math.Abs(value);
+        CurrentHealth -= value;
+
+        if (value > 0)
+        {
+            onDamageTaken?.Invoke(this, value);
+
+            if (NumberPrefab)
+            {
+                NumberPrefab.Spawn(value, transform.position + damageNumberOffSetPosition, gameObject);
+            }
+        }
+
+        if (CurrentHealth <= 0)
+        {
+            HandleDeath();
+        }
+        else
+        {
+            flashDamage.Flash();
+            anim.SetTrigger("Hit");
         }
     }
 

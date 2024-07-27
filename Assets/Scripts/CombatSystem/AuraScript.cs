@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AuraScript : MonoBehaviour
@@ -6,15 +7,32 @@ public class AuraScript : MonoBehaviour
     private int auraDamage;
     private float auraDamageInterval;
     private float nextDamageTime;
+    private List<Collider2D> collidersInTrigger = new List<Collider2D>();
     [SerializeField] private SOBulletStats bulletStats;
 
     private void Start()
     {
         auraDamage = bulletStats.auraDamage;
         auraDamageInterval = bulletStats.auraDamageInterval;
-         
     }
-    public void OnTriggerStay2D(Collider2D other)
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            collidersInTrigger.Add(other);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            collidersInTrigger.Remove(other);
+        }
+    }
+
+    /*public void OnTriggerStay2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
         {
@@ -23,6 +41,18 @@ public class AuraScript : MonoBehaviour
                 other.GetComponent<HealthController>().ReduceHealth((int)auraDamage, transform.right);
                 nextDamageTime = Time.time + auraDamageInterval;
             }
+        }
+    }*/
+
+    private void FixedUpdate()
+    {
+        if (Time.time >= nextDamageTime)
+        {
+            foreach (var collider in collidersInTrigger)
+            {
+                collider.GetComponent<HealthController>().ReduceHealthNoKnockback((int)auraDamage);
+            }
+            nextDamageTime = Time.time + auraDamageInterval;
         }
     }
 

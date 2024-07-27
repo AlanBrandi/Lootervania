@@ -11,14 +11,15 @@ public enum WeaponType
     Pistol,
     Assault,
     Shotgun,
-    Bazzuka
+    Bazooka
 }
 public class WeaponFactory : MonoBehaviour
 {
+    public bool isEnabled;
     [SerializeField] private SOWeaponStats pistol;
     [SerializeField] private SOWeaponStats assault;
     [SerializeField] private SOWeaponStats shotgun;
-    [SerializeField] private SOWeaponStats bazzuka;
+    [SerializeField] private SOWeaponStats bazooka;
 
     [SerializeField] private Bullet customBullet;
     [SerializeField] private SOBulletStats bulletStats;
@@ -39,6 +40,7 @@ public class WeaponFactory : MonoBehaviour
     public List<string> selectedPerks = new List<string>();
     void Start()
     {
+        if (isEnabled)
         GenerateWeapon(WeaponType.Pistol);
     }
 
@@ -47,7 +49,7 @@ public class WeaponFactory : MonoBehaviour
        GenerateWeapon(WeaponType.Pistol); 
        GenerateWeapon(WeaponType.Assault); 
        GenerateWeapon(WeaponType.Shotgun); 
-       GenerateWeapon(WeaponType.Bazzuka); 
+       GenerateWeapon(WeaponType.Bazooka); 
     }
     public void GenerateWeapon(Enum weapon)
     {
@@ -62,8 +64,8 @@ public class WeaponFactory : MonoBehaviour
             case WeaponType.Shotgun:
                 WeaponAndBulletConfiguration(shotgun);
                 break;
-            case WeaponType.Bazzuka:
-                WeaponAndBulletConfiguration(bazzuka);
+            case WeaponType.Bazooka:
+                WeaponAndBulletConfiguration(bazooka);
                 break;
         }
     }

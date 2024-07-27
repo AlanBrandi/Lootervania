@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: WeaponStats_Pistol
   m_EditorClassIdentifier: 
   bullet: {fileID: 1942506858983192280, guid: 52573968194c8f646a1c26a7d0241b8b, type: 3}
-  bulletStats: {fileID: 0}
+  bulletStats: {fileID: 11400000, guid: 46ceead9f429e5d43a6f8e9a1d9932d7, type: 2}
   damage: 25
   reloadTime: 1.5
   fireRate_BPS: 5
   maxAmmoAmount: 10
   bulletSize: {x: 0.28, y: 0.28, z: 0.28}
   amountShotsPerTrigger: 1
-  isLessAmmoMorePower: 0
+  isLessAmmoMorePower: 1
   ammoPowerMultiplier: 0.2
-  isAmmoRandomCount: 1
+  isAmmoRandomCount: 0
   ammoRandomCountPercentage: 20

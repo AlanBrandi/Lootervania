@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7bc611d8021e4ac409707ef7d4542153, type: 3}
-  m_Name: WeaponStats_Bazzuka
+  m_Name: WeaponStats_Bazooka
   m_EditorClassIdentifier: 
   bullet: {fileID: 1942506858983192280, guid: 7020a4280221b9041971a5aac01c97a3, type: 3}
-  bulletStats: {fileID: 0}
+  bulletStats: {fileID: 11400000, guid: 0cae26e1d4fd47147aa261f3d068096e, type: 2}
   damage: 120
   reloadTime: 3.5
   fireRate_BPS: 1

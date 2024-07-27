@@ -3081,12 +3081,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41d642ab56792c14098b1267cd905346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pistol: {fileID: 0}
-  assault: {fileID: 0}
-  shotgun: {fileID: 0}
-  bazzuka: {fileID: 0}
-  customBullet: {fileID: 0}
-  bulletStats: {fileID: 0}
+  isEnabled: 0
+  pistol: {fileID: 11400000, guid: b4a3bc8cbf0aef148b9b622f0936a07b, type: 2}
+  assault: {fileID: 11400000, guid: 5d8409cc5e041e4449900e1cb660b6fb, type: 2}
+  shotgun: {fileID: 11400000, guid: aea09bcee8edb654db4b3059fe14669f, type: 2}
+  bazooka: {fileID: 11400000, guid: b09ab17c300d140468e3cbf7a855f44d, type: 2}
+  customBullet: {fileID: 1942506858983192280, guid: 52573968194c8f646a1c26a7d0241b8b, type: 3}
+  bulletStats: {fileID: 11400000, guid: 46ceead9f429e5d43a6f8e9a1d9932d7, type: 2}
   selectedPerks: []
 --- !u!4 &1492526355
 Transform:
@@ -3474,6 +3475,14 @@ PrefabInstance:
     - target: {fileID: 3547138264848156508, guid: a66f480133fed654cb445c636f470cde, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4822713358078598202, guid: a66f480133fed654cb445c636f470cde, type: 3}
+      propertyPath: m_Name
+      value: Bazooka
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283653943451396410, guid: a66f480133fed654cb445c636f470cde, type: 3}
+      propertyPath: m_Name
+      value: WeaponHandler
       objectReference: {fileID: 0}
     - target: {fileID: 7303961745206797375, guid: a66f480133fed654cb445c636f470cde, type: 3}
       propertyPath: m_LocalPosition.x
