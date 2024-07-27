@@ -20,7 +20,7 @@ public class AuraScript : MonoBehaviour
         {
             if (Time.time >= nextDamageTime)
             {
-                other.GetComponent<HealthController>().ReduceHealth((int)auraDamage);
+                other.GetComponent<HealthController>().ReduceHealth((int)auraDamage, transform.right);
                 nextDamageTime = Time.time + auraDamageInterval;
             }
         }
