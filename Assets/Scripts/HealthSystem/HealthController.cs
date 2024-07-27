@@ -1,7 +1,24 @@
 using System;
+using Cinemachine;
+using UnityEngine;
 
 public class HealthController : HealthModel
 {
+    [SerializeField] ParticleSystem hitEffect;
+    [SerializeField] ParticleSystem spikesHitEffect;
+    [SerializeField] ParticleSystem deathEffect;
+    [SerializeField] CameraShake cameraShake;
+    [SerializeField] private float offsetDistance = 1.0f;
+    private Knockback knockback;
+    private Animator anim;
+    private FlashDamage flashDamage;
+    private void Start() 
+    {
+        anim = GetComponentInChildren<Animator>();
+        flashDamage = GetComponentInChildren<FlashDamage>();
+        knockback = GetComponent<Knockback>();
+    }
+
     public void SetupMaxHealth(int maxHealthValue)
     {
         MaxHealth = maxHealthValue;
@@ -9,32 +26,62 @@ public class HealthController : HealthModel
 
     public void IncreaseHealth(int value)
     {
-        value = Math.Abs(value);        
-        CurrentHealth+=value;
+        value = Math.Abs(value);
+        CurrentHealth += value;
         onHeal?.Invoke(this, value);
     }
 
-    public void ReduceHealth(int value)
+    public void ReduceHealth(int value, Vector2 attackDirection)
     {
         value = Math.Abs(value);
-        CurrentHealth-=value;
-            
+        CurrentHealth -= value;
+        
+
         if (value > 0)
         {
-            onDamageTaken?.Invoke(this, value);    
-                
+            onDamageTaken?.Invoke(this, value);
+
             if (NumberPrefab)
             {
                 NumberPrefab.Spawn(value, transform.position + damageNumberOffSetPosition, gameObject);
             }
         }
-            
+
         if (CurrentHealth <= 0)
         {
-                onDeath?.Invoke();
+            cameraShake.Shake(attackDirection, 1);
+            HandleDeath();
+        }
+        else
+        {
+            flashDamage.Flash();
+            anim.SetTrigger("Hit");
+            knockback.StartKnockBack(attackDirection);
+            cameraShake.Shake(attackDirection, .1f);
+
+            Quaternion spawnRotation = Quaternion.FromToRotation(Vector2.right, attackDirection);
+            Quaternion spikesSpawnRotation = Quaternion.FromToRotation(Vector2.right, -attackDirection);
+            Vector2 spawnOffset = attackDirection.normalized * offsetDistance;
+            Vector3 spawnPosition = transform.position + (Vector3)spawnOffset;
+
+            Instantiate(hitEffect, spawnPosition, spawnRotation);
+            Instantiate(spikesHitEffect, transform.position, spikesSpawnRotation);
         }
     }
+
+    private void HandleDeath()
+    {
+        onDeath?.Invoke();
+
+        if (deathEffect != null)
+        {
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
+        }
         
+
+        Destroy(gameObject);
+    }
+
     private void OnEnable()
     {
         CurrentHealth = MaxHealth;

@@ -102,12 +102,12 @@ public class BulletCustom : Bullet
         OnShoot();
     }
 
-    public override void OnBulletCollide(Collider2D other)
+   public override void OnBulletCollide(Collider2D other, Vector2 attackDiretion)
     {
         if (other.CompareTag("Enemy"))
         {
-            other.GetComponent<HealthController>().ReduceHealth((int)bulletDamage);
-
+            other.GetComponent<HealthController>().ReduceHealth((int)bulletDamage, attackDiretion);
+            
             // Piercing
             if (!isPiercingShoot)
             {
@@ -250,7 +250,7 @@ public class BulletCustom : Bullet
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        OnBulletCollide(other);
+        OnBulletCollide(other, transform.right);
     }
 
     private void Explode()
@@ -262,7 +262,7 @@ public class BulletCustom : Bullet
         {
             if (hitCollider.CompareTag("Enemy"))
             {
-                hitCollider.GetComponent<HealthController>().ReduceHealth((int)bulletDamage);
+                hitCollider.GetComponent<HealthController>().ReduceHealth((int)bulletDamage, transform.right);
                 hitEnemy = true;
             }
         }

@@ -18,7 +18,7 @@ public class BulletPrefabDummie : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<HealthController>().ReduceHealth((int)damage);
+            other.GetComponent<HealthController>().ReduceHealth((int)damage, transform.right);
         }
     }
 }

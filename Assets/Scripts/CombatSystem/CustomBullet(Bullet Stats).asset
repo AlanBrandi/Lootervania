@@ -22,11 +22,6 @@ MonoBehaviour:
   maxBulletSize: 20
   isBoomerangShoot: 0
   maxDistanceBoomerang: 5
-  isAuraShot: 1
-  auraGameObject: {fileID: 2732271386456280531, guid: 3e0a2e73f8583e54791fc7c85381b9cd, type: 3}
-  sizeAura: 0
-  auraDamage: 5
-  auraDamageInterval: 0.05
   isExplosive: 0
   explosionRadius: 0
   damageableLayers:
