@@ -16,6 +16,8 @@ MonoBehaviour:
   lifeTime: 1
   IsRecochetShoot: 0
   recochetAmount: 6
+  IsStickyShot: 1
+  maxStickyShotsTime: 2
   isPiercingShoot: 0
   maxPiercingShoots: 3
   isShootGetBigByTime: 0
@@ -24,11 +26,12 @@ MonoBehaviour:
   maxDistanceBoomerang: 5
   isAuraShot: 0
   auraGameObject: {fileID: 2732271386456280531, guid: 3e0a2e73f8583e54791fc7c85381b9cd, type: 3}
-  sizeAura: 0
+  sizeAura: 1
   auraDamage: 5
   auraDamageInterval: 0.05
-  isExplosive: 0
-  explosionRadius: 0
+  isExplosive: 1
+  explosionRadius: 2
+  explosionDamage: 15
   damageableLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64

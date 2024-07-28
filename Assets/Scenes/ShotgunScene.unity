@@ -319,6 +319,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyEnemy (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1946811184431325652, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2162828930099267216, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
       propertyPath: m_Camera
       value: 
@@ -404,6 +408,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DummieEnemy (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1187080735758031696, guid: 4e676bb5c421c024b864fb8e9a7927dd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3500602182109118506, guid: 4e676bb5c421c024b864fb8e9a7927dd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 33.03
@@ -488,6 +496,10 @@ PrefabInstance:
     - target: {fileID: 1946811184431325652, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
       propertyPath: m_Name
       value: FlyEnemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946811184431325652, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2162828930099267216, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
       propertyPath: m_Camera
@@ -621,6 +633,10 @@ PrefabInstance:
     - target: {fileID: 1187080735758031696, guid: 4e676bb5c421c024b864fb8e9a7927dd, type: 3}
       propertyPath: m_Name
       value: DummieEnemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187080735758031696, guid: 4e676bb5c421c024b864fb8e9a7927dd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2128949328054800767, guid: 4e676bb5c421c024b864fb8e9a7927dd, type: 3}
       propertyPath: m_Constraints
@@ -2741,6 +2757,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1946811184431325652, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2162828930099267216, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
       propertyPath: m_Camera
       value: 
@@ -2860,6 +2880,10 @@ PrefabInstance:
     - target: {fileID: 1946811184431325652, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
       propertyPath: m_Name
       value: FlyEnemy (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946811184431325652, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2162828930099267216, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
       propertyPath: m_Camera
@@ -3132,6 +3156,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DummieEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1187080735758031696, guid: 4e676bb5c421c024b864fb8e9a7927dd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3500602182109118506, guid: 4e676bb5c421c024b864fb8e9a7927dd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15.02
@@ -3310,6 +3338,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlyEnemy (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1946811184431325652, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2162828930099267216, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
       propertyPath: m_Camera
       value: 
@@ -3394,6 +3426,10 @@ PrefabInstance:
     - target: {fileID: 1187080735758031696, guid: 4e676bb5c421c024b864fb8e9a7927dd, type: 3}
       propertyPath: m_Name
       value: DummieEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187080735758031696, guid: 4e676bb5c421c024b864fb8e9a7927dd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3500602182109118506, guid: 4e676bb5c421c024b864fb8e9a7927dd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3544,6 +3580,10 @@ PrefabInstance:
     - target: {fileID: 1946811184431325652, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
       propertyPath: m_Name
       value: FlyEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1946811184431325652, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2162828930099267216, guid: 716db6224d7d6004b85db9799d83f9b0, type: 3}
       propertyPath: m_Camera

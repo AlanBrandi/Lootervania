@@ -92,10 +92,24 @@ public class SOBulletStatsEditor : Editor
             {
                 EditorGUI.indentLevel++;
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("explosionRadius"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("explosionDamage"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("damageableLayers"));
                 EditorGUI.indentLevel--;
+
+                SerializedProperty isStickyShotProp = serializedObject.FindProperty("IsStickyShot");
+                 if (isStickyShotProp != null)
+                 {
+                    EditorGUILayout.PropertyField(isStickyShotProp);
+                    if (bulletStats.IsStickyShot)
+                    {
+                         EditorGUI.indentLevel++;
+                         EditorGUILayout.PropertyField(serializedObject.FindProperty("maxStickyShotsTime"));
+                         EditorGUI.indentLevel--;
+                    }
+        }
             }
         }
+
 
         serializedObject.ApplyModifiedProperties();
     }

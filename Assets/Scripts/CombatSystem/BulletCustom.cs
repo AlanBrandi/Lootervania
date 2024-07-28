@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utilities.Pool.Core;
@@ -29,16 +30,22 @@ public class BulletCustom : Bullet
     private bool isAuraShot;
     private GameObject auraGameObject;
 
+    private bool isStickyShot;
+    private float MaxStickyShotsTime;
+
     private Transform playerTransform;
     private int hitCountPlayer = 0;
 
     // Parâmetros de explosão
     private bool isExplosive;
     private float explosionRadius;
+    private int explosionDamage;
     private LayerMask damageableLayers;
 
     [SerializeField] private SOBulletStats bulletStats;
     [SerializeField] private GameObject circlePrefab;
+
+    private bool shouldMove = true; // Flag to control movement
 
     private void Awake()
     {
@@ -52,7 +59,12 @@ public class BulletCustom : Bullet
     private void FixedUpdate()
     {
         if (!gameObject.activeSelf) return;
-        Move();
+
+        if (shouldMove)
+        {
+            Move();
+        }
+
         LifeTimeCount();
     }
 
@@ -65,7 +77,7 @@ public class BulletCustom : Bullet
     {
         elapsedTime += Time.deltaTime;
 
-        if (elapsedTime >= lifetime)
+        if (elapsedTime >= lifetime + MaxStickyShotsTime)
         {
             OnBulletDestroy();
         }
@@ -94,7 +106,7 @@ public class BulletCustom : Bullet
         OnShoot();
     }
 
-   public override void OnBulletCollide(Collider2D other, Vector2 attackDiretion)
+    public override void OnBulletCollide(Collider2D other, Vector2 attackDiretion)
     {
         if (other.CompareTag("Enemy"))
         {
@@ -104,7 +116,12 @@ public class BulletCustom : Bullet
             if (!isPiercingShoot)
             {
                 if (isExplosive)
-                    Explode();
+                {
+                    if(!isStickyShot)
+                    {
+                        Explode();
+                    }
+                }
                 else
                     OnBulletDestroy();
             }
@@ -118,35 +135,56 @@ public class BulletCustom : Bullet
 
         if (other.CompareTag("Level"))
         {
-            if (!isRecochetShoot)
+            if (isStickyShot)
+            {
+                rb.velocity = Vector2.zero;
+                shouldMove = false;
+                StartCoroutine(StickyShotCoroutine());
+            }
+            else if (!isRecochetShoot)
             {
                 if (isExplosive)
-                    Explode();
+                {
+                    if(isStickyShot)
+                    {
+                        rb.velocity = Vector2.zero;
+                        shouldMove = false;
+                        StartCoroutine(StickyShotCoroutine());
+                    }
+                    else
+                    {
+                        Explode();
+                    }
+                }
+                    
                 else
                     OnBulletDestroy();
             }
 
-            if (recochetAmount <= 0)
+            if (!isStickyShot)
             {
-                OnBulletDestroy();
-                return;
-            }
-
-            recochetAmount--;
-
-            ContactPoint2D[] contacts = new ContactPoint2D[10];
-            int contactCount = other.GetContacts(contacts);
-
-            if (contactCount > 0)
-            {
-                Vector2 normal = Vector2.zero;
-                foreach (ContactPoint2D contact in contacts)
+                if (recochetAmount <= 0)
                 {
-                    normal = contact.normal;
-                    break;
+                    OnBulletDestroy();
+                    return;
                 }
-                Vector2 newDirection = Vector2.Reflect(rb.velocity.normalized, normal.normalized);
-                direction = newDirection;
+
+                recochetAmount--;
+
+                ContactPoint2D[] contacts = new ContactPoint2D[10];
+                int contactCount = other.GetContacts(contacts);
+
+                if (contactCount > 0)
+                {
+                    Vector2 normal = Vector2.zero;
+                    foreach (ContactPoint2D contact in contacts)
+                    {
+                        normal = contact.normal;
+                        break;
+                    }
+                    Vector2 newDirection = Vector2.Reflect(rb.velocity.normalized, normal.normalized);
+                    direction = newDirection;
+                }
             }
         }
 
@@ -189,6 +227,7 @@ public class BulletCustom : Bullet
         // Inicialize os novos parâmetros
         isExplosive = bulletStats.isExplosive;
         explosionRadius = bulletStats.explosionRadius;
+        explosionDamage = bulletStats.explosionDamage;
         damageableLayers = bulletStats.damageableLayers;
 
         // Piercing
@@ -211,7 +250,13 @@ public class BulletCustom : Bullet
         isAuraShot = bulletStats.isAuraShot;
         auraGameObject = bulletStats.auraGameObject;
 
+        //Sticky
+        isStickyShot = bulletStats.IsStickyShot;
+        MaxStickyShotsTime = bulletStats.maxStickyShotsTime;
+
         hitCountPlayer = 0;
+
+        shouldMove = true; // Reset the movement flag
 
         // Quando for fazer o código final melhorar isso
         if (isBoomerangShoot)
@@ -238,6 +283,10 @@ public class BulletCustom : Bullet
         {
             isRecochetShoot = true;
         }
+        if (selectedPerks.Contains("StickyShot"))
+        {
+            isStickyShot = true;
+        }
         // ... adicione mais condições conforme necessário
     }
 
@@ -252,24 +301,31 @@ public class BulletCustom : Bullet
         OnBulletCollide(other, transform.right);
     }
 
-    private void Explode()
+    private IEnumerator StickyShotCoroutine()
     {
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
-        bool hitEnemy = false;
-
-        foreach (var hitCollider in hitColliders)
-        {
-            if (hitCollider.CompareTag("Enemy"))
-            {
-                hitCollider.GetComponent<HealthController>().ReduceHealth((int)bulletDamage, transform.right);
-                hitEnemy = true;
-            }
-        }
-
-        DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
-
-        OnBulletDestroy();
+        yield return new WaitForSeconds(MaxStickyShotsTime);
+        Explode();
     }
+
+    private void Explode()
+{
+    Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
+    bool hitEnemy = false;
+
+    foreach (var hitCollider in hitColliders)
+    {
+        if (hitCollider.CompareTag("Enemy"))
+        {
+            Vector2 attackDirection = (hitCollider.transform.position - transform.position).normalized;
+            hitCollider.GetComponent<HealthController>().ReduceHealth((int)explosionDamage, attackDirection);
+            hitEnemy = true;
+        }
+    }
+
+    DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
+
+    OnBulletDestroy();
+}
 
     private void DrawExplosionCircle(Vector3 position, float radius, Color color)
     {

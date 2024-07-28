@@ -19,6 +19,16 @@ public class SOBulletStats : ScriptableObject
     }
 
     [Space]
+
+    public bool IsStickyShot;
+    [SerializeField] public float maxStickyShotsTime;
+    public float MaxStickyShotsTime
+    {
+        get { return maxStickyShotsTime; }
+        set { maxStickyShotsTime = value; }
+    }
+
+    [Space]
     public bool isPiercingShoot;
     [SerializeField] public int maxPiercingShoots;
     public int MaxPiercingShoots
@@ -94,6 +104,10 @@ public class SOBulletStats : ScriptableObject
         {
             isAuraShot = true;
         }
+        if (selectedPerks.Contains("StickyShot"))
+        {
+            IsStickyShot = true;
+        }
     }
 //Ignora isso que ta pessimo
     public void DisableAllPerks()
@@ -103,11 +117,13 @@ public class SOBulletStats : ScriptableObject
         isShootGetBigByTime = false;
         isBoomerangShoot = false;
         isAuraShot = false;
+        IsStickyShot = false;
     }
 
     [Space]
     [Header("Explosion Settings")]
     public bool isExplosive;
     public float explosionRadius;
+    public int explosionDamage;
     public LayerMask damageableLayers;
 }
