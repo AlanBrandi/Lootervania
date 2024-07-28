@@ -16,7 +16,7 @@ MonoBehaviour:
   lifeTime: 1
   IsRecochetShoot: 0
   recochetAmount: 6
-  IsStickyShot: 1
+  IsStickyShot: 0
   maxStickyShotsTime: 2
   isPiercingShoot: 0
   maxPiercingShoots: 3
@@ -29,7 +29,7 @@ MonoBehaviour:
   sizeAura: 1
   auraDamage: 5
   auraDamageInterval: 0.05
-  isExplosive: 1
+  isExplosive: 0
   explosionRadius: 2
   explosionDamage: 15
   damageableLayers:

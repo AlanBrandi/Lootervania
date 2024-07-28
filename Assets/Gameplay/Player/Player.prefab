@@ -1400,6 +1400,7 @@ MonoBehaviour:
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  _cameraFollowGO: {fileID: 0}
 --- !u!114 &4199209442688074443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1425,6 +1426,11 @@ MonoBehaviour:
   onHeal:
     m_PersistentCalls:
       m_Calls: []
+  hitEffect: {fileID: 0}
+  spikesHitEffect: {fileID: 0}
+  deathEffect: {fileID: 0}
+  cameraShake: {fileID: 0}
+  offsetDistance: 1
 --- !u!114 &8717526593658710146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2772,6 +2778,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7056747345513411772}
   - component: {fileID: 8018737869759207078}
+  - component: {fileID: 6671237104032379833}
   m_Layer: 3
   m_Name: Visual
   m_TagString: Untagged
@@ -2847,6 +2854,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6671237104032379833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9183942777221603846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f978d6068763f424bbf28a0327822f4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _color: {r: 1, g: 1, b: 1, a: 0}
+  _flashTime: 0.2
 --- !u!1001 &865656015733635719
 PrefabInstance:
   m_ObjectHideFlags: 0
