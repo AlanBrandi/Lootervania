@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
 	#region STATE PARAMETERS
 	public bool IsFacingRight { get; private set; }
 	public bool IsJumping { get; private set; }
-	public bool IsWallJumping;
+	public bool IsWallJumping { get; private set; }
 	public bool IsDashing { get; private set; }
 	public bool IsSliding { get; private set; }
 	public float LastOnGroundTime { get; private set; }
@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
 	private InputControllerBase _inputController = null;
 
 
+    private CameraFollowObject _cameraFollowObject;
+	private float _fallSpeedYDampingChangeThreshold;
 	private bool _isWallJumpBackWall;
 	private bool _isJumpCut;
 	private bool _isJumpFalling;
@@ -65,6 +67,11 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] private LayerMask _groundLayer;
 	#endregion
 
+	#region CAMERAS
+	[Header("Cameras")]
+	[SerializeField] private GameObject _cameraFollowGO;
+	#endregion
+
 	private void Awake()
 	{
 		if (Instance)
@@ -89,6 +96,9 @@ public class PlayerMovement : MonoBehaviour
 	{
 		SetGravityScale(Data.gravityScale);
 		IsFacingRight = true;
+
+		_cameraFollowObject = _cameraFollowGO.GetComponent<CameraFollowObject>();
+		_fallSpeedYDampingChangeThreshold = CameraManager.instance._fallSpeedYDampingChangeThreshold;
 	}
 
 	private void Update()
@@ -134,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
 					_isWallJumpBackWall = false;
 					if (IsFacingRight)
 						LastOnWallRightTime = Data.coyoteTime;
-					else			
+					else
 						LastOnWallLeftTime = Data.coyoteTime;
 				}
 
@@ -142,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
 				{
 					_isWallJumpBackWall = true;
 					if (!IsFacingRight)
-						LastOnWallRightTime = Data.coyoteTime;			
+						LastOnWallRightTime = Data.coyoteTime;
 					else
 						LastOnWallLeftTime = Data.coyoteTime;
 				}
@@ -258,6 +268,18 @@ public class PlayerMovement : MonoBehaviour
 			SetGravityScale(0);
 		}
 		#endregion
+
+		#region CAMERA CHECKS
+		if (RB.velocity.y < _fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
+		{
+			CameraManager.instance.LerpYDamping(true);
+		}
+		if(RB.velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
+		{
+			CameraManager.instance.LerpedFromPlayerFalling = false;
+			CameraManager.instance.LerpYDamping(false);
+		}
+		#endregion
 	}
 
 
@@ -346,11 +368,11 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if (IsWallJumping) return;
 
-		Vector3 scale = turnableGameObject.transform.localScale;
-		scale.x *= -1;
-		turnableGameObject.transform.localScale = scale;
-
+		Vector3 rotation = turnableGameObject.transform.rotation.eulerAngles;
+		rotation.y += 180f;
+		turnableGameObject.transform.rotation = Quaternion.Euler(rotation);
 		IsFacingRight = !IsFacingRight;
+		_cameraFollowObject.CallTurn();
 	}
 	#endregion
 
