@@ -27,7 +27,10 @@ MonoBehaviour:
   isAuraShot: 0
   auraGameObject: {fileID: 2732271386456280531, guid: 3e0a2e73f8583e54791fc7c85381b9cd, type: 3}
   sizeAura: 1
-  auraDamage: 5
+  auraSpeedMod: 2
+  auraLifetimeMod: 2
+  auraDamageMod: 5
+  auraDamage: 250
   auraDamageInterval: 0.05
   isExplosive: 0
   explosionRadius: 2

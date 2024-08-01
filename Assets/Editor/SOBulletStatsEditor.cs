@@ -77,7 +77,9 @@ public class SOBulletStatsEditor : Editor
                 EditorGUI.indentLevel++;
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("auraGameObject"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("sizeAura"));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("auraDamage"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("auraSpeedMod"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("auraLifetimeMod"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("auraDamageMod"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("auraDamageInterval"));
                 EditorGUI.indentLevel--;
             }

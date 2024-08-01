@@ -29,9 +29,18 @@ public class BulletCustom : Bullet
 
     private bool isAuraShot;
     private GameObject auraGameObject;
+    private GameObject auraTmp;
+    private float auraDamage;
+    private float auraSpeedMod;
+    private float auraLifetimeMod;
 
     private bool isStickyShot;
     private float MaxStickyShotsTime;
+
+    private bool isPullShot;
+    private float pullShotChance;
+    private float maxPullTime;
+    private float maxPullStrength;
 
     private Transform playerTransform;
     private int hitCountPlayer = 0;
@@ -97,6 +106,14 @@ public class BulletCustom : Bullet
             {
                 Vector2 directionToPlayer = (playerTransform.position - transform.position).normalized;
                 direction = directionToPlayer;
+            }
+        }
+
+        if (isAuraShot)
+        {
+            if (elapsedTime >= lifetime * 2)
+            {
+                Destroy(auraTmp);
             }
         }
     }
@@ -186,6 +203,11 @@ public class BulletCustom : Bullet
                     direction = newDirection;
                 }
             }
+
+            if (isPullShot)
+            {
+
+            }
         }
 
         if (other.CompareTag("Player"))
@@ -249,6 +271,9 @@ public class BulletCustom : Bullet
         // Aura
         isAuraShot = bulletStats.isAuraShot;
         auraGameObject = bulletStats.auraGameObject;
+        auraSpeedMod = bulletStats.auraSpeedMod;
+        auraLifetimeMod = bulletStats.auraLifetimeMod;
+        bulletStats.auraDamage = bulletDamage / bulletStats.auraDamageMod;
 
         //Sticky
         isStickyShot = bulletStats.IsStickyShot;
@@ -267,9 +292,10 @@ public class BulletCustom : Bullet
 
         if (isAuraShot)
         {
-            lifetime = lifetime * 2;
-            speed = speed / 2f;
+            lifetime = lifetime * auraLifetimeMod;
+            speed = speed / auraSpeedMod;
             GameObject aura = Instantiate(auraGameObject, transform);
+            auraTmp = aura;
         }
     }
 

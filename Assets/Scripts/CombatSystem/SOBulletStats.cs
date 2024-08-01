@@ -69,8 +69,28 @@ public class SOBulletStats : ScriptableObject
         get { return sizeAura; }
         set { sizeAura = value; }
     }
-    [SerializeField] public int auraDamage;
-    public int AuraDamage
+    [Tooltip("Higher value is slower.")]
+    [SerializeField] public float auraSpeedMod;
+    public float AuraSpeedMod
+    {
+        get { return auraSpeedMod; }
+        set { auraSpeedMod = value; }
+    }
+    [SerializeField] public float auraLifetimeMod;
+    public float AuraLifetimeMod
+    {
+        get { return auraLifetimeMod; }
+        set { auraLifetimeMod = value; }
+    }
+    [Tooltip("Higher value is weaker.")]
+    [SerializeField] public float auraDamageMod;
+    public float AuraDamageMod
+    {
+        get { return auraDamageMod; }
+        set { auraDamageMod = value; }
+    }
+    public float auraDamage;
+    public float AuraDamage
     {
         get { return auraDamage; }
         set { auraDamage = value; }
