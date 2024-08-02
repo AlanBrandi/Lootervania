@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Utilities.Pool.Core;
 
 public class BulletCustom : Bullet
@@ -38,9 +39,11 @@ public class BulletCustom : Bullet
     private float MaxStickyShotsTime;
 
     private bool isPullShot;
+    private GameObject pullGameObject;
     private float pullShotChance;
+    private float pullStrength;
+    private float maxPullDistance;
     private float maxPullTime;
-    private float maxPullStrength;
 
     private Transform playerTransform;
     private int hitCountPlayer = 0;
@@ -111,7 +114,7 @@ public class BulletCustom : Bullet
 
         if (isAuraShot)
         {
-            if (elapsedTime >= lifetime * 2)
+            if (elapsedTime >= lifetime * auraLifetimeMod)
             {
                 Destroy(auraTmp);
             }
@@ -147,6 +150,14 @@ public class BulletCustom : Bullet
             if (MaxPiercingShoots < 0)
             {
                 OnBulletDestroy();
+            }
+
+            if (isPullShot)
+            {
+                if (Random.Range(0f, 100f) <= pullShotChance)
+                {
+                    Instantiate(pullGameObject, transform.position, Quaternion.identity);
+                }
             }
         }
 
@@ -188,25 +199,24 @@ public class BulletCustom : Bullet
 
                 recochetAmount--;
 
-                ContactPoint2D[] contacts = new ContactPoint2D[10];
-                int contactCount = other.GetContacts(contacts);
-
-                if (contactCount > 0)
+                Debug.Log("enter");
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction);
+                if (hit.collider != null)
                 {
-                    Vector2 normal = Vector2.zero;
-                    foreach (ContactPoint2D contact in contacts)
-                    {
-                        normal = contact.normal;
-                        break;
-                    }
-                    Vector2 newDirection = Vector2.Reflect(rb.velocity.normalized, normal.normalized);
+                    Vector2 normal = hit.normal;
+
+                    Vector2 newDirection = Vector2.Reflect(direction, normal);
                     direction = newDirection;
+                    Debug.DrawRay(hit.point, direction);
                 }
             }
 
             if (isPullShot)
             {
-
+                if (Random.Range(0f, 100f) <= pullShotChance)
+                {
+                    Instantiate(pullGameObject, transform.position, Quaternion.identity);
+                }
             }
         }
 
@@ -230,6 +240,7 @@ public class BulletCustom : Bullet
     public override void OnBulletDestroy()
     {
         if (!gameObject.activeSelf) return;
+        if (gameObject != null)
         PoolManager.ReleaseObject(gameObject);
     }
 
@@ -278,6 +289,11 @@ public class BulletCustom : Bullet
         //Sticky
         isStickyShot = bulletStats.IsStickyShot;
         MaxStickyShotsTime = bulletStats.maxStickyShotsTime;
+
+        //Pull
+        isPullShot = bulletStats.isPullShot;
+        pullGameObject = bulletStats.pullGameObject;
+        pullShotChance = bulletStats.pullShotChance;
 
         hitCountPlayer = 0;
 

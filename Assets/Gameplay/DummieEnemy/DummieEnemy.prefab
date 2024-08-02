@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4931939589965379871}
   - component: {fileID: 2128949328054800767}
   - component: {fileID: 7089529052183691528}
+  - component: {fileID: 2579511751794614139}
   - component: {fileID: 667496222679240379}
   - component: {fileID: 2201213931122930549}
   m_Layer: 6
@@ -97,9 +98,9 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 0.05
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -141,6 +142,51 @@ BoxCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.06945419, y: 0.12898636}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1.4375}
+    newSize: {x: 0.8828125, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.1804733, y: 1.6548538}
+  m_EdgeRadius: 0
+--- !u!61 &2579511751794614139
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187080735758031696}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.06945419, y: 0.12898636}
@@ -235,7 +281,7 @@ GameObject:
   - component: {fileID: 2339230928606280073}
   - component: {fileID: 3673381023769268994}
   - component: {fileID: 7670377519594329860}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +401,7 @@ GameObject:
   - component: {fileID: 2042375687141137937}
   - component: {fileID: 5873276041958453820}
   - component: {fileID: 3582243660590246198}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: DetectionArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,27 +488,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 313361740318748774, guid: c4d0458800e911947ad7e86125ef0478, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 313361740318748774, guid: c4d0458800e911947ad7e86125ef0478, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1044014373630003188, guid: c4d0458800e911947ad7e86125ef0478, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1044014373630003188, guid: c4d0458800e911947ad7e86125ef0478, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2061555942202706237, guid: c4d0458800e911947ad7e86125ef0478, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2061555942202706237, guid: c4d0458800e911947ad7e86125ef0478, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2259386846049220931, guid: c4d0458800e911947ad7e86125ef0478, type: 3}
       propertyPath: m_Name
@@ -470,19 +516,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2259386846049220931, guid: c4d0458800e911947ad7e86125ef0478, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2259386846049220931, guid: c4d0458800e911947ad7e86125ef0478, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3014183195298443128, guid: c4d0458800e911947ad7e86125ef0478, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3014183195298443128, guid: c4d0458800e911947ad7e86125ef0478, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5027372379090284514, guid: c4d0458800e911947ad7e86125ef0478, type: 3}
       propertyPath: m_Pivot.x

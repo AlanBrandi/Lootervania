@@ -85,6 +85,22 @@ public class SOBulletStatsEditor : Editor
             }
         }
 
+        SerializedProperty isPullShot = serializedObject.FindProperty("isPullShot");
+        if (isAuraShot != null)
+        {
+            EditorGUILayout.PropertyField(isPullShot);
+            if (bulletStats.isPullShot)
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("pullGameObject"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("pullShotChance"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("pullStrength"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("maxPullDistance"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("maxPullTime"));
+                EditorGUI.indentLevel--;
+            }
+        }
+
         // Mostra isExplosive e suas propriedades explosionRadius e damageableLayers se for true
         SerializedProperty isExplosiveProp = serializedObject.FindProperty("isExplosive");
         if (isExplosiveProp != null)

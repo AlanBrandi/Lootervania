@@ -8,6 +8,7 @@ public class AuraScript : MonoBehaviour
     private float auraDamageInterval;
     private float nextDamageTime;
     private List<Collider2D> collidersInTrigger = new List<Collider2D>();
+
     [SerializeField] private SOBulletStats bulletStats;
 
     private void Start()

@@ -102,6 +102,40 @@ public class SOBulletStats : ScriptableObject
         set { auraDamageInterval = value; }
     }
 
+    [Space]
+    public bool isPullShot;
+    [SerializeField] public float pullShotChance;
+
+    [SerializeField] public GameObject pullGameObject;
+    public GameObject PullGameObject
+    {
+        get { return pullGameObject; }
+        set { pullGameObject = value; }
+    }
+    public float PullShotChance
+    {
+        get { return pullShotChance; }
+        set { pullShotChance = value; }
+    }
+    [SerializeField] public float pullStrength;
+    public float PullStrength
+    {
+        get { return pullStrength; }
+        set { pullStrength = value; }
+    }
+    [SerializeField] public float maxPullDistance;
+    public float MaxPullDistance
+    {
+        get { return maxPullDistance; }
+        set { maxPullDistance = value; }
+    }
+    [SerializeField] public float maxPullTime;
+    public float MaxPullTime
+    {
+        get { return maxPullTime; }
+        set { maxPullTime = value; }
+    }
+
     public void ActivatePerks(List<string> selectedPerks)
     {
         if (selectedPerks.Contains("PiercingShoot"))
@@ -128,6 +162,10 @@ public class SOBulletStats : ScriptableObject
         {
             IsStickyShot = true;
         }
+        if (selectedPerks.Contains("PullShot"))
+        {
+            isPullShot = true;
+        }
     }
 //Ignora isso que ta pessimo
     public void DisableAllPerks()
@@ -138,6 +176,7 @@ public class SOBulletStats : ScriptableObject
         isBoomerangShoot = false;
         isAuraShot = false;
         IsStickyShot = false;
+        isPullShot = false;
     }
 
     [Space]
