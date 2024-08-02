@@ -15,7 +15,7 @@ MonoBehaviour:
   bulletSpeed: 900
   lifeTime: 2
   IsRecochetShoot: 0
-  recochetAmount: 0
+  recochetAmount: 6
   IsStickyShot: 0
   maxStickyShotsTime: 0
   isPiercingShoot: 0
@@ -27,8 +27,17 @@ MonoBehaviour:
   isAuraShot: 0
   auraGameObject: {fileID: 0}
   sizeAura: 0
-  auraDamage: 0
+  auraSpeedMod: 0
+  auraLifetimeMod: 0
+  auraDamageMod: 0
+  auraDamage: Infinity
   auraDamageInterval: 0
+  isPullShot: 0
+  pullShotChance: 0
+  pullGameObject: {fileID: 0}
+  pullStrength: 0
+  maxPullDistance: 0
+  maxPullTime: 0
   isExplosive: 1
   explosionRadius: 3
   explosionDamage: 80

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Utilities.Pool.Core;
 
 public class BulletCustom : Bullet
@@ -51,7 +50,7 @@ public class BulletCustom : Bullet
     // Parâmetros de explosão
     private bool isExplosive;
     private float explosionRadius;
-    private int explosionDamage;
+    private float explosionDamage;
     private LayerMask damageableLayers;
 
     [SerializeField] private SOBulletStats bulletStats;
@@ -131,13 +130,13 @@ public class BulletCustom : Bullet
         if (other.CompareTag("Enemy"))
         {
             other.GetComponent<HealthController>().ReduceHealth((int)bulletDamage, attackDiretion);
-            
+
             // Piercing
             if (!isPiercingShoot)
             {
                 if (isExplosive)
                 {
-                    if(!isStickyShot)
+                    if (!isStickyShot)
                     {
                         Explode();
                     }
@@ -173,7 +172,7 @@ public class BulletCustom : Bullet
             {
                 if (isExplosive)
                 {
-                    if(isStickyShot)
+                    if (isStickyShot)
                     {
                         rb.velocity = Vector2.zero;
                         shouldMove = false;
@@ -184,31 +183,9 @@ public class BulletCustom : Bullet
                         Explode();
                     }
                 }
-                    
+
                 else
                     OnBulletDestroy();
-            }
-
-            if (!isStickyShot)
-            {
-                if (recochetAmount <= 0)
-                {
-                    OnBulletDestroy();
-                    return;
-                }
-
-                recochetAmount--;
-
-                Debug.Log("enter");
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, direction);
-                if (hit.collider != null)
-                {
-                    Vector2 normal = hit.normal;
-
-                    Vector2 newDirection = Vector2.Reflect(direction, normal);
-                    direction = newDirection;
-                    Debug.DrawRay(hit.point, direction);
-                }
             }
 
             if (isPullShot)
@@ -233,6 +210,42 @@ public class BulletCustom : Bullet
         }
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (isRecochetShoot && recochetAmount > 0)
+        {
+            Vector2 normal = collision.contacts[0].normal;
+            direction = Vector2.Reflect(direction, normal);
+            Vector2 reflectionOffsetVector = direction.normalized * 0.01f;
+            transform.position += (Vector3)reflectionOffsetVector;
+
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
+
+            recochetAmount--;
+            if (isExplosive)
+            {
+                if (isStickyShot)
+                {
+                    rb.velocity = Vector2.zero;
+                    shouldMove = false;
+                    StartCoroutine(StickyShotCoroutine());
+                }
+                else
+                {
+                    ExplodeNonDestroy(0.2f);
+                }
+            }
+
+            Debug.DrawRay(collision.contacts[0].point, normal * 2, Color.green, 1f);
+            Debug.DrawRay(collision.contacts[0].point, direction * 2, Color.red, 1f);
+        }
+        else
+        {
+            OnBulletDestroy();
+        }
+    }
+
     public override void OnShoot()
     {
     }
@@ -241,7 +254,7 @@ public class BulletCustom : Bullet
     {
         if (!gameObject.activeSelf) return;
         if (gameObject != null)
-        PoolManager.ReleaseObject(gameObject);
+            PoolManager.ReleaseObject(gameObject);
     }
 
     public override void Initialize(float damage, Vector3 bulletSize)
@@ -253,7 +266,7 @@ public class BulletCustom : Bullet
         elapsedTime = 0;
 
         bulletDamage = damage;
-        direction = transform.right;
+        direction = transform.right.normalized;
 
         playerTransform = PlayerMovement.Instance.transform;
 
@@ -350,24 +363,42 @@ public class BulletCustom : Bullet
     }
 
     private void Explode()
-{
-    Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
-    bool hitEnemy = false;
-
-    foreach (var hitCollider in hitColliders)
     {
-        if (hitCollider.CompareTag("Enemy"))
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
+        bool hitEnemy = false;
+
+        foreach (var hitCollider in hitColliders)
         {
-            Vector2 attackDirection = (hitCollider.transform.position - transform.position).normalized;
-            hitCollider.GetComponent<HealthController>().ReduceHealth((int)explosionDamage, attackDirection);
-            hitEnemy = true;
+            if (hitCollider.CompareTag("Enemy"))
+            {
+                Vector2 attackDirection = (hitCollider.transform.position - transform.position).normalized;
+                hitCollider.GetComponent<HealthController>().ReduceHealth((int)explosionDamage, attackDirection);
+                hitEnemy = true;
+            }
         }
+
+        DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
+
+        OnBulletDestroy();
     }
 
-    DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
+    private void ExplodeNonDestroy(float damageMod)
+    {
+        float trueExplosionDamage = explosionDamage * damageMod;
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
+        bool hitEnemy = false;
 
-    OnBulletDestroy();
-}
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Enemy"))
+            {
+                Vector2 attackDirection = (hitCollider.transform.position - transform.position).normalized;
+                hitCollider.GetComponent<HealthController>().ReduceHealth((int)trueExplosionDamage, attackDirection);
+                hitEnemy = true;
+            }
+        }
+        DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
+    }
 
     private void DrawExplosionCircle(Vector3 position, float radius, Color color)
     {
