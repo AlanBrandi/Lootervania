@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 1200
   lifeTime: 1
-  IsRecochetShoot: 1
+  IsRecochetShoot: 0
   recochetAmount: 6
   IsStickyShot: 0
   maxStickyShotsTime: 2
@@ -30,9 +30,9 @@ MonoBehaviour:
   auraSpeedMod: 2
   auraLifetimeMod: 2
   auraDamageMod: 5
-  auraDamage: 2
+  auraDamage: 5
   auraDamageInterval: 0.05
-  isPullShot: 0
+  isPullShot: 1
   pullShotChance: 15
   pullGameObject: {fileID: 2732271386456280531, guid: f1f75ad76fcf0964caf28272d374b422, type: 3}
   pullStrength: 50

@@ -212,7 +212,7 @@ public class BulletCustom : Bullet
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (isRecochetShoot && recochetAmount > 0)
+        if (isRecochetShoot && recochetAmount > 0 && collision.gameObject.CompareTag("Level"))
         {
             Vector2 normal = collision.contacts[0].normal;
             direction = Vector2.Reflect(direction, normal);

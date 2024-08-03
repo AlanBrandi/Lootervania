@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6201266283497970282}
   - component: {fileID: 1231111506859950532}
   - component: {fileID: 1942506858983192280}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BulletBazuca
   m_TagString: Untagged
   m_Icon: {fileID: 0}
