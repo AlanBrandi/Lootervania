@@ -165,13 +165,7 @@ public class BulletCustom : Bullet
 
         if (other.CompareTag("Level"))
         {
-            if (isStickyShot)
-            {
-                rb.velocity = Vector2.zero;
-                shouldMove = false;
-                StartCoroutine(StickyShotCoroutine());
-            }
-            else if (!isRecochetShoot && !isBouncyShot)
+            if (!isRecochetShoot && !isBouncyShot)
             {
                 if (isExplosive)
                 {
@@ -186,7 +180,6 @@ public class BulletCustom : Bullet
                         Explode();
                     }
                 }
-
                 else
                     OnBulletDestroy();
             }
@@ -234,7 +227,6 @@ public class BulletCustom : Bullet
             Debug.DrawRay(collision.contacts[0].point, normal * 2, Color.green, 1f);
             Debug.DrawRay(collision.contacts[0].point, direction * 2, Color.red, 1f);
         }
-
         if (isExplosive || isBouncyShot)
         {
 
@@ -387,7 +379,7 @@ public class BulletCustom : Bullet
 
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.CompareTag("Enemy"))
+            if (hitCollider.CompareTag("Enemy") && hitCollider.isTrigger)
             {
                 Vector2 attackDirection = (hitCollider.transform.position - transform.position).normalized;
                 hitCollider.GetComponent<HealthController>().ReduceHealth((int)explosionDamage, attackDirection);
@@ -408,7 +400,7 @@ public class BulletCustom : Bullet
 
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.CompareTag("Enemy"))
+            if (hitCollider.CompareTag("Enemy") && hitCollider.isTrigger)
             {
                 Vector2 attackDirection = (hitCollider.transform.position - transform.position).normalized;
                 hitCollider.GetComponent<HealthController>().ReduceHealth((int)trueExplosionDamage, attackDirection);
@@ -436,6 +428,8 @@ public class BulletCustom : Bullet
             lineRenderer.SetPosition(i, new Vector3(x, y, 0) + position);
             angle += 360f / segments;
         }
+
+        FindObjectOfType<CameraShake>().Shake(Vector2.right, .1f);
 
         Destroy(circle, 0.5f);
     }

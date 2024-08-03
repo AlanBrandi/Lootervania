@@ -16,7 +16,7 @@ MonoBehaviour:
   lifeTime: 1
   IsRecochetShoot: 0
   recochetAmount: 6
-  IsStickyShot: 1
+  IsStickyShot: 0
   maxStickyShotsTime: 2
   isPiercingShoot: 0
   maxPiercingShoots: 3

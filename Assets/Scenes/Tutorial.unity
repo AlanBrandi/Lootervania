@@ -13681,6 +13681,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DummieEnemyStart
       objectReference: {fileID: 0}
+    - target: {fileID: 1187080735758031696, guid: 4e676bb5c421c024b864fb8e9a7927dd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3500602182109118506, guid: 4e676bb5c421c024b864fb8e9a7927dd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15.82

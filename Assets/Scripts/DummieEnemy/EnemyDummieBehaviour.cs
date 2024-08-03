@@ -30,6 +30,8 @@ public class EnemyDummieBehaviour : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        if (rb == null)
+            rb = GetComponentInParent<Rigidbody2D>();
         startPosition = transform.position;
         direction = Vector2.right;
     }
