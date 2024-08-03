@@ -16,7 +16,7 @@ MonoBehaviour:
   lifeTime: 1
   IsRecochetShoot: 0
   recochetAmount: 6
-  IsStickyShot: 0
+  IsStickyShot: 1
   maxStickyShotsTime: 2
   isPiercingShoot: 0
   maxPiercingShoots: 3
@@ -32,13 +32,15 @@ MonoBehaviour:
   auraDamageMod: 5
   auraDamage: 5
   auraDamageInterval: 0.05
-  isPullShot: 1
+  isPullShot: 0
   pullShotChance: 15
   pullGameObject: {fileID: 2732271386456280531, guid: f1f75ad76fcf0964caf28272d374b422, type: 3}
   pullStrength: 50
   maxPullDistance: 15
   maxPullTime: 2
-  isExplosive: 0
+  isBouncyShot: 0
+  bouncyMaterial: {fileID: 6200000, guid: 1f0591ecbc7836e4dab4df9aa54efe7f, type: 2}
+  isExplosive: 1
   explosionRadius: 2
   explosionDamage: 15
   damageableLayers:

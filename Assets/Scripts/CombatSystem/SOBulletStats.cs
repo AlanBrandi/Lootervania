@@ -135,6 +135,15 @@ public class SOBulletStats : ScriptableObject
         get { return maxPullTime; }
         set { maxPullTime = value; }
     }
+    [Space]
+    [Tooltip("Doesn't work. Don't activate.")]
+    public bool isBouncyShot;
+    [SerializeField] public PhysicsMaterial2D bouncyMaterial;
+    public PhysicsMaterial2D BouncyMaterial
+    {
+        get { return bouncyMaterial; }
+        set { bouncyMaterial = value; }
+    }
 
     public void ActivatePerks(List<string> selectedPerks)
     {
@@ -166,6 +175,10 @@ public class SOBulletStats : ScriptableObject
         {
             isPullShot = true;
         }
+        /*if(selectedPerks.Contains("BouncyShot"))
+        {
+            isBouncyShot = true;
+        }*/
     }
 //Ignora isso que ta pessimo
     public void DisableAllPerks()
@@ -177,6 +190,7 @@ public class SOBulletStats : ScriptableObject
         isAuraShot = false;
         IsStickyShot = false;
         isPullShot = false;
+        //isBouncyShot = false;
     }
 
     [Space]

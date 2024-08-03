@@ -33,6 +33,8 @@ public class WeaponFactory : MonoBehaviour
         "BulletGetBigByTime",
         "BoomerangShoot",
         "AuraShot",
+        "StickyShot",
+        "PullShot",
     };
 
     private List<string> availablePerks = new List<string>();

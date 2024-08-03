@@ -1,6 +1,5 @@
 #if UNITY_EDITOR
 using UnityEditor;
-using UnityEngine;
 
 [CustomEditor(typeof(SOBulletStats))]
 public class SOBulletStatsEditor : Editor
@@ -101,6 +100,18 @@ public class SOBulletStatsEditor : Editor
             }
         }
 
+        SerializedProperty isBouncyShot = serializedObject.FindProperty("isBouncyShot");
+        if (isBouncyShot != null)
+        {
+            EditorGUILayout.PropertyField(isBouncyShot);
+            if (bulletStats.isBouncyShot)
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("bouncyMaterial"));
+                EditorGUI.indentLevel--;
+            }
+        }
+
         // Mostra isExplosive e suas propriedades explosionRadius e damageableLayers se for true
         SerializedProperty isExplosiveProp = serializedObject.FindProperty("isExplosive");
         if (isExplosiveProp != null)
@@ -115,16 +126,16 @@ public class SOBulletStatsEditor : Editor
                 EditorGUI.indentLevel--;
 
                 SerializedProperty isStickyShotProp = serializedObject.FindProperty("IsStickyShot");
-                 if (isStickyShotProp != null)
-                 {
+                if (isStickyShotProp != null)
+                {
                     EditorGUILayout.PropertyField(isStickyShotProp);
                     if (bulletStats.IsStickyShot)
                     {
-                         EditorGUI.indentLevel++;
-                         EditorGUILayout.PropertyField(serializedObject.FindProperty("maxStickyShotsTime"));
-                         EditorGUI.indentLevel--;
+                        EditorGUI.indentLevel++;
+                        EditorGUILayout.PropertyField(serializedObject.FindProperty("maxStickyShotsTime"));
+                        EditorGUI.indentLevel--;
                     }
-        }
+                }
             }
         }
 

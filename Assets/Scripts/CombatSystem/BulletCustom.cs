@@ -44,6 +44,9 @@ public class BulletCustom : Bullet
     private float maxPullDistance;
     private float maxPullTime;
 
+    private bool isBouncyShot;
+    private PhysicsMaterial2D bouncyMaterial;
+
     private Transform playerTransform;
     private int hitCountPlayer = 0;
 
@@ -113,9 +116,9 @@ public class BulletCustom : Bullet
 
         if (isAuraShot)
         {
-            if (elapsedTime >= lifetime * auraLifetimeMod)
+            if (elapsedTime >= (lifetime * auraLifetimeMod) -0.1f)
             {
-                Destroy(auraTmp);
+                OnBulletDestroy();
             }
         }
     }
@@ -168,7 +171,7 @@ public class BulletCustom : Bullet
                 shouldMove = false;
                 StartCoroutine(StickyShotCoroutine());
             }
-            else if (!isRecochetShoot)
+            else if (!isRecochetShoot && !isBouncyShot)
             {
                 if (isExplosive)
                 {
@@ -225,20 +228,16 @@ public class BulletCustom : Bullet
             recochetAmount--;
             if (isExplosive)
             {
-                if (isStickyShot)
-                {
-                    rb.velocity = Vector2.zero;
-                    shouldMove = false;
-                    StartCoroutine(StickyShotCoroutine());
-                }
-                else
-                {
-                    ExplodeNonDestroy(0.2f);
-                }
+                ExplodeNonDestroy(0.2f);
             }
 
             Debug.DrawRay(collision.contacts[0].point, normal * 2, Color.green, 1f);
             Debug.DrawRay(collision.contacts[0].point, direction * 2, Color.red, 1f);
+        }
+
+        if (isExplosive || isBouncyShot)
+        {
+
         }
         else
         {
@@ -254,11 +253,18 @@ public class BulletCustom : Bullet
     {
         if (!gameObject.activeSelf) return;
         if (gameObject != null)
+            if (isAuraShot)
+                Destroy(auraTmp);
             PoolManager.ReleaseObject(gameObject);
     }
 
     public override void Initialize(float damage, Vector3 bulletSize)
     {
+        Collider2D[] colliders = GetComponents<Collider2D>();
+        foreach (Collider2D collider in colliders)
+        {
+            collider.sharedMaterial = null;
+        }
         transform.localScale = bulletSize;
 
         speed = bulletStats.bulletSpeed;
@@ -308,6 +314,10 @@ public class BulletCustom : Bullet
         pullGameObject = bulletStats.pullGameObject;
         pullShotChance = bulletStats.pullShotChance;
 
+        //Bouncy
+        isBouncyShot = bulletStats.isBouncyShot;
+        bouncyMaterial = bulletStats.bouncyMaterial;
+
         hitCountPlayer = 0;
 
         shouldMove = true; // Reset the movement flag
@@ -325,6 +335,14 @@ public class BulletCustom : Bullet
             speed = speed / auraSpeedMod;
             GameObject aura = Instantiate(auraGameObject, transform);
             auraTmp = aura;
+        }
+
+        if(isBouncyShot)
+        {
+            foreach (Collider2D collider in colliders)
+            {
+                collider.sharedMaterial = bouncyMaterial;
+            }
         }
     }
 
