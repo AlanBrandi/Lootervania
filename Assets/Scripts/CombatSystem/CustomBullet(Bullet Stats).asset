@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 1200
   lifeTime: 1
-  IsRecochetShoot: 0
+  IsRecochetShoot: 1
   recochetAmount: 6
   IsStickyShot: 0
   stickyGameObject: {fileID: 2732271386456280531, guid: 8b0f86ca08f62a845a7c10cc03adff8b, type: 3}
