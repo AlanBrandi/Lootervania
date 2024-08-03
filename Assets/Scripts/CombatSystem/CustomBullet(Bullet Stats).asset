@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 1200
   lifeTime: 1
-  IsRecochetShoot: 0
+  IsRecochetShoot: 1
   recochetAmount: 6
   IsStickyShot: 0
   maxStickyShotsTime: 2
