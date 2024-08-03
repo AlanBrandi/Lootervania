@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Utilities.Pool.Core;
 
@@ -35,6 +36,7 @@ public class BulletCustom : Bullet
     private float auraLifetimeMod;
 
     private bool isStickyShot;
+    private GameObject stickyGameObject;
     private float MaxStickyShotsTime;
 
     private bool isPullShot;
@@ -116,7 +118,7 @@ public class BulletCustom : Bullet
 
         if (isAuraShot)
         {
-            if (elapsedTime >= (lifetime * auraLifetimeMod) -0.1f)
+            if (elapsedTime >= (lifetime * auraLifetimeMod) - 0.1f)
             {
                 OnBulletDestroy();
             }
@@ -130,30 +132,11 @@ public class BulletCustom : Bullet
 
     public override void OnBulletCollide(Collider2D other, Vector2 attackDiretion)
     {
+        //If enemy, go here
         if (other.CompareTag("Enemy"))
         {
             other.GetComponent<HealthController>().ReduceHealth((int)bulletDamage, attackDiretion);
 
-            // Piercing
-            if (!isPiercingShoot)
-            {
-                if (isExplosive)
-                {
-                    if (!isStickyShot)
-                    {
-                        Explode();
-                    }
-                }
-                else
-                    OnBulletDestroy();
-            }
-
-            MaxPiercingShoots--;
-            if (MaxPiercingShoots < 0)
-            {
-                OnBulletDestroy();
-            }
-
             if (isPullShot)
             {
                 if (Random.Range(0f, 100f) <= pullShotChance)
@@ -161,35 +144,25 @@ public class BulletCustom : Bullet
                     Instantiate(pullGameObject, transform.position, Quaternion.identity);
                 }
             }
-        }
 
-        if (other.CompareTag("Level"))
-        {
-            if (!isRecochetShoot && !isBouncyShot)
+            if (isPiercingShoot)
             {
-                if (isExplosive)
+                if (MaxPiercingShoots > 0)
                 {
-                    if (isStickyShot)
-                    {
-                        rb.velocity = Vector2.zero;
-                        shouldMove = false;
-                        StartCoroutine(StickyShotCoroutine());
-                    }
-                    else
-                    {
-                        Explode();
-                    }
+                    MaxPiercingShoots--;
+
+                    HandleExplosionMulti(other);
                 }
                 else
-                    OnBulletDestroy();
-            }
-
-            if (isPullShot)
-            {
-                if (Random.Range(0f, 100f) <= pullShotChance)
                 {
-                    Instantiate(pullGameObject, transform.position, Quaternion.identity);
+                    HandleExplosionOnce(other);
+
+                    OnBulletDestroy();
                 }
+            }
+            else
+            {
+                HandleExplosionOnce(other);
             }
         }
 
@@ -208,34 +181,121 @@ public class BulletCustom : Bullet
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (isRecochetShoot && recochetAmount > 0 && collision.gameObject.CompareTag("Level"))
+        //If level, go here
+        if (collision.gameObject.CompareTag("Level"))
         {
-            Vector2 normal = collision.contacts[0].normal;
-            direction = Vector2.Reflect(direction, normal);
-            Vector2 reflectionOffsetVector = direction.normalized * 0.01f;
-            transform.position += (Vector3)reflectionOffsetVector;
+            if (isPullShot)
+            {
+                if (Random.Range(0f, 100f) <= pullShotChance)
+                {
+                    Instantiate(pullGameObject, transform.position, Quaternion.identity);
+                }
+            }
 
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, angle);
+            if (isRecochetShoot)
+            {
+                if (recochetAmount > 0)
+                {
+                    Vector2 normal = collision.contacts[0].normal;
+                    direction = Vector2.Reflect(direction, normal);
+                    Vector2 reflectionOffsetVector = direction.normalized * 0.01f;
+                    transform.position += (Vector3)reflectionOffsetVector;
 
-            recochetAmount--;
-            if (isExplosive)
+                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0, 0, angle);
+
+                    recochetAmount--;
+
+                    HandleExplosionMulti();
+
+                    Debug.DrawRay(collision.contacts[0].point, normal * 2, Color.green, 1f);
+                    Debug.DrawRay(collision.contacts[0].point, direction * 2, Color.red, 1f);
+                }
+                else
+                {
+                    HandleExplosionOnce();
+
+                    OnBulletDestroy();
+                }
+            }
+            else
+            {
+                HandleExplosionOnce();
+            }
+            if (!isRecochetShoot && !isExplosive && !isStickyShot)
+            {
+                OnBulletDestroy();
+            }
+        }
+    }
+
+    #region Explosion Methodds
+    private void HandleExplosionOnce()
+    {
+        if (isExplosive)
+        {
+            if (isStickyShot)
+            {
+                rb.velocity = Vector2.zero;
+                shouldMove = false;
+                StartCoroutine(StickyShotCoroutine());
+            }
+            else
+            {
+                Explode();
+            }
+        }
+    }
+
+    private void HandleExplosionOnce(Collider2D enemyCollider)
+    {
+        if (isExplosive)
+        {
+            if (isStickyShot)
+            {
+                GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity, enemyCollider.transform);
+                tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
+                OnBulletDestroy();
+            }
+            else
+            {
+                Explode();
+            }
+        }
+    }
+
+    private void HandleExplosionMulti()
+    {
+        if (isExplosive)
+        {
+            if (isStickyShot)
+            {
+                GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity);
+                tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
+            }
+            else
             {
                 ExplodeNonDestroy(0.2f);
             }
-
-            Debug.DrawRay(collision.contacts[0].point, normal * 2, Color.green, 1f);
-            Debug.DrawRay(collision.contacts[0].point, direction * 2, Color.red, 1f);
-        }
-        if (isExplosive || isBouncyShot)
-        {
-
-        }
-        else
-        {
-            OnBulletDestroy();
         }
     }
+
+    private void HandleExplosionMulti(Collider2D enemyCollider)
+    {
+        if (isExplosive)
+        {
+            if (isStickyShot)
+            {
+                GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity, enemyCollider.transform);
+                tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
+            }
+            else
+            {
+                ExplodeNonDestroy(0.2f);
+            }
+        }
+    }
+    #endregion
 
     public override void OnShoot()
     {
@@ -247,7 +307,7 @@ public class BulletCustom : Bullet
         if (gameObject != null)
             if (isAuraShot)
                 Destroy(auraTmp);
-            PoolManager.ReleaseObject(gameObject);
+        PoolManager.ReleaseObject(gameObject);
     }
 
     public override void Initialize(float damage, Vector3 bulletSize)
@@ -299,6 +359,7 @@ public class BulletCustom : Bullet
 
         //Sticky
         isStickyShot = bulletStats.IsStickyShot;
+        stickyGameObject = bulletStats.stickyGameObject;
         MaxStickyShotsTime = bulletStats.maxStickyShotsTime;
 
         //Pull
@@ -329,7 +390,7 @@ public class BulletCustom : Bullet
             auraTmp = aura;
         }
 
-        if(isBouncyShot)
+        if (isBouncyShot)
         {
             foreach (Collider2D collider in colliders)
             {

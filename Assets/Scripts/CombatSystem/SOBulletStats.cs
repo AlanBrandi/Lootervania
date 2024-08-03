@@ -21,6 +21,12 @@ public class SOBulletStats : ScriptableObject
     [Space]
 
     public bool IsStickyShot;
+    [SerializeField] public GameObject stickyGameObject;
+    public GameObject StickyGameObject
+    {
+        get { return stickyGameObject; }
+        set { stickyGameObject = value; }
+    }
     [SerializeField] public float maxStickyShotsTime;
     public float MaxStickyShotsTime
     {

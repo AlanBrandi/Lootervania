@@ -132,6 +132,7 @@ public class SOBulletStatsEditor : Editor
                     if (bulletStats.IsStickyShot)
                     {
                         EditorGUI.indentLevel++;
+                        EditorGUILayout.PropertyField(serializedObject.FindProperty("stickyGameObject"));
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("maxStickyShotsTime"));
                         EditorGUI.indentLevel--;
                     }
