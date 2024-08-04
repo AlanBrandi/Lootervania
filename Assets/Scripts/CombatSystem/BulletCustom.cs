@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Utilities.Pool.Core;
 
@@ -29,9 +30,24 @@ public class BulletCustom : Bullet
 
     private bool isAuraShot;
     private GameObject auraGameObject;
+    private GameObject auraTmp;
+    private float auraDamage;
+    private float auraSpeedMod;
+    private float auraLifetimeMod;
 
     private bool isStickyShot;
+    private GameObject stickyGameObject;
     private float MaxStickyShotsTime;
+
+    private bool isPullShot;
+    private GameObject pullGameObject;
+    private float pullShotChance;
+    private float pullStrength;
+    private float maxPullDistance;
+    private float maxPullTime;
+
+    private bool isBouncyShot;
+    private PhysicsMaterial2D bouncyMaterial;
 
     private Transform playerTransform;
     private int hitCountPlayer = 0;
@@ -39,7 +55,7 @@ public class BulletCustom : Bullet
     // Parâmetros de explosão
     private bool isExplosive;
     private float explosionRadius;
-    private int explosionDamage;
+    private float explosionDamage;
     private LayerMask damageableLayers;
 
     [SerializeField] private SOBulletStats bulletStats;
@@ -99,6 +115,14 @@ public class BulletCustom : Bullet
                 direction = directionToPlayer;
             }
         }
+
+        if (isAuraShot)
+        {
+            if (elapsedTime >= (lifetime * auraLifetimeMod) - 0.1f)
+            {
+                OnBulletDestroy();
+            }
+        }
     }
 
     public override void Act()
@@ -108,83 +132,37 @@ public class BulletCustom : Bullet
 
     public override void OnBulletCollide(Collider2D other, Vector2 attackDiretion)
     {
+        //If enemy, go here
         if (other.CompareTag("Enemy"))
         {
             other.GetComponent<HealthController>().ReduceHealth((int)bulletDamage, attackDiretion);
-            
-            // Piercing
-            if (!isPiercingShoot)
+
+            if (isPullShot)
             {
-                if (isExplosive)
+                if (Random.Range(0f, 100f) <= pullShotChance)
                 {
-                    if(!isStickyShot)
-                    {
-                        Explode();
-                    }
+                    Instantiate(pullGameObject, transform.position, Quaternion.identity);
+                }
+            }
+
+            if (isPiercingShoot)
+            {
+                if (MaxPiercingShoots > 0)
+                {
+                    MaxPiercingShoots--;
+
+                    HandleExplosionMulti(other);
                 }
                 else
-                    OnBulletDestroy();
-            }
-
-            MaxPiercingShoots--;
-            if (MaxPiercingShoots < 0)
-            {
-                OnBulletDestroy();
-            }
-        }
-
-        if (other.CompareTag("Level"))
-        {
-            if (isStickyShot)
-            {
-                rb.velocity = Vector2.zero;
-                shouldMove = false;
-                StartCoroutine(StickyShotCoroutine());
-            }
-            else if (!isRecochetShoot)
-            {
-                if (isExplosive)
                 {
-                    if(isStickyShot)
-                    {
-                        rb.velocity = Vector2.zero;
-                        shouldMove = false;
-                        StartCoroutine(StickyShotCoroutine());
-                    }
-                    else
-                    {
-                        Explode();
-                    }
-                }
-                    
-                else
+                    HandleExplosionOnce(other);
+
                     OnBulletDestroy();
+                }
             }
-
-            if (!isStickyShot)
+            else
             {
-                if (recochetAmount <= 0)
-                {
-                    OnBulletDestroy();
-                    return;
-                }
-
-                recochetAmount--;
-
-                ContactPoint2D[] contacts = new ContactPoint2D[10];
-                int contactCount = other.GetContacts(contacts);
-
-                if (contactCount > 0)
-                {
-                    Vector2 normal = Vector2.zero;
-                    foreach (ContactPoint2D contact in contacts)
-                    {
-                        normal = contact.normal;
-                        break;
-                    }
-                    Vector2 newDirection = Vector2.Reflect(rb.velocity.normalized, normal.normalized);
-                    direction = newDirection;
-                }
+                HandleExplosionOnce(other);
             }
         }
 
@@ -201,6 +179,124 @@ public class BulletCustom : Bullet
         }
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        //If level, go here
+        if (collision.gameObject.CompareTag("Level"))
+        {
+            if (isPullShot)
+            {
+                if (Random.Range(0f, 100f) <= pullShotChance)
+                {
+                    Instantiate(pullGameObject, transform.position, Quaternion.identity);
+                }
+            }
+
+            if (isRecochetShoot)
+            {
+                if (recochetAmount > 0)
+                {
+                    Vector2 normal = collision.contacts[0].normal;
+                    direction = Vector2.Reflect(direction, normal);
+                    Vector2 reflectionOffsetVector = direction.normalized * 0.01f;
+                    transform.position += (Vector3)reflectionOffsetVector;
+
+                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0, 0, angle);
+
+                    recochetAmount--;
+
+                    HandleExplosionMulti();
+
+                    Debug.DrawRay(collision.contacts[0].point, normal * 2, Color.green, 1f);
+                    Debug.DrawRay(collision.contacts[0].point, direction * 2, Color.red, 1f);
+                }
+                else
+                {
+                    HandleExplosionOnce();
+
+                    OnBulletDestroy();
+                }
+            }
+            else
+            {
+                HandleExplosionOnce();
+            }
+            if (!isRecochetShoot && !isExplosive && !isStickyShot)
+            {
+                OnBulletDestroy();
+            }
+        }
+    }
+
+    #region Explosion Methodds
+    private void HandleExplosionOnce()
+    {
+        if (isExplosive)
+        {
+            if (isStickyShot)
+            {
+                rb.velocity = Vector2.zero;
+                shouldMove = false;
+                StartCoroutine(StickyShotCoroutine());
+            }
+            else
+            {
+                Explode();
+            }
+        }
+    }
+
+    private void HandleExplosionOnce(Collider2D enemyCollider)
+    {
+        if (isExplosive)
+        {
+            if (isStickyShot)
+            {
+                GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity, enemyCollider.transform);
+                tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
+                OnBulletDestroy();
+            }
+            else
+            {
+                Explode();
+            }
+        }
+    }
+
+    private void HandleExplosionMulti()
+    {
+        if (isExplosive)
+        {
+            if (isStickyShot)
+            {
+                GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity);
+                tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
+            }
+            else
+            {
+                ExplodeNonDestroy(0.2f);
+            }
+        }
+    }
+
+    private void HandleExplosionMulti(Collider2D enemyCollider)
+    {
+        if (isExplosive)
+        {
+            if (isStickyShot)
+            {
+                GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity, enemyCollider.transform);
+                tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
+            }
+            else
+            {
+                ExplodeNonDestroy(0.2f);
+            }
+        }
+    }
+    #endregion
+
     public override void OnShoot()
     {
     }
@@ -208,11 +304,19 @@ public class BulletCustom : Bullet
     public override void OnBulletDestroy()
     {
         if (!gameObject.activeSelf) return;
+        if (gameObject != null)
+            if (isAuraShot)
+                Destroy(auraTmp);
         PoolManager.ReleaseObject(gameObject);
     }
 
     public override void Initialize(float damage, Vector3 bulletSize)
     {
+        Collider2D[] colliders = GetComponents<Collider2D>();
+        foreach (Collider2D collider in colliders)
+        {
+            collider.sharedMaterial = null;
+        }
         transform.localScale = bulletSize;
 
         speed = bulletStats.bulletSpeed;
@@ -220,7 +324,7 @@ public class BulletCustom : Bullet
         elapsedTime = 0;
 
         bulletDamage = damage;
-        direction = transform.right;
+        direction = transform.right.normalized;
 
         playerTransform = PlayerMovement.Instance.transform;
 
@@ -249,10 +353,23 @@ public class BulletCustom : Bullet
         // Aura
         isAuraShot = bulletStats.isAuraShot;
         auraGameObject = bulletStats.auraGameObject;
+        auraSpeedMod = bulletStats.auraSpeedMod;
+        auraLifetimeMod = bulletStats.auraLifetimeMod;
+        bulletStats.auraDamage = bulletDamage / bulletStats.auraDamageMod;
 
         //Sticky
         isStickyShot = bulletStats.IsStickyShot;
+        stickyGameObject = bulletStats.stickyGameObject;
         MaxStickyShotsTime = bulletStats.maxStickyShotsTime;
+
+        //Pull
+        isPullShot = bulletStats.isPullShot;
+        pullGameObject = bulletStats.pullGameObject;
+        pullShotChance = bulletStats.pullShotChance;
+
+        //Bouncy
+        isBouncyShot = bulletStats.isBouncyShot;
+        bouncyMaterial = bulletStats.bouncyMaterial;
 
         hitCountPlayer = 0;
 
@@ -267,10 +384,19 @@ public class BulletCustom : Bullet
 
         if (isAuraShot)
         {
-            lifetime = lifetime * 2;
-            speed = speed / 2f;
+            lifetime = lifetime * auraLifetimeMod;
+            speed = speed / auraSpeedMod;
             GameObject aura = Instantiate(auraGameObject, transform);
+            auraTmp = aura;
         }
+
+        /*if (isBouncyShot)
+        {
+            foreach (Collider2D collider in colliders)
+            {
+                collider.sharedMaterial = bouncyMaterial;
+            }
+        }*/
     }
 
     public void ActivatePerks(List<string> selectedPerks)
@@ -308,24 +434,42 @@ public class BulletCustom : Bullet
     }
 
     private void Explode()
-{
-    Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
-    bool hitEnemy = false;
-
-    foreach (var hitCollider in hitColliders)
     {
-        if (hitCollider.CompareTag("Enemy"))
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
+        bool hitEnemy = false;
+
+        foreach (var hitCollider in hitColliders)
         {
-            Vector2 attackDirection = (hitCollider.transform.position - transform.position).normalized;
-            hitCollider.GetComponent<HealthController>().ReduceHealth((int)explosionDamage, attackDirection);
-            hitEnemy = true;
+            if (hitCollider.CompareTag("Enemy") && hitCollider.isTrigger)
+            {
+                Vector2 attackDirection = (hitCollider.transform.position - transform.position).normalized;
+                hitCollider.GetComponent<HealthController>().ReduceHealth((int)explosionDamage, attackDirection);
+                hitEnemy = true;
+            }
         }
+
+        DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
+
+        OnBulletDestroy();
     }
 
-    DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
+    private void ExplodeNonDestroy(float damageMod)
+    {
+        float trueExplosionDamage = explosionDamage * damageMod;
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
+        bool hitEnemy = false;
 
-    OnBulletDestroy();
-}
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Enemy") && hitCollider.isTrigger)
+            {
+                Vector2 attackDirection = (hitCollider.transform.position - transform.position).normalized;
+                hitCollider.GetComponent<HealthController>().ReduceHealth((int)trueExplosionDamage, attackDirection);
+                hitEnemy = true;
+            }
+        }
+        DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
+    }
 
     private void DrawExplosionCircle(Vector3 position, float radius, Color color)
     {
@@ -345,6 +489,8 @@ public class BulletCustom : Bullet
             lineRenderer.SetPosition(i, new Vector3(x, y, 0) + position);
             angle += 360f / segments;
         }
+
+        FindObjectOfType<CameraShake>().Shake(Vector2.right, .1f);
 
         Destroy(circle, 0.5f);
     }

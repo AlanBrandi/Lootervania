@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 
 public enum WeaponType
@@ -22,8 +24,13 @@ public class WeaponFactory : MonoBehaviour
     [SerializeField] private SOWeaponStats bazooka;
 
     [SerializeField] private Bullet customBullet;
-    [SerializeField] private SOBulletStats bulletStats;
-    
+    [SerializeField] private SOBulletStats bulletStatsPistol;
+    [SerializeField] private SOBulletStats bulletStatsAssault;
+    [SerializeField] private SOBulletStats bulletStatsShotgun;
+    [SerializeField] private SOBulletStats bulletStatsBazooka;
+
+    private bool isBazooka;
+
     private List<string> perks = new List<string>()
     {
         "LessAmmoMorePower",
@@ -33,6 +40,9 @@ public class WeaponFactory : MonoBehaviour
         "BulletGetBigByTime",
         "BoomerangShoot",
         "AuraShot",
+        "ExplosiveShot",
+        "StickyShot",
+        "PullShot",
     };
 
     private List<string> availablePerks = new List<string>();
@@ -41,7 +51,7 @@ public class WeaponFactory : MonoBehaviour
     void Start()
     {
         if (isEnabled)
-        GenerateWeapon(WeaponType.Pistol);
+            RerollAllPerksFromAllWeapons();
     }
 
     public void RerollAllPerksFromAllWeapons()
@@ -53,37 +63,39 @@ public class WeaponFactory : MonoBehaviour
     }
     public void GenerateWeapon(Enum weapon)
     {
+        isBazooka = false;
         switch (weapon)
         {
             case WeaponType.Pistol:
-                WeaponAndBulletConfiguration(pistol);
+                WeaponAndBulletConfiguration(pistol, bulletStatsPistol);
                 break;
             case WeaponType.Assault:
-                WeaponAndBulletConfiguration(assault);
+                WeaponAndBulletConfiguration(assault, bulletStatsAssault);
                 break;
             case WeaponType.Shotgun:
-                WeaponAndBulletConfiguration(shotgun);
+                WeaponAndBulletConfiguration(shotgun, bulletStatsShotgun);
                 break;
             case WeaponType.Bazooka:
-                WeaponAndBulletConfiguration(bazooka);
+                isBazooka = true;
+                WeaponAndBulletConfiguration(bazooka, bulletStatsBazooka);
                 break;
         }
     }
 
-    private void WeaponAndBulletConfiguration(SOWeaponStats weaponStats)
+    private void WeaponAndBulletConfiguration(SOWeaponStats weaponStats, SOBulletStats bulletStats)
     {
         var newWeapon = ScriptableObject.CreateInstance<SOWeaponStats>();
         newWeapon = weaponStats;
 
         var newBullet = ScriptableObject.CreateInstance<SOBulletStats>();
         newBullet = bulletStats;
-        
-        
+
         //Set bullet type (por agora só tem uma e para o protótipo ta de boa)
-        newWeapon.bullet = customBullet; 
-        RandomPerks();
+        newWeapon.bullet = weaponStats.bullet;
         
         Debug.Log($"Generate weapon, {newWeapon.name}");
+
+        RandomPerks();
 
         //Aqui ele da um replace no scriptableObject da arma
         newWeapon.DisableAllPerks();
@@ -106,11 +118,26 @@ public class WeaponFactory : MonoBehaviour
 
         selectedPerks.Clear();
 
+        if (isBazooka)
+        {
+            selectedPerks.Add("ExplosiveShot");
+            availablePerks.Remove("ExplosiveShot");
+        }
+
         System.Random rand = new System.Random();
         for (int i = 0; i < 2; i++)
         {
             int randomIndex = rand.Next(availablePerks.Count);
             selectedPerks.Add(availablePerks[randomIndex]);
+            if (availablePerks[randomIndex] == "ExplosiveShot")
+            {
+                availablePerks.Remove("StickyShot");
+            }
+            else if (availablePerks[randomIndex] == "StickyShot")
+            {
+                selectedPerks.Add("ExplosiveShot");
+                availablePerks.Remove("ExplosiveShot");
+            }
             availablePerks.RemoveAt(randomIndex);
         }
     }

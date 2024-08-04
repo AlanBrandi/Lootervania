@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5880433632933969206
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 958453793465432081}
+  - component: {fileID: 3443328649806135723}
+  m_Layer: 0
+  m_Name: WeaponFactory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &958453793465432081
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5880433632933969206}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 23.684568, y: 2.489187, z: -0.042927068}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3443328649806135723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5880433632933969206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41d642ab56792c14098b1267cd905346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isEnabled: 1
+  pistol: {fileID: 11400000, guid: b4a3bc8cbf0aef148b9b622f0936a07b, type: 2}
+  assault: {fileID: 11400000, guid: 5d8409cc5e041e4449900e1cb660b6fb, type: 2}
+  shotgun: {fileID: 11400000, guid: aea09bcee8edb654db4b3059fe14669f, type: 2}
+  bazooka: {fileID: 11400000, guid: b09ab17c300d140468e3cbf7a855f44d, type: 2}
+  customBullet: {fileID: 1942506858983192280, guid: 52573968194c8f646a1c26a7d0241b8b, type: 3}
+  bulletStatsPistol: {fileID: 11400000, guid: 46ceead9f429e5d43a6f8e9a1d9932d7, type: 2}
+  bulletStatsAssault: {fileID: 11400000, guid: 7ef77c71f349008438b6479e8b37489d, type: 2}
+  bulletStatsShotgun: {fileID: 11400000, guid: 6878d9586628c184d8e9c8c85f8a42da, type: 2}
+  bulletStatsBazooka: {fileID: 11400000, guid: 0cae26e1d4fd47147aa261f3d068096e, type: 2}
+  selectedPerks: []

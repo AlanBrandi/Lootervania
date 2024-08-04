@@ -21,6 +21,12 @@ public class SOBulletStats : ScriptableObject
     [Space]
 
     public bool IsStickyShot;
+    [SerializeField] public GameObject stickyGameObject;
+    public GameObject StickyGameObject
+    {
+        get { return stickyGameObject; }
+        set { stickyGameObject = value; }
+    }
     [SerializeField] public float maxStickyShotsTime;
     public float MaxStickyShotsTime
     {
@@ -69,8 +75,28 @@ public class SOBulletStats : ScriptableObject
         get { return sizeAura; }
         set { sizeAura = value; }
     }
-    [SerializeField] public int auraDamage;
-    public int AuraDamage
+    [Tooltip("Higher value is slower.")]
+    [SerializeField] public float auraSpeedMod;
+    public float AuraSpeedMod
+    {
+        get { return auraSpeedMod; }
+        set { auraSpeedMod = value; }
+    }
+    [SerializeField] public float auraLifetimeMod;
+    public float AuraLifetimeMod
+    {
+        get { return auraLifetimeMod; }
+        set { auraLifetimeMod = value; }
+    }
+    [Tooltip("Higher value is weaker.")]
+    [SerializeField] public float auraDamageMod;
+    public float AuraDamageMod
+    {
+        get { return auraDamageMod; }
+        set { auraDamageMod = value; }
+    }
+    public float auraDamage;
+    public float AuraDamage
     {
         get { return auraDamage; }
         set { auraDamage = value; }
@@ -80,6 +106,49 @@ public class SOBulletStats : ScriptableObject
     {
         get { return auraDamageInterval; }
         set { auraDamageInterval = value; }
+    }
+
+    [Space]
+    public bool isPullShot;
+    [SerializeField] public float pullShotChance;
+
+    [SerializeField] public GameObject pullGameObject;
+    public GameObject PullGameObject
+    {
+        get { return pullGameObject; }
+        set { pullGameObject = value; }
+    }
+    public float PullShotChance
+    {
+        get { return pullShotChance; }
+        set { pullShotChance = value; }
+    }
+    [SerializeField] public float pullStrength;
+    public float PullStrength
+    {
+        get { return pullStrength; }
+        set { pullStrength = value; }
+    }
+    [SerializeField] public float maxPullDistance;
+    public float MaxPullDistance
+    {
+        get { return maxPullDistance; }
+        set { maxPullDistance = value; }
+    }
+    [SerializeField] public float maxPullTime;
+    public float MaxPullTime
+    {
+        get { return maxPullTime; }
+        set { maxPullTime = value; }
+    }
+    [Space]
+    [Tooltip("Doesn't work. Don't activate.")]
+    public bool isBouncyShot;
+    [SerializeField] public PhysicsMaterial2D bouncyMaterial;
+    public PhysicsMaterial2D BouncyMaterial
+    {
+        get { return bouncyMaterial; }
+        set { bouncyMaterial = value; }
     }
 
     public void ActivatePerks(List<string> selectedPerks)
@@ -108,6 +177,18 @@ public class SOBulletStats : ScriptableObject
         {
             IsStickyShot = true;
         }
+        if (selectedPerks.Contains("ExplosiveShot"))
+        {
+            isExplosive = true;
+        }
+        if (selectedPerks.Contains("PullShot"))
+        {
+            isPullShot = true;
+        }
+        /*if(selectedPerks.Contains("BouncyShot"))
+        {
+            isBouncyShot = true;
+        }*/
     }
 //Ignora isso que ta pessimo
     public void DisableAllPerks()
@@ -118,6 +199,9 @@ public class SOBulletStats : ScriptableObject
         isBoomerangShoot = false;
         isAuraShot = false;
         IsStickyShot = false;
+        isExplosive = false;
+        isPullShot = false;
+        //isBouncyShot = false;
     }
 
     [Space]

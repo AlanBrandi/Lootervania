@@ -84,11 +84,13 @@ namespace Utilities.Pool.Core
 		private GameObject InstantiatePrefab(GameObject prefab)
 		{
 			var go = Instantiate(prefab) as GameObject;
-			if (root == null && go.GetComponent<RectTransform>() != null)
+			/*if (root == null && go.GetComponent<RectTransform>() != null)
 				root = FindObjectOfType<Canvas>().transform;
-			if (root != null) go.transform.SetParent(root);
-			
-			go.SetActive(false);
+			if (root != null) go.transform.SetParent(root);*/ //old setparent
+			root = transform;
+            if (root != null) go.transform.SetParent(root);
+
+            go.SetActive(false);
 			return go;
 		}
 

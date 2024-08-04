@@ -20,7 +20,7 @@ MonoBehaviour:
   maxAmmoAmount: 1
   bulletSize: {x: 1.6, y: 1.6, z: 1.6}
   amountShotsPerTrigger: 1
-  isLessAmmoMorePower: 0
+  isLessAmmoMorePower: 1
   ammoPowerMultiplier: 0.2
   isAmmoRandomCount: 0
   ammoRandomCountPercentage: 20

@@ -25,7 +25,10 @@ public class WeaponFactoryEditor : Editor
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("shotgun"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("bazooka"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("customBullet"));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("bulletStats"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("bulletStatsPistol"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("bulletStatsAssault"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("bulletStatsShotgun"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("bulletStatsBazooka"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("selectedPerks"));
                 EditorGUI.indentLevel--;
             }

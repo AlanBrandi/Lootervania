@@ -3,17 +3,20 @@ using UnityEngine;
 
 public class AuraScript : MonoBehaviour
 {
-    private float auraSize;
-    private int auraDamage;
+    private float sizeAura;
+    private float auraDamage;
     private float auraDamageInterval;
     private float nextDamageTime;
     private List<Collider2D> collidersInTrigger = new List<Collider2D>();
+
     [SerializeField] private SOBulletStats bulletStats;
 
     private void Start()
     {
         auraDamage = bulletStats.auraDamage;
         auraDamageInterval = bulletStats.auraDamageInterval;
+        sizeAura = bulletStats.sizeAura;
+        transform.localScale = transform.localScale * sizeAura;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -54,10 +57,5 @@ public class AuraScript : MonoBehaviour
             }
             nextDamageTime = Time.time + auraDamageInterval;
         }
-    }
-
-    private void OnDisable()
-    {
-        Destroy(gameObject);
     }
 }

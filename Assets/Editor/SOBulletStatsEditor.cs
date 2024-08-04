@@ -1,6 +1,5 @@
 #if UNITY_EDITOR
 using UnityEditor;
-using UnityEngine;
 
 [CustomEditor(typeof(SOBulletStats))]
 public class SOBulletStatsEditor : Editor
@@ -77,8 +76,38 @@ public class SOBulletStatsEditor : Editor
                 EditorGUI.indentLevel++;
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("auraGameObject"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("sizeAura"));
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("auraDamage"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("auraSpeedMod"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("auraLifetimeMod"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("auraDamageMod"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("auraDamageInterval"));
+                EditorGUI.indentLevel--;
+            }
+        }
+
+        SerializedProperty isPullShot = serializedObject.FindProperty("isPullShot");
+        if (isAuraShot != null)
+        {
+            EditorGUILayout.PropertyField(isPullShot);
+            if (bulletStats.isPullShot)
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("pullGameObject"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("pullShotChance"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("pullStrength"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("maxPullDistance"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("maxPullTime"));
+                EditorGUI.indentLevel--;
+            }
+        }
+
+        SerializedProperty isBouncyShot = serializedObject.FindProperty("isBouncyShot");
+        if (isBouncyShot != null)
+        {
+            EditorGUILayout.PropertyField(isBouncyShot);
+            if (bulletStats.isBouncyShot)
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("bouncyMaterial"));
                 EditorGUI.indentLevel--;
             }
         }
@@ -97,16 +126,17 @@ public class SOBulletStatsEditor : Editor
                 EditorGUI.indentLevel--;
 
                 SerializedProperty isStickyShotProp = serializedObject.FindProperty("IsStickyShot");
-                 if (isStickyShotProp != null)
-                 {
+                if (isStickyShotProp != null)
+                {
                     EditorGUILayout.PropertyField(isStickyShotProp);
                     if (bulletStats.IsStickyShot)
                     {
-                         EditorGUI.indentLevel++;
-                         EditorGUILayout.PropertyField(serializedObject.FindProperty("maxStickyShotsTime"));
-                         EditorGUI.indentLevel--;
+                        EditorGUI.indentLevel++;
+                        EditorGUILayout.PropertyField(serializedObject.FindProperty("stickyGameObject"));
+                        EditorGUILayout.PropertyField(serializedObject.FindProperty("maxStickyShotsTime"));
+                        EditorGUI.indentLevel--;
                     }
-        }
+                }
             }
         }
 

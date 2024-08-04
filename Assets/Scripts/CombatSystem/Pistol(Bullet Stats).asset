@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f36a323ecb421724c93a4ef2cc2fd923, type: 3}
-  m_Name: CustomBullet(Bullet Stats)
+  m_Name: Pistol(Bullet Stats)
   m_EditorClassIdentifier: 
   bulletSpeed: 1200
   lifeTime: 1
   IsRecochetShoot: 0
   recochetAmount: 6
   IsStickyShot: 1
+  stickyGameObject: {fileID: 2732271386456280531, guid: 8b0f86ca08f62a845a7c10cc03adff8b, type: 3}
   maxStickyShotsTime: 2
   isPiercingShoot: 0
   maxPiercingShoots: 3
@@ -27,8 +28,19 @@ MonoBehaviour:
   isAuraShot: 0
   auraGameObject: {fileID: 2732271386456280531, guid: 3e0a2e73f8583e54791fc7c85381b9cd, type: 3}
   sizeAura: 1
+  auraSpeedMod: 2
+  auraLifetimeMod: 2
+  auraDamageMod: 5
   auraDamage: 5
   auraDamageInterval: 0.05
+  isPullShot: 0
+  pullShotChance: 15
+  pullGameObject: {fileID: 2732271386456280531, guid: f1f75ad76fcf0964caf28272d374b422, type: 3}
+  pullStrength: 50
+  maxPullDistance: 15
+  maxPullTime: 2
+  isBouncyShot: 0
+  bouncyMaterial: {fileID: 6200000, guid: 1f0591ecbc7836e4dab4df9aa54efe7f, type: 2}
   isExplosive: 1
   explosionRadius: 2
   explosionDamage: 15
