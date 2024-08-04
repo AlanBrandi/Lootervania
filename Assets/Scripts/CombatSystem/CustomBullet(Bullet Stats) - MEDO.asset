@@ -17,6 +17,7 @@ MonoBehaviour:
   IsRecochetShoot: 0
   recochetAmount: 6
   IsStickyShot: 0
+  stickyGameObject: {fileID: 0}
   maxStickyShotsTime: 0
   isPiercingShoot: 0
   maxPiercingShoots: 5
@@ -38,6 +39,8 @@ MonoBehaviour:
   pullStrength: 0
   maxPullDistance: 0
   maxPullTime: 0
+  isBouncyShot: 0
+  bouncyMaterial: {fileID: 0}
   isExplosive: 0
   explosionRadius: 0
   explosionDamage: 0

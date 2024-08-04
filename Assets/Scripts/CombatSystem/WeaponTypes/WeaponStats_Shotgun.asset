@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc611d8021e4ac409707ef7d4542153, type: 3}
   m_Name: WeaponStats_Shotgun
   m_EditorClassIdentifier: 
-  bullet: {fileID: 1942506858983192280, guid: 52573968194c8f646a1c26a7d0241b8b, type: 3}
-  bulletStats: {fileID: 11400000, guid: 46ceead9f429e5d43a6f8e9a1d9932d7, type: 2}
+  bullet: {fileID: 1942506858983192280, guid: 2c00394cce48d994f94a3fd9cba06d27, type: 3}
+  bulletStats: {fileID: 11400000, guid: 6878d9586628c184d8e9c8c85f8a42da, type: 2}
   damage: 30
   reloadTime: 2
   fireRate_BPS: 1
@@ -22,5 +22,5 @@ MonoBehaviour:
   amountShotsPerTrigger: 5
   isLessAmmoMorePower: 0
   ammoPowerMultiplier: 0.2
-  isAmmoRandomCount: 0
+  isAmmoRandomCount: 1
   ammoRandomCountPercentage: 20

@@ -117,7 +117,7 @@ public class RangeWeapon : Weapon
     private void InitializeWeapon()
     {
         bullet = weaponStats.bullet;
-        damage = weaponStats.damage;
+        damage = weaponStats.damage;    
         
         reloadTime = weaponStats.reloadTime;
         fireRate = weaponStats.fireRate_BPS;

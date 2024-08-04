@@ -177,6 +177,10 @@ public class SOBulletStats : ScriptableObject
         {
             IsStickyShot = true;
         }
+        if (selectedPerks.Contains("ExplosiveShot"))
+        {
+            isExplosive = true;
+        }
         if (selectedPerks.Contains("PullShot"))
         {
             isPullShot = true;
@@ -195,6 +199,7 @@ public class SOBulletStats : ScriptableObject
         isBoomerangShoot = false;
         isAuraShot = false;
         IsStickyShot = false;
+        isExplosive = false;
         isPullShot = false;
         //isBouncyShot = false;
     }

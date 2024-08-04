@@ -390,13 +390,13 @@ public class BulletCustom : Bullet
             auraTmp = aura;
         }
 
-        if (isBouncyShot)
+        /*if (isBouncyShot)
         {
             foreach (Collider2D collider in colliders)
             {
                 collider.sharedMaterial = bouncyMaterial;
             }
-        }
+        }*/
     }
 
     public void ActivatePerks(List<string> selectedPerks)
