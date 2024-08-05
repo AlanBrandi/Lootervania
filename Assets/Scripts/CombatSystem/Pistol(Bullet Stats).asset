@@ -31,7 +31,7 @@ MonoBehaviour:
   auraSpeedMod: 2
   auraLifetimeMod: 2
   auraDamageMod: 5
-  auraDamage: 5.9
+  auraDamage: 5
   auraDamageInterval: 0.05
   isPullShot: 1
   pullShotChance: 15
