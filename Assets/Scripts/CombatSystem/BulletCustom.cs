@@ -242,9 +242,9 @@ public class BulletCustom : Bullet
         {
             if (isStickyShot)
             {
-                rb.velocity = Vector2.zero;
-                shouldMove = false;
-                StartCoroutine(StickyShotCoroutine());
+                GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity);
+                tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
+                OnBulletDestroy();
             }
             else
             {

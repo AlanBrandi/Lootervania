@@ -323,7 +323,19 @@ MonoBehaviour:
   damageNumberOffSetPosition: {x: -5, y: 0, z: 0}
   onDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1511705221501172229}
+        m_TargetAssemblyTypeName: HealthController, Assembly-CSharp
+        m_MethodName: DeathFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onDamageTaken:
     m_PersistentCalls:
       m_Calls: []
@@ -335,6 +347,7 @@ MonoBehaviour:
   deathEffect: {fileID: 6536818496667015655, guid: 4d548661debccce4490cb28e0352bd45, type: 3}
   cameraShake: {fileID: 0}
   offsetDistance: 1
+  dieFX: {fileID: 4609334155266785647, guid: 0ad7db9c56e871a45bf8eabab10465ed, type: 3}
 --- !u!114 &7293903628989769074
 MonoBehaviour:
   m_ObjectHideFlags: 0

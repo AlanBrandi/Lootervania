@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 390ccb0b42a8050468df19c9c62143a2, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 0.5924529, g: 0.5924529, b: 0.5924529, a: 0.5882353}
   m_FlipX: 1
   m_FlipY: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_Size: {x: 4.4166665, y: 4.4166665}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &7082086233388830829
@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df72faedd2487394abd489ceacd26ee4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pullFX: {fileID: 7261218695894373573, guid: a1227f5d0989bc346947890daad3ac10, type: 3}
   bulletStats: {fileID: 11400000, guid: 46ceead9f429e5d43a6f8e9a1d9932d7, type: 2}
 --- !u!95 &3630445101542733947
 Animator:
@@ -171,7 +172,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2732271386456280531}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: b4c9fb8cc7517874f847ceae53695586, type: 2}
   m_CullingMode: 0

@@ -10,18 +10,21 @@ public class PullScript : MonoBehaviour
     private float maxPullTime;
     private float timer = 0;
     private GameObject[] enemies;
+    [SerializeField] private GameObject pullFX;
 
-    private Animator anim;
+    //private Animator anim;
 
     [SerializeField] private SOBulletStats bulletStats;
 
     private void Start()
     {
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>();
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         maxPullDistance = bulletStats.maxPullDistance;
         pullStrength = bulletStats.pullStrength;
         maxPullTime = bulletStats.maxPullTime;
+        Instantiate(pullFX, transform);
+        Destroy(gameObject, maxPullTime+1f);
     }
 
     private void AnimEnd()
@@ -35,7 +38,7 @@ public class PullScript : MonoBehaviour
 
         if(timer > maxPullTime)
         {
-            anim.SetBool("CanGoOff", true);
+            //anim.SetBool("CanGoOff", true);
             timer = 0f; 
         }
 

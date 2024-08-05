@@ -42,8 +42,8 @@ MonoBehaviour:
   isBouncyShot: 0
   bouncyMaterial: {fileID: 0}
   isExplosive: 1
-  explosionRadius: 3
-  explosionDamage: 80
+  explosionRadius: 5
+  explosionDamage: 200
   damageableLayers:
     serializedVersion: 2
     m_Bits: 64

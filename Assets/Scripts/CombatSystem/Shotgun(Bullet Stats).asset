@@ -16,7 +16,7 @@ MonoBehaviour:
   lifeTime: 1
   IsRecochetShoot: 0
   recochetAmount: 6
-  IsStickyShot: 1
+  IsStickyShot: 0
   stickyGameObject: {fileID: 2732271386456280531, guid: 8b0f86ca08f62a845a7c10cc03adff8b, type: 3}
   maxStickyShotsTime: 2
   isPiercingShoot: 0
@@ -41,9 +41,9 @@ MonoBehaviour:
   maxPullTime: 2
   isBouncyShot: 0
   bouncyMaterial: {fileID: 6200000, guid: 1f0591ecbc7836e4dab4df9aa54efe7f, type: 2}
-  isExplosive: 1
+  isExplosive: 0
   explosionRadius: 2
-  explosionDamage: 15
+  explosionDamage: 20
   damageableLayers:
     serializedVersion: 2
     m_Bits: 64

@@ -51,7 +51,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -4945,6 +4945,10 @@ PrefabInstance:
     - target: {fileID: 123535643113005869, guid: fff4bfe62dee751448e1e356397abcc2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8901915367276590846, guid: fff4bfe62dee751448e1e356397abcc2, type: 3}
+      propertyPath: playOnAwake
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9144877711515139287, guid: fff4bfe62dee751448e1e356397abcc2, type: 3}
       propertyPath: m_Name

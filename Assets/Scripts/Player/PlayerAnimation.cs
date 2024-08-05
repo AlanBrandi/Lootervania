@@ -35,12 +35,10 @@ public class PlayerAnimation : MonoBehaviour
         //Debug.Log(_RB.velocity.magnitude);
         if (_RB.velocity.magnitude > 0.2f && _playerMovement.CanJump())
         {
-            Debug.Log("j");
             CreateRunDust();
         }
         else
         {
-            Debug.Log("n");
             StopRunDust();
         }
         //Vector3 newVelocity = runDust.velocityOverLifetime;

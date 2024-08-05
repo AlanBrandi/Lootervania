@@ -5,6 +5,7 @@ using UnityEngine;
 public class StickyScript : MonoBehaviour
 {
     private Animator anim;
+    [SerializeField] private GameObject explosionFX;
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -28,7 +29,8 @@ public class StickyScript : MonoBehaviour
                 hitEnemy = true;
             }
         }
-        DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green, circlePrefab);
+        Instantiate(explosionFX, transform.position, Quaternion.identity);
+        //DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green, circlePrefab);
         Destroy(gameObject);
     }
 
