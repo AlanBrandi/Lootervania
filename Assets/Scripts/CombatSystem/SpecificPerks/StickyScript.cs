@@ -57,7 +57,7 @@ public class StickyScript : MonoBehaviour
 
     private IEnumerator StickyShotCoroutine(float explosionDamage, float explosionRadius, LayerMask damageableLayers, GameObject circlePrefab, float time)
     {
-        yield return new WaitForSeconds(3f - time);
+        yield return new WaitForSeconds(2f - time);
         anim.SetBool("StartExplosion", true);
         yield return new WaitForSeconds(time);
         FinalExplosion(explosionDamage, explosionRadius, damageableLayers, circlePrefab);

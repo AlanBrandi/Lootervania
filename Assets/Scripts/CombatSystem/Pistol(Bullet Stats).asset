@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 1200
   lifeTime: 1
-  IsRecochetShoot: 0
+  IsRecochetShoot: 1
   recochetAmount: 6
   IsStickyShot: 1
   stickyGameObject: {fileID: 2732271386456280531, guid: 8b0f86ca08f62a845a7c10cc03adff8b, type: 3}
@@ -25,13 +25,13 @@ MonoBehaviour:
   maxBulletSize: 2
   isBoomerangShoot: 0
   maxDistanceBoomerang: 5
-  isAuraShot: 1
+  isAuraShot: 0
   auraGameObject: {fileID: 2732271386456280531, guid: 3e0a2e73f8583e54791fc7c85381b9cd, type: 3}
   sizeAura: 1
   auraSpeedMod: 2
   auraLifetimeMod: 2
   auraDamageMod: 5
-  auraDamage: 5
+  auraDamage: 5.8
   auraDamageInterval: 0.05
   isPullShot: 0
   pullShotChance: 15
