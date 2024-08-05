@@ -156,13 +156,15 @@ public class BulletCustom : Bullet
                 else
                 {
                     HandleExplosionOnce(other);
-
-                    OnBulletDestroy();
                 }
             }
             else
             {
                 HandleExplosionOnce(other);
+            }
+            if (!isPiercingShoot && !isExplosive)
+            {
+                OnBulletDestroy();
             }
         }
 
@@ -222,14 +224,14 @@ public class BulletCustom : Bullet
             {
                 HandleExplosionOnce();
             }
-            if (!isRecochetShoot && !isExplosive && !isStickyShot)
+            if (!isRecochetShoot && !isExplosive)
             {
                 OnBulletDestroy();
             }
         }
     }
 
-    #region Explosion Methodds
+    #region Explosion Methods
     private void HandleExplosionOnce()
     {
         if (isExplosive)

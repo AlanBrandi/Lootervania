@@ -47,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
 
 	public GameObject landDust;
 	public GameObject jumpDust;
-	public ParticleSystem rundust;
 
 	#endregion
 
@@ -295,10 +294,10 @@ public class PlayerMovement : MonoBehaviour
 		{
 			if (IsWallJumping)
 				Run(Data.wallJumpRunLerp);
-			else{
+			else
+			{
 				Run(1);
-				CreateRunDust();
-				}
+			}
 		}
 		else if (_isDashAttacking)
 		{
@@ -307,6 +306,7 @@ public class PlayerMovement : MonoBehaviour
 
 		if (IsSliding)
 			Slide();
+
 	}
 
 	#region INPUT CALLBACKS
@@ -538,21 +538,15 @@ public class PlayerMovement : MonoBehaviour
 		else
 			return false;
 	}
+    #endregion
+
+    #region EFFECTS
+	private void CreateDust(GameObject dust)
+    {
+		Vector3 dustPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y -1.261f, gameObject.transform.position.z);
+		Instantiate(dust, dustPosition, Quaternion.identity);
+	}
 	#endregion
-
-	#region EFFECTS
-
-private void CreateDust(GameObject dust){
-	Vector3 dustPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y -1.261f, gameObject.transform.position.z);
-	Instantiate(dust, dustPosition, Quaternion.identity);
-
-}
-private void CreateRunDust(){
-	rundust.Play();
-}
-
-	#endregion
-
 
 	#region EDITOR METHODS
 	private void OnDrawGizmosSelected()

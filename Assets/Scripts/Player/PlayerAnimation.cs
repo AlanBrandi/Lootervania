@@ -10,6 +10,8 @@ public class PlayerAnimation : MonoBehaviour
     private bool isJumping = false;
     private bool isWallJumping = false;
 
+    public ParticleSystem runDust;  
+
     void Start()
     {
         _RB = GetComponent<Rigidbody2D>();
@@ -29,6 +31,19 @@ public class PlayerAnimation : MonoBehaviour
         _anim.SetBool("IsDashing", _playerMovement.IsDashing);
         _anim.SetBool("IsJumping", _playerMovement.IsJumping);
         _anim.SetBool("IsWallJumping", _playerMovement.IsWallJumping);
+
+        //Debug.Log(_RB.velocity.magnitude);
+        if (_RB.velocity.magnitude > 0.2f && _playerMovement.CanJump())
+        {
+            Debug.Log("j");
+            CreateRunDust();
+        }
+        else
+        {
+            Debug.Log("n");
+            StopRunDust();
+        }
+        //Vector3 newVelocity = runDust.velocityOverLifetime;
     }
 
     private void CheckAndSetAnimationTriggers()
@@ -46,4 +61,21 @@ public class PlayerAnimation : MonoBehaviour
             _anim.SetTrigger(triggerName);
         }
     }
+
+    #region EFFECTS
+    private void CreateDust(GameObject dust)
+    {
+        Vector3 dustPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 1.261f, gameObject.transform.position.z);
+        Instantiate(dust, dustPosition, Quaternion.identity);
+    }
+    private void CreateRunDust()
+    {
+        runDust.Play();
+    }
+
+    private void StopRunDust()
+    {
+        runDust.Stop();
+    }
+    #endregion
 }

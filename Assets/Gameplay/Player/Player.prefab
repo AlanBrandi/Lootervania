@@ -1395,7 +1395,6 @@ MonoBehaviour:
   turnableGameObject: {fileID: 5667115825748660000}
   landDust: {fileID: 2776646383461696872, guid: a1c1b45d17e186949a682c7b08284aa4, type: 3}
   jumpDust: {fileID: 2776646383461696872, guid: 293fb4109bdf13e4b924f6a6878759e2, type: 3}
-  rundust: {fileID: 7819392627884778366, guid: 89bd05170368f4c4cb6c21d37984ffec, type: 3}
   _groundCheckPoint: {fileID: 5061378893366820064}
   _groundCheckSize: {x: 0.49, y: 0.03}
   _frontWallCheckPoint: {fileID: 3464324494946342107}
@@ -1624,6 +1623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _anim: {fileID: 3408741359618101778}
+  runDust: {fileID: 6713287029997108848}
 --- !u!1 &3789542581162972741
 GameObject:
   m_ObjectHideFlags: 0
@@ -3316,6 +3316,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7819392627884778366, guid: 89bd05170368f4c4cb6c21d37984ffec, type: 3}
+      propertyPath: stopAction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7819392627884778366, guid: 89bd05170368f4c4cb6c21d37984ffec, type: 3}
       propertyPath: playOnAwake
       value: 1
       objectReference: {fileID: 0}
@@ -3327,6 +3331,11 @@ PrefabInstance:
 --- !u!4 &3270531318561006528 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2075367991637835470, guid: 89bd05170368f4c4cb6c21d37984ffec, type: 3}
+  m_PrefabInstance: {fileID: 3579925020246777102}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &6713287029997108848 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7819392627884778366, guid: 89bd05170368f4c4cb6c21d37984ffec, type: 3}
   m_PrefabInstance: {fileID: 3579925020246777102}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5059886165600077285
