@@ -240,6 +240,10 @@ public class BulletCustom : Bullet
             {
                 GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity);
                 tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
+                if (isAuraShot)
+                {
+                    Instantiate(bulletStats.auraGameObject, tmpSticky.transform);
+                }
                 OnBulletDestroy();
             }
             else
@@ -257,6 +261,10 @@ public class BulletCustom : Bullet
             {
                 GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity, enemyCollider.transform);
                 tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
+                if (isAuraShot)
+                {
+                    Instantiate(bulletStats.auraGameObject, tmpSticky.transform);
+                }
                 OnBulletDestroy();
             }
             else
@@ -274,6 +282,10 @@ public class BulletCustom : Bullet
             {
                 GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity);
                 tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
+                if (isAuraShot)
+                {
+                    Instantiate(bulletStats.auraGameObject, tmpSticky.transform);
+                }
             }
             else
             {
@@ -290,6 +302,10 @@ public class BulletCustom : Bullet
             {
                 GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity, enemyCollider.transform);
                 tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
+                if (isAuraShot)
+                {
+                    Instantiate(bulletStats.auraGameObject, tmpSticky.transform);
+                }
             }
             else
             {
