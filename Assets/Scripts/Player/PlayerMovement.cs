@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
 
 	public GameObject landDust;
 	public GameObject jumpDust;
+	private PlayerAnimation playerAnimation;
 
 	#endregion
 
@@ -93,6 +94,7 @@ public class PlayerMovement : MonoBehaviour
 		_inputController.OnJumpDown += OnJumpInput;
 		_inputController.OnJumpUp += OnJumpUpInput;
 		_inputController.OnDash += OnDashInput;
+		playerAnimation = GetComponent<PlayerAnimation>();
 	}
 
 	private void Start()
@@ -379,6 +381,7 @@ public class PlayerMovement : MonoBehaviour
 		Vector3 rotation = turnableGameObject.transform.rotation.eulerAngles;
 		rotation.y += 180f;
 		turnableGameObject.transform.rotation = Quaternion.Euler(rotation);
+		playerAnimation.ChangeDustDirection();
 		IsFacingRight = !IsFacingRight;
 		_cameraFollowObject.CallTurn();
 	}

@@ -70,11 +70,18 @@ public class PlayerAnimation : MonoBehaviour
     }
     private void CreateRunDust()
     {
+        if (!runDust.isEmitting)
         runDust.Play();
+    }
+
+    public void ChangeDustDirection()
+    {
+        runDust.gameObject.transform.localScale = new Vector3(runDust.gameObject.transform.localScale.x * -1, runDust.gameObject.transform.localScale.y, runDust.gameObject.transform.localScale.z);
     }
 
     private void StopRunDust()
     {
+        if (runDust.isEmitting)
         runDust.Stop();
     }
     #endregion
