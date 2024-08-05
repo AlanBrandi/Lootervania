@@ -45,6 +45,10 @@ public class PlayerMovement : MonoBehaviour
 
 	private TrailRenderer _trailRenderer;
 
+	public GameObject landDust;
+	public GameObject jumpDust;
+	public ParticleSystem rundust;
+
 	#endregion
 
 	#region INPUT PARAMETERS
@@ -128,6 +132,7 @@ public class PlayerMovement : MonoBehaviour
 			{
 				if (LastOnGroundTime < -0.1f)
 				{
+					CreateDust(landDust);
 					//landAnimation
 				}
 
@@ -191,7 +196,8 @@ public class PlayerMovement : MonoBehaviour
 				_isJumpCut = false;
 				_isJumpFalling = false;
 				Jump();
-
+				CreateDust(jumpDust);
+				
 				//call jump animation
 			}
 			else if (CanWallJump() && LastPressedJumpTime > 0)
@@ -289,8 +295,10 @@ public class PlayerMovement : MonoBehaviour
 		{
 			if (IsWallJumping)
 				Run(Data.wallJumpRunLerp);
-			else
+			else{
 				Run(1);
+				CreateRunDust();
+				}
 		}
 		else if (_isDashAttacking)
 		{
@@ -530,6 +538,19 @@ public class PlayerMovement : MonoBehaviour
 		else
 			return false;
 	}
+	#endregion
+
+	#region EFFECTS
+
+private void CreateDust(GameObject dust){
+	Vector3 dustPosition = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y -1.261f, gameObject.transform.position.z);
+	Instantiate(dust, dustPosition, Quaternion.identity);
+
+}
+private void CreateRunDust(){
+	rundust.Play();
+}
+
 	#endregion
 
 
