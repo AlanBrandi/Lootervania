@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class StickyScript : MonoBehaviour
 {
+    private Animator anim;
+    private void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
     public void Explode(float explosionDamage, float explosionRadius, LayerMask damageableLayers, GameObject circlePrefab, float time)
     {
         StartCoroutine(StickyShotCoroutine(explosionDamage, explosionRadius, damageableLayers, circlePrefab, time));
@@ -52,6 +57,8 @@ public class StickyScript : MonoBehaviour
 
     private IEnumerator StickyShotCoroutine(float explosionDamage, float explosionRadius, LayerMask damageableLayers, GameObject circlePrefab, float time)
     {
+        yield return new WaitForSeconds(2f - time);
+        anim.SetBool("StartExplosion", true);
         yield return new WaitForSeconds(time);
         FinalExplosion(explosionDamage, explosionRadius, damageableLayers, circlePrefab);
     }

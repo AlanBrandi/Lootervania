@@ -32,6 +32,10 @@ public class HealthController : HealthModel
         CurrentHealth += value;
         onHeal?.Invoke(this, value);
     }
+    public void PlayAnimHit()
+    {
+        anim.SetTrigger("Hit");
+    }
 
     public void ReduceHealth(int value, Vector2 attackDirection)
     {
