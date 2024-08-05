@@ -174,11 +174,7 @@ public class BulletCustom : Bullet
 
         if (other.CompareTag("Player"))
         {
-            if (hitCountPlayer == 0)
-            {
-                hitCountPlayer++;
-            }
-            else
+            if(isBoomerangShoot)
             {
                 OnBulletDestroy();
             }

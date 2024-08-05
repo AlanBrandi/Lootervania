@@ -23,17 +23,17 @@ MonoBehaviour:
   maxPiercingShoots: 3
   isShootGetBigByTime: 0
   maxBulletSize: 2
-  isBoomerangShoot: 0
+  isBoomerangShoot: 1
   maxDistanceBoomerang: 5
-  isAuraShot: 0
+  isAuraShot: 1
   auraGameObject: {fileID: 2732271386456280531, guid: 3e0a2e73f8583e54791fc7c85381b9cd, type: 3}
   sizeAura: 1
   auraSpeedMod: 2
   auraLifetimeMod: 2
   auraDamageMod: 5
-  auraDamage: 5.6
+  auraDamage: 5.2
   auraDamageInterval: 0.05
-  isPullShot: 1
+  isPullShot: 0
   pullShotChance: 100
   pullGameObject: {fileID: 2732271386456280531, guid: f1f75ad76fcf0964caf28272d374b422, type: 3}
   pullStrength: 50
