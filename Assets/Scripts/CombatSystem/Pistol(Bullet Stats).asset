@@ -25,16 +25,16 @@ MonoBehaviour:
   maxBulletSize: 2
   isBoomerangShoot: 0
   maxDistanceBoomerang: 5
-  isAuraShot: 1
+  isAuraShot: 0
   auraGameObject: {fileID: 2732271386456280531, guid: 3e0a2e73f8583e54791fc7c85381b9cd, type: 3}
   sizeAura: 1
   auraSpeedMod: 2
   auraLifetimeMod: 2
   auraDamageMod: 5
-  auraDamage: 5.7
+  auraDamage: 5.9
   auraDamageInterval: 0.05
-  isPullShot: 0
-  pullShotChance: 15
+  isPullShot: 1
+  pullShotChance: 100
   pullGameObject: {fileID: 2732271386456280531, guid: f1f75ad76fcf0964caf28272d374b422, type: 3}
   pullStrength: 50
   maxPullDistance: 15

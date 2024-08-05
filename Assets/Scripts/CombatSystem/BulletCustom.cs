@@ -52,6 +52,10 @@ public class BulletCustom : Bullet
     private Transform playerTransform;
     private int hitCountPlayer = 0;
 
+    public GameObject destroyFX;
+    public GameObject explosionFX;
+    
+
     // Parâmetros de explosão
     private bool isExplosive;
     private float explosionRadius;
@@ -309,6 +313,7 @@ public class BulletCustom : Bullet
         if (gameObject != null)
             if (isAuraShot)
                 Destroy(auraTmp);
+            Instantiate(destroyFX, transform.position, Quaternion.identity);
         PoolManager.ReleaseObject(gameObject);
     }
 
@@ -319,6 +324,7 @@ public class BulletCustom : Bullet
         {
             collider.sharedMaterial = null;
         }
+
         transform.localScale = bulletSize;
 
         speed = bulletStats.bulletSpeed;
@@ -449,8 +455,8 @@ public class BulletCustom : Bullet
                 hitEnemy = true;
             }
         }
-
-        DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
+         Instantiate(explosionFX, transform.position, Quaternion.identity);
+        //DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
 
         OnBulletDestroy();
     }
@@ -470,7 +476,8 @@ public class BulletCustom : Bullet
                 hitEnemy = true;
             }
         }
-        DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
+        Instantiate(explosionFX, transform.position, Quaternion.identity);
+        //DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
     }
 
     private void DrawExplosionCircle(Vector3 position, float radius, Color color)

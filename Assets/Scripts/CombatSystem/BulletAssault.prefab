@@ -197,5 +197,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f2d9f130fc85e44881be5967e1ef46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyFX: {fileID: 3703970013701416737, guid: 3678643322fad6947b230f1787b8af24, type: 3}
+  explosionFX: {fileID: 9144877711515139287, guid: fff4bfe62dee751448e1e356397abcc2, type: 3}
+  pullFX: {fileID: 0}
   bulletStats: {fileID: 11400000, guid: 7ef77c71f349008438b6479e8b37489d, type: 2}
   circlePrefab: {fileID: 165832977858907626, guid: b3c23822facfb8446b7b99263f0515d3, type: 3}

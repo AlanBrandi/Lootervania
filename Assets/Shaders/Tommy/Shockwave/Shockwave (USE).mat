@@ -38,6 +38,9 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _WaveDistance: -0.1
+    - _ShockwaveStrength: 0.07
+    - _WaveDistance: 0.146
+    - _XSize: 1.78
+    - _size: 0.05
     m_Colors: []
   m_BuildTextureStacks: []

@@ -12,6 +12,8 @@ public class HealthController : HealthModel
     private Knockback knockback;
     private Animator anim;
     private FlashDamage flashDamage;
+
+    public GameObject dieFX;
     private void Start()
     {
         anim = GetComponentInChildren<Animator>();
@@ -111,5 +113,10 @@ public class HealthController : HealthModel
     private void OnEnable()
     {
         CurrentHealth = MaxHealth;
+    }
+
+    public void DeathFX()
+    {
+         Instantiate(dieFX, transform.position, Quaternion.identity);
     }
 }
