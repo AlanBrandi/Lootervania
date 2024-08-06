@@ -32,10 +32,7 @@ public class HealthController : HealthModel
         CurrentHealth += value;
         onHeal?.Invoke(this, value);
     }
-    public void PlayAnimHit()
-    {
-        anim.SetTrigger("Hit");
-    }
+    
 
     public void ReduceHealth(int value, Vector2 attackDirection)
     {
@@ -62,7 +59,12 @@ public class HealthController : HealthModel
         {
             flashDamage.Flash();
             anim.SetTrigger("Hit");
-            knockback.StartKnockBack(attackDirection);
+            if(knockback != null)
+            {
+                knockback.StartKnockBack(attackDirection);
+            }
+            
+            Debug.Log(attackDirection.ToString());
             cameraShake.Shake(attackDirection, .1f);
 
             Quaternion spawnRotation = Quaternion.FromToRotation(Vector2.right, attackDirection);

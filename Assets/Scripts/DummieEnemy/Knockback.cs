@@ -10,7 +10,7 @@ public class Knockback : MonoBehaviour
     private Rigidbody2D _rb;
     private FlyingEnemyBehaviour _enemyBehaviour; 
 
-    private bool _isKnockBacking;
+    public bool _isKnockBacking;
     private float _timer;
 
     private void Awake() 

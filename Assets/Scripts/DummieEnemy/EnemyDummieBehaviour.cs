@@ -99,13 +99,16 @@ public class EnemyDummieBehaviour : MonoBehaviour
     private void ShootTarget()
     {
         var bullet = PoolManager.SpawnObject(prefabBullet, transform.position, Quaternion.identity);
-        Vector2 shootDirection = (target.position - transform.position).normalized;
+    Vector2 shootDirection = (target.position - transform.position).normalized;
 
-        Rigidbody2D rb2d = bullet.GetComponent<Rigidbody2D>();
-        if (rb2d != null)
-        {
-            rb2d.velocity = shootDirection * bulletSpeed;
-        }
+    float angle = Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg;
+    bullet.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+    Rigidbody2D rb2d = bullet.GetComponent<Rigidbody2D>();
+    if (rb2d != null)
+    {
+        rb2d.velocity = shootDirection * bulletSpeed;
+    }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
