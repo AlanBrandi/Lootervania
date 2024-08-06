@@ -23,7 +23,7 @@ public class RangeWeapon : Weapon
     
     private Bullet bullet;
 
-    public GameObject shootFX;
+    public ParticleSystem shootFX;
     
     //Perks
     [Space]
@@ -67,7 +67,7 @@ public class RangeWeapon : Weapon
             int currentAmountShotsPerTrigger = amountShotsPerTrigger;
             damage = weaponStats.damage;
             Vector3 bulletSize = weaponStats.bulletSize;
-             Instantiate(shootFX, spawnPoint);
+            shootFX.Play();
             if (isLessAmmoMorePower)
             {
                 float ammoRatio = (float)currentAmmoAmount / maxAmmoAmount;

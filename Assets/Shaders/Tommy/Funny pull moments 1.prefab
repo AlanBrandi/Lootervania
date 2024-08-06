@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1679452986132255997}
   - component: {fileID: 7608435629710895951}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Particle System Force Field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -539,7 +539,7 @@ GameObject:
   - component: {fileID: 4421255976400448183}
   - component: {fileID: 4912190022230137365}
   - component: {fileID: 5090288673153032869}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Hello
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5411,7 +5411,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.0002
+  m_Radius: 0.03
 --- !u!1 &7261218695894373573
 GameObject:
   m_ObjectHideFlags: 0
@@ -5423,7 +5423,7 @@ GameObject:
   - component: {fileID: 7083700611232319749}
   - component: {fileID: 1085047464510939763}
   - component: {fileID: 2207714551897715200}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Funny pull moments 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
