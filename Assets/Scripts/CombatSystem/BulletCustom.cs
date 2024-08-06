@@ -10,6 +10,7 @@ public class BulletCustom : Bullet
     private float speed;
     private float lifetime;
     private float elapsedTime;
+    private float originalLocalscale;
 
     private Rigidbody2D rb;
     private Vector2 direction;
@@ -54,7 +55,7 @@ public class BulletCustom : Bullet
 
     public GameObject destroyFX;
     public GameObject explosionFX;
-    
+
 
     // Parâmetros de explosão
     private bool isExplosive;
@@ -104,8 +105,8 @@ public class BulletCustom : Bullet
 
         if (isBulletGetBigByTime)
         {
-            float scalePercentage = elapsedTime / lifetime;
-            float currentScale = Mathf.Lerp(1f, maxBulletSize, scalePercentage);
+            float scalePercentage = (elapsedTime / lifetime) * .2f;
+            float currentScale = Mathf.Lerp(originalLocalscale, maxBulletSize, scalePercentage);
 
             transform.localScale = new Vector3(currentScale, currentScale, 1f);
             bulletDamage += (int)(0.2f * elapsedTime); // 20% pensar melhor depois
@@ -145,7 +146,8 @@ public class BulletCustom : Bullet
             {
                 if (Random.Range(0f, 100f) <= pullShotChance)
                 {
-                    Instantiate(pullGameObject, transform.position, Quaternion.identity);
+                    GameObject tmpPull = Instantiate(pullGameObject, transform.position, Quaternion.identity);
+                    tmpPull.transform.localScale = transform.localScale;
                 }
             }
 
@@ -174,7 +176,7 @@ public class BulletCustom : Bullet
 
         if (other.CompareTag("Player"))
         {
-            if(isBoomerangShoot)
+            if (isBoomerangShoot)
             {
                 OnBulletDestroy();
             }
@@ -190,7 +192,8 @@ public class BulletCustom : Bullet
             {
                 if (Random.Range(0f, 100f) <= pullShotChance)
                 {
-                    Instantiate(pullGameObject, transform.position, Quaternion.identity);
+                    GameObject tmpPull = Instantiate(pullGameObject, transform.position, Quaternion.identity);
+                    tmpPull.transform.localScale = transform.localScale;
                 }
             }
 
@@ -238,12 +241,7 @@ public class BulletCustom : Bullet
         {
             if (isStickyShot)
             {
-                GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity);
-                tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
-                if (isAuraShot)
-                {
-                    Instantiate(bulletStats.auraGameObject, tmpSticky.transform);
-                }
+                HandleSticky();
                 OnBulletDestroy();
             }
             else
@@ -259,12 +257,7 @@ public class BulletCustom : Bullet
         {
             if (isStickyShot)
             {
-                GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity, enemyCollider.transform);
-                tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
-                if (isAuraShot)
-                {
-                    Instantiate(bulletStats.auraGameObject, tmpSticky.transform);
-                }
+                HandleSticky(enemyCollider);
                 OnBulletDestroy();
             }
             else
@@ -280,12 +273,7 @@ public class BulletCustom : Bullet
         {
             if (isStickyShot)
             {
-                GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity);
-                tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
-                if (isAuraShot)
-                {
-                    Instantiate(bulletStats.auraGameObject, tmpSticky.transform);
-                }
+                HandleSticky();
             }
             else
             {
@@ -300,17 +288,40 @@ public class BulletCustom : Bullet
         {
             if (isStickyShot)
             {
-                GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity, enemyCollider.transform);
-                tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
-                if (isAuraShot)
-                {
-                    Instantiate(bulletStats.auraGameObject, tmpSticky.transform);
-                }
+                HandleSticky(enemyCollider);
             }
             else
             {
                 ExplodeNonDestroy(0.2f);
             }
+        }
+    }
+
+    private void HandleSticky()
+    {
+        GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity);
+        tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
+        tmpSticky.transform.localScale = transform.localScale;
+        if (isAuraShot)
+        {
+            GameObject tmpAura = Instantiate(bulletStats.auraGameObject, tmpSticky.transform);
+            tmpAura.GetComponent<AuraScript>().isSticky = true;
+            if (isBulletGetBigByTime)
+                tmpAura.GetComponent<AuraScript>().isBig = true;
+        }
+    }
+
+    private void HandleSticky(Collider2D enemyCollider)
+    {
+        GameObject tmpSticky = Instantiate(stickyGameObject, transform.position, Quaternion.identity, enemyCollider.transform);
+        tmpSticky.GetComponent<StickyScript>().Explode(explosionDamage, explosionRadius, damageableLayers, circlePrefab, MaxStickyShotsTime);
+        tmpSticky.transform.localScale = transform.localScale;
+        if (isAuraShot)
+        {
+            GameObject tmpAura = Instantiate(bulletStats.auraGameObject, tmpSticky.transform);
+            tmpAura.GetComponent<AuraScript>().isSticky = true;
+            if (isBulletGetBigByTime)
+                tmpAura.GetComponent<AuraScript>().isBig = true;
         }
     }
     #endregion
@@ -325,7 +336,8 @@ public class BulletCustom : Bullet
         if (gameObject != null)
             if (isAuraShot)
                 Destroy(auraTmp);
-            Instantiate(destroyFX, transform.position, Quaternion.identity);
+            GameObject tmpDestroy = Instantiate(destroyFX, transform.position, Quaternion.identity);
+        tmpDestroy.transform.localScale = transform.localScale;
         PoolManager.ReleaseObject(gameObject);
     }
 
@@ -338,6 +350,7 @@ public class BulletCustom : Bullet
         }
 
         transform.localScale = bulletSize;
+        originalLocalscale = bulletSize.x;
 
         speed = bulletStats.bulletSpeed;
         lifetime = bulletStats.lifeTime;
@@ -407,6 +420,7 @@ public class BulletCustom : Bullet
             lifetime = lifetime * auraLifetimeMod;
             speed = speed / auraSpeedMod;
             GameObject aura = Instantiate(auraGameObject, transform);
+            aura.GetComponent<AuraScript>().isBig = true;
             auraTmp = aura;
         }
 
@@ -455,7 +469,7 @@ public class BulletCustom : Bullet
 
     private void Explode()
     {
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, ((explosionRadius) + (explosionRadius * transform.localScale.x)), damageableLayers);
         bool hitEnemy = false;
 
         foreach (var hitCollider in hitColliders)
@@ -467,7 +481,8 @@ public class BulletCustom : Bullet
                 hitEnemy = true;
             }
         }
-         Instantiate(explosionFX, transform.position, Quaternion.identity);
+         GameObject tmpExplosion = Instantiate(explosionFX, transform.position, Quaternion.identity);
+        tmpExplosion.transform.localScale = transform.localScale;
         //DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green);
 
         OnBulletDestroy();

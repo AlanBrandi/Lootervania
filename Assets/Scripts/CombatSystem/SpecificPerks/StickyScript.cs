@@ -17,7 +17,7 @@ public class StickyScript : MonoBehaviour
 
     private void FinalExplosion(float explosionDamage, float explosionRadius, LayerMask damageableLayers, GameObject circlePrefab)
     {
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, explosionRadius, damageableLayers);
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, ((explosionRadius)+(explosionRadius*transform.localScale.x)), damageableLayers);
         bool hitEnemy = false;
 
         foreach (var hitCollider in hitColliders)
@@ -29,7 +29,8 @@ public class StickyScript : MonoBehaviour
                 hitEnemy = true;
             }
         }
-        Instantiate(explosionFX, transform.position, Quaternion.identity);
+        GameObject tmpExplosion = Instantiate(explosionFX, transform.position, Quaternion.identity);
+        tmpExplosion.transform.localScale = transform.localScale;
         //DrawExplosionCircle(transform.position, explosionRadius, hitEnemy ? Color.red : Color.green, circlePrefab);
         Destroy(gameObject);
     }

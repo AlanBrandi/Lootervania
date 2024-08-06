@@ -3018,6 +3018,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5834220963688480271}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
+      propertyPath: reloadInput
+      value: 
+      objectReference: {fileID: -8927725033201282838, guid: 64449ccd15f37574489db74b02e31e1c, type: 3}
+    - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: weaponStats
       value: 
       objectReference: {fileID: 11400000, guid: 5d8409cc5e041e4449900e1cb660b6fb, type: 2}
@@ -3336,6 +3340,10 @@ PrefabInstance:
       propertyPath: ReloadPanel
       value: 
       objectReference: {fileID: 5834220963688480271}
+    - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
+      propertyPath: reloadInput
+      value: 
+      objectReference: {fileID: -8927725033201282838, guid: 64449ccd15f37574489db74b02e31e1c, type: 3}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: weaponStats
       value: 
@@ -3834,6 +3842,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5834220963688480271}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
+      propertyPath: reloadInput
+      value: 
+      objectReference: {fileID: -8927725033201282838, guid: 64449ccd15f37574489db74b02e31e1c, type: 3}
+    - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: sliderReload
       value: 
       objectReference: {fileID: 5482777622639593291}
@@ -4000,6 +4012,10 @@ PrefabInstance:
       propertyPath: ReloadPanel
       value: 
       objectReference: {fileID: 5834220963688480271}
+    - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
+      propertyPath: reloadInput
+      value: 
+      objectReference: {fileID: -8927725033201282838, guid: 64449ccd15f37574489db74b02e31e1c, type: 3}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: weaponStats
       value: 
