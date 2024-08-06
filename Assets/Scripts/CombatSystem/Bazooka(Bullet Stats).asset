@@ -21,21 +21,23 @@ MonoBehaviour:
   maxStickyShotsTime: 2
   isPiercingShoot: 0
   maxPiercingShoots: 0
-  isShootGetBigByTime: 1
+  isShootGetBigByTime: 0
   maxBulletSize: 10
   isBoomerangShoot: 0
   maxDistanceBoomerang: 5
   isAuraShot: 0
   auraGameObject: {fileID: 0}
+  auraMaterial: {fileID: 2100000, guid: 6640a1ea0dbe4254b8d51bb5a99d9531, type: 2}
   sizeAura: 0
   auraSpeedMod: 0
   auraLifetimeMod: 0
   auraDamageMod: 0
   auraDamage: Infinity
   auraDamageInterval: 0
-  isPullShot: 1
+  isPullShot: 0
   pullShotChance: 100
   pullGameObject: {fileID: 2732271386456280531, guid: f1f75ad76fcf0964caf28272d374b422, type: 3}
+  pullFX: {fileID: 7261218695894373573, guid: 8c1f96fda2718374dbffb012395f243a, type: 3}
   pullStrength: 50
   maxPullDistance: 15
   maxPullTime: 2
@@ -43,7 +45,7 @@ MonoBehaviour:
   pullDamageInterval: 0.55
   isBouncyShot: 0
   bouncyMaterial: {fileID: 0}
-  isExplosive: 1
+  isExplosive: 0
   explosionRadius: 2
   explosionDamage: 200
   damageableLayers:

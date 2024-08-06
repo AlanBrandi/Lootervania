@@ -5,17 +5,47 @@ using UnityEngine;
 public class StickyScript : MonoBehaviour
 {
     private Animator anim;
+    public bool isBig= false;
+    private float originalLocalScale;
+    public SOBulletStats bulletStats;
+    private float elapsedTime;
+    private float lifetime;
+    private float damage;
+    private float originalDamage;
     [SerializeField] private GameObject explosionFX;
     private void Start()
     {
         anim = GetComponent<Animator>();
+        originalLocalScale = transform.localScale.x;
+        elapsedTime = 0;
+    }
+
+    public void UpdateSize()
+    {
+        isBig = true;
+    }
+
+    private void FixedUpdate()
+    {
+        elapsedTime += Time.deltaTime;
+        float scalePercentage = (elapsedTime / lifetime) * .2f;
+        float currentScale = Mathf.Lerp(originalLocalScale, bulletStats.maxBulletSize, scalePercentage);
+
+        //float sizeRatio = currentScale / bulletStats.maxBulletSize;
+        //damage = originalDamage * sizeRatio;
+        damage += (int)(0.2 * elapsedTime);
+
+        transform.localScale = new Vector3(currentScale, currentScale, 1f);
     }
     public void Explode(float explosionDamage, float explosionRadius, LayerMask damageableLayers, GameObject circlePrefab, float time)
     {
-        StartCoroutine(StickyShotCoroutine(explosionDamage, explosionRadius, damageableLayers, circlePrefab, time));
+        lifetime = time;
+        originalDamage = explosionDamage;
+        damage = originalDamage;
+        StartCoroutine(StickyShotCoroutine(explosionRadius, damageableLayers, circlePrefab, time));
     }
 
-    private void FinalExplosion(float explosionDamage, float explosionRadius, LayerMask damageableLayers, GameObject circlePrefab)
+    private void FinalExplosion(float explosionRadius, LayerMask damageableLayers, GameObject circlePrefab)
     {
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, ((explosionRadius)+(explosionRadius*transform.localScale.x)), damageableLayers);
         bool hitEnemy = false;
@@ -25,7 +55,7 @@ public class StickyScript : MonoBehaviour
             if (hitCollider.CompareTag("Enemy") && hitCollider.isTrigger)
             {
                 Vector2 attackDirection = (hitCollider.transform.position - transform.position).normalized;
-                hitCollider.GetComponent<HealthController>().ReduceHealth((int)explosionDamage, attackDirection);
+                hitCollider.GetComponent<HealthController>().ReduceHealth((int)damage, attackDirection);
                 hitEnemy = true;
             }
         }
@@ -58,11 +88,11 @@ public class StickyScript : MonoBehaviour
         Destroy(circle, 0.5f);
     }
 
-    private IEnumerator StickyShotCoroutine(float explosionDamage, float explosionRadius, LayerMask damageableLayers, GameObject circlePrefab, float time)
+    private IEnumerator StickyShotCoroutine(float explosionRadius, LayerMask damageableLayers, GameObject circlePrefab, float time)
     {
         yield return new WaitForSeconds(2f - time);
         anim.SetBool("StartExplosion", true);
         yield return new WaitForSeconds(time);
-        FinalExplosion(explosionDamage, explosionRadius, damageableLayers, circlePrefab);
+        FinalExplosion(explosionRadius, damageableLayers, circlePrefab);
     }
 }

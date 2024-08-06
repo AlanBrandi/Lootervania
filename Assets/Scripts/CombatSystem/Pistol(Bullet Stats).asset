@@ -14,28 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 1200
   lifeTime: 1
-  IsRecochetShoot: 0
+  IsRecochetShoot: 1
   recochetAmount: 6
   IsStickyShot: 0
   stickyGameObject: {fileID: 2732271386456280531, guid: 8b0f86ca08f62a845a7c10cc03adff8b, type: 3}
   maxStickyShotsTime: 2
   isPiercingShoot: 0
   maxPiercingShoots: 3
-  isShootGetBigByTime: 1
+  isShootGetBigByTime: 0
   maxBulletSize: 5
   isBoomerangShoot: 0
   maxDistanceBoomerang: 5
-  isAuraShot: 0
+  isAuraShot: 1
   auraGameObject: {fileID: 2732271386456280531, guid: 3e0a2e73f8583e54791fc7c85381b9cd, type: 3}
+  auraMaterial: {fileID: 2100000, guid: 6640a1ea0dbe4254b8d51bb5a99d9531, type: 2}
   sizeAura: 1
   auraSpeedMod: 2
   auraLifetimeMod: 2
   auraDamageMod: 5
-  auraDamage: 5.4
+  auraDamage: 5.1
   auraDamageInterval: 0.05
-  isPullShot: 1
+  isPullShot: 0
   pullShotChance: 100
   pullGameObject: {fileID: 2732271386456280531, guid: f1f75ad76fcf0964caf28272d374b422, type: 3}
+  pullFX: {fileID: 7261218695894373573, guid: a1227f5d0989bc346947890daad3ac10, type: 3}
   pullStrength: 50
   maxPullDistance: 15
   maxPullTime: 2
@@ -44,7 +46,7 @@ MonoBehaviour:
   isBouncyShot: 0
   bouncyMaterial: {fileID: 6200000, guid: 1f0591ecbc7836e4dab4df9aa54efe7f, type: 2}
   isExplosive: 0
-  explosionRadius: 1
+  explosionRadius: 1.5
   explosionDamage: 15
   damageableLayers:
     serializedVersion: 2

@@ -13,13 +13,13 @@ public class PullScript : MonoBehaviour
     private float pullDamageInterval;
     private float nextDamageTime;
     private GameObject[] enemies;
-    [SerializeField] private GameObject pullFX;
+    private GameObject pullFX;
 
     private List<Collider2D> collidersInTrigger = new List<Collider2D>();
 
     //private Animator anim;
 
-    [SerializeField] private SOBulletStats bulletStats;
+    [SerializeField] public SOBulletStats bulletStats;
 
     private void Start()
     {
@@ -30,6 +30,7 @@ public class PullScript : MonoBehaviour
         maxPullTime = bulletStats.maxPullTime;
         pullDamage = bulletStats.pullDamage;
         pullDamageInterval = bulletStats.pullDamageInterval;
+        pullFX = bulletStats.pullFX;
         GameObject pullFXTemp = Instantiate(pullFX, transform);
         //pullFXTemp.transform.localScale = transform.localScale;
         Destroy(gameObject, maxPullTime+1f);

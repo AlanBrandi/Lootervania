@@ -36,9 +36,12 @@ MonoBehaviour:
   isPullShot: 0
   pullShotChance: 0
   pullGameObject: {fileID: 0}
+  pullFX: {fileID: 0}
   pullStrength: 0
   maxPullDistance: 0
   maxPullTime: 0
+  pullDamage: 0
+  pullDamageInterval: 0
   isBouncyShot: 0
   bouncyMaterial: {fileID: 0}
   isExplosive: 0
