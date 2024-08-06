@@ -5,8 +5,8 @@ public class AuraScript : MonoBehaviour
 {
     private float sizeAura;
     private float auraDamage;
-    public bool isSticky;
-    public bool isBig;
+    public bool isSticky = false;
+    public bool isBig = false;
     private float auraDamageInterval;
     private float nextDamageTime;
     private List<Collider2D> collidersInTrigger = new List<Collider2D>();
@@ -19,6 +19,10 @@ public class AuraScript : MonoBehaviour
         auraDamageInterval = bulletStats.auraDamageInterval;
         sizeAura = bulletStats.sizeAura;
         transform.localScale = transform.localScale * sizeAura;
+    }
+
+    public void UpdateSize()
+    {
         if (isBig)
             transform.localScale = transform.localScale * 0.5f;
     }

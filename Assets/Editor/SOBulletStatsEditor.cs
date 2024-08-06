@@ -96,6 +96,8 @@ public class SOBulletStatsEditor : Editor
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("pullStrength"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("maxPullDistance"));
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("maxPullTime"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("pullDamage"));
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("pullDamageInterval"));
                 EditorGUI.indentLevel--;
             }
         }

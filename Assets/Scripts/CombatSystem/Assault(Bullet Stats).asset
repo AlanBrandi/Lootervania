@@ -16,16 +16,16 @@ MonoBehaviour:
   lifeTime: 1
   IsRecochetShoot: 0
   recochetAmount: 6
-  IsStickyShot: 0
+  IsStickyShot: 1
   stickyGameObject: {fileID: 2732271386456280531, guid: 8b0f86ca08f62a845a7c10cc03adff8b, type: 3}
   maxStickyShotsTime: 2
   isPiercingShoot: 0
   maxPiercingShoots: 3
-  isShootGetBigByTime: 1
+  isShootGetBigByTime: 0
   maxBulletSize: 5
   isBoomerangShoot: 0
   maxDistanceBoomerang: 5
-  isAuraShot: 0
+  isAuraShot: 1
   auraGameObject: {fileID: 2732271386456280531, guid: 3e0a2e73f8583e54791fc7c85381b9cd, type: 3}
   sizeAura: 1
   auraSpeedMod: 2
@@ -33,12 +33,14 @@ MonoBehaviour:
   auraDamageMod: 5
   auraDamage: 2
   auraDamageInterval: 0.05
-  isPullShot: 0
+  isPullShot: 1
   pullShotChance: 15
   pullGameObject: {fileID: 2732271386456280531, guid: f1f75ad76fcf0964caf28272d374b422, type: 3}
   pullStrength: 50
   maxPullDistance: 15
   maxPullTime: 2
+  pullDamage: 5
+  pullDamageInterval: 0.55
   isBouncyShot: 0
   bouncyMaterial: {fileID: 6200000, guid: 1f0591ecbc7836e4dab4df9aa54efe7f, type: 2}
   isExplosive: 1

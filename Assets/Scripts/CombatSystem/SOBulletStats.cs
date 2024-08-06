@@ -141,6 +141,18 @@ public class SOBulletStats : ScriptableObject
         get { return maxPullTime; }
         set { maxPullTime = value; }
     }
+    [SerializeField] public float pullDamage;
+    public float PullDamage
+    {
+        get { return pullDamage; }
+        set { pullDamage = value; }
+    }
+    [SerializeField] public float pullDamageInterval;
+    public float PullDamageInterval
+    {
+        get { return pullDamageInterval; }
+        set { pullDamageInterval = value; }
+    }
     [Space]
     [Tooltip("Doesn't work. Don't activate.")]
     public bool isBouncyShot;

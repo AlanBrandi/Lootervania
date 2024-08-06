@@ -307,7 +307,10 @@ public class BulletCustom : Bullet
             GameObject tmpAura = Instantiate(bulletStats.auraGameObject, tmpSticky.transform);
             tmpAura.GetComponent<AuraScript>().isSticky = true;
             if (isBulletGetBigByTime)
+            {
                 tmpAura.GetComponent<AuraScript>().isBig = true;
+                tmpAura.GetComponent<AuraScript>().UpdateSize();
+            }
         }
     }
 
@@ -321,7 +324,10 @@ public class BulletCustom : Bullet
             GameObject tmpAura = Instantiate(bulletStats.auraGameObject, tmpSticky.transform);
             tmpAura.GetComponent<AuraScript>().isSticky = true;
             if (isBulletGetBigByTime)
+            {
                 tmpAura.GetComponent<AuraScript>().isBig = true;
+                tmpAura.GetComponent<AuraScript>().UpdateSize();
+            }
         }
     }
     #endregion
@@ -420,7 +426,11 @@ public class BulletCustom : Bullet
             lifetime = lifetime * auraLifetimeMod;
             speed = speed / auraSpeedMod;
             GameObject aura = Instantiate(auraGameObject, transform);
-            aura.GetComponent<AuraScript>().isBig = true;
+            if (isBulletGetBigByTime)
+            {
+                aura.GetComponent<AuraScript>().isBig = true;
+                aura.GetComponent<AuraScript>().UpdateSize();
+            }
             auraTmp = aura;
         }
 

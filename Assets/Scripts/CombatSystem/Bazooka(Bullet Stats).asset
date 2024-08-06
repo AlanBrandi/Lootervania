@@ -21,7 +21,7 @@ MonoBehaviour:
   maxStickyShotsTime: 2
   isPiercingShoot: 0
   maxPiercingShoots: 0
-  isShootGetBigByTime: 0
+  isShootGetBigByTime: 1
   maxBulletSize: 10
   isBoomerangShoot: 0
   maxDistanceBoomerang: 5
@@ -39,10 +39,12 @@ MonoBehaviour:
   pullStrength: 50
   maxPullDistance: 15
   maxPullTime: 2
+  pullDamage: 5
+  pullDamageInterval: 0.55
   isBouncyShot: 0
   bouncyMaterial: {fileID: 0}
   isExplosive: 1
-  explosionRadius: 3
+  explosionRadius: 2
   explosionDamage: 200
   damageableLayers:
     serializedVersion: 2
