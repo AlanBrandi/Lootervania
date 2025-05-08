@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AuraScript : MonoBehaviour
@@ -51,7 +52,7 @@ public class AuraScript : MonoBehaviour
     {
         if (Time.time >= nextDamageTime)
         {
-            foreach (var collider in collidersInTrigger)
+            foreach (var collider in collidersInTrigger.ToList())
             {
                 collider.GetComponent<HealthController>().ReduceHealthNoKnockback((int)auraDamage);
             }

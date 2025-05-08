@@ -57,22 +57,25 @@ public class HealthController : HealthModel
         {
             cameraShake.Shake(attackDirection, 1);
             HandleDeath();
+            return;
         }
-        else
-        {
-            flashDamage.Flash();
-            anim.SetTrigger("Hit");
+        
+        flashDamage.Flash();
+        anim.SetTrigger("Hit");
+        
+        if(knockback)
             knockback.StartKnockBack(attackDirection);
+        
+        if(cameraShake)
             cameraShake.Shake(attackDirection, .1f);
 
-            Quaternion spawnRotation = Quaternion.FromToRotation(Vector2.right, attackDirection);
-            Quaternion spikesSpawnRotation = Quaternion.FromToRotation(Vector2.right, -attackDirection);
-            Vector2 spawnOffset = attackDirection.normalized * offsetDistance;
-            Vector3 spawnPosition = transform.position + (Vector3)spawnOffset;
+        Quaternion spawnRotation = Quaternion.FromToRotation(Vector2.right, attackDirection);
+        Quaternion spikesSpawnRotation = Quaternion.FromToRotation(Vector2.right, -attackDirection);
+        Vector2 spawnOffset = attackDirection.normalized * offsetDistance;
+        Vector3 spawnPosition = transform.position + (Vector3)spawnOffset;
 
-            Instantiate(hitEffect, spawnPosition, spawnRotation);
-            Instantiate(spikesHitEffect, transform.position, spikesSpawnRotation);
-        }
+        Instantiate(hitEffect, spawnPosition, spawnRotation);
+        Instantiate(spikesHitEffect, transform.position, spikesSpawnRotation);
     }
 
     public void ReduceHealthNoKnockback(int value)
@@ -93,12 +96,10 @@ public class HealthController : HealthModel
         if (CurrentHealth <= 0)
         {
             HandleDeath();
+            return;
         }
-        else
-        {
-            flashDamage.Flash();
-            anim.SetTrigger("Hit");
-        }
+        flashDamage.Flash();
+        anim.SetTrigger("Hit");
     }
 
     private void HandleDeath()

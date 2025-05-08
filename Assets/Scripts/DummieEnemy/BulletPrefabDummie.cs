@@ -10,7 +10,7 @@ public class BulletPrefabDummie : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        if (!gameObject) return;
+        if (gameObject == null) return;
         PoolManager.ReleaseObject(gameObject);
     }
 

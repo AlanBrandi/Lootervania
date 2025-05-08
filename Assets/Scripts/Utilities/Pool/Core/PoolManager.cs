@@ -121,6 +121,7 @@ namespace Utilities.Pool.Core
 
 		public static void ReleaseObject(GameObject clone)
 		{
+			if(clone == null) return;
 			Instance.InternalReleaseObject(clone);
 		}
 
