@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7536415623918087593}
   - component: {fileID: 5437918116590098976}
   - component: {fileID: 7212727070451225089}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 2
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -5067,6 +5067,10 @@ PrefabInstance:
     - target: {fileID: 3125858827463585977, guid: 8bfe2f210b9680f42b6099dbb7538f5e, type: 3}
       propertyPath: m_Name
       value: Shockwave
+      objectReference: {fileID: 0}
+    - target: {fileID: 3125858827463585977, guid: 8bfe2f210b9680f42b6099dbb7538f5e, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7680828698196661595, guid: 8bfe2f210b9680f42b6099dbb7538f5e, type: 3}

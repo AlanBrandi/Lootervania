@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1526209124275050828}
   - component: {fileID: 8907364327394909350}
   - component: {fileID: 9218470543945413910}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Funny pull moments
   m_TagString: Untagged
   m_Icon: {fileID: 0}

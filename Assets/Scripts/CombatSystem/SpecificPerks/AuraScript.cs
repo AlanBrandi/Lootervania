@@ -6,6 +6,8 @@ public class AuraScript : MonoBehaviour
 {
     private float sizeAura;
     private float auraDamage;
+    public bool isSticky = false;
+    public bool isBig = false;
     private float auraDamageInterval;
     private float nextDamageTime;
     private List<Collider2D> collidersInTrigger = new List<Collider2D>();
@@ -18,6 +20,12 @@ public class AuraScript : MonoBehaviour
         auraDamageInterval = bulletStats.auraDamageInterval;
         sizeAura = bulletStats.sizeAura;
         transform.localScale = transform.localScale * sizeAura;
+    }
+
+    public void UpdateSize()
+    {
+        if (isBig)
+            transform.localScale = transform.localScale * 0.5f;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -54,7 +62,10 @@ public class AuraScript : MonoBehaviour
         {
             foreach (var collider in collidersInTrigger.ToList())
             {
-                collider.GetComponent<HealthController>().ReduceHealthNoKnockback((int)auraDamage);
+                if (isSticky)
+                    collider.GetComponent<HealthController>().ReduceHealthNoKnockback((int)(auraDamage*0.2f));
+                else
+                collider.GetComponent<HealthController>().ReduceHealthNoKnockback((int)(auraDamage));
             }
             nextDamageTime = Time.time + auraDamageInterval;
         }

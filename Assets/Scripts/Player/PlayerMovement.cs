@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
 	private bool _dashRefilling;
 	private Vector2 _lastDashDir;
 	private bool _isDashAttacking;
+	private Knockback _knockback;
 
 	private TrailRenderer _trailRenderer;
 
@@ -102,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
 		SetGravityScale(Data.gravityScale);
 		IsFacingRight = true;
 
+        _knockback = GetComponent<Knockback>();
 		_cameraFollowObject = _cameraFollowGO.GetComponent<CameraFollowObject>();
 		_fallSpeedYDampingChangeThreshold = CameraManager.instance._fallSpeedYDampingChangeThreshold;
 	}
@@ -298,7 +300,8 @@ public class PlayerMovement : MonoBehaviour
 				Run(Data.wallJumpRunLerp);
 			else
 			{
-				Run(1);
+				if(!_knockback._isKnockBacking)
+				     Run(1);			
 			}
 		}
 		else if (_isDashAttacking)

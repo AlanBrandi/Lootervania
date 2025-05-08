@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Utilities.Pool.Core;
 using Random = UnityEngine.Random;
@@ -18,12 +19,14 @@ public class RangeWeapon : Weapon
     [SerializeField] private TMP_Text ammoText;
     [SerializeField] private Slider sliderReload;
 
+    [SerializeField] private InputActionReference reloadInput;
+
     private bool isReloading;
     private float timeSinceLastFire; 
     
     private Bullet bullet;
 
-    public GameObject shootFX;
+    public ParticleSystem shootFX;
     
     //Perks
     [Space]
@@ -36,14 +39,24 @@ public class RangeWeapon : Weapon
 
     private void Start()
     {
+        reloadInput.action.performed += Reload;
         InitializeWeapon();
     }
 
     private void Update()
     {
         if (isReloading) return;
+        
 
         timeSinceLastFire += Time.deltaTime;
+    }
+
+    private void Reload(InputAction.CallbackContext obj)
+    {
+        if (isReloading || currentAmmoAmount == maxAmmoAmount) return;
+        OnStartReload();
+        canShoot = false;
+        Invoke(nameof(WeaponReload), reloadTime);
     }
 
     private void AddPerks()
@@ -67,7 +80,7 @@ public class RangeWeapon : Weapon
             int currentAmountShotsPerTrigger = amountShotsPerTrigger;
             damage = weaponStats.damage;
             Vector3 bulletSize = weaponStats.bulletSize;
-             Instantiate(shootFX, spawnPoint);
+            shootFX.Play();
             if (isLessAmmoMorePower)
             {
                 float ammoRatio = (float)currentAmmoAmount / maxAmmoAmount;

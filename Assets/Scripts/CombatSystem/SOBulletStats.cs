@@ -69,6 +69,12 @@ public class SOBulletStats : ScriptableObject
         get { return auraGameObject; }
         set { auraGameObject = value; }
     }
+    [SerializeField] public Material auraMaterial;
+    public Material AuraMaterial
+    {
+        get { return auraMaterial; }
+        set { auraMaterial = value; }
+    }
     [SerializeField] public float sizeAura;
     public float SizeAura
     {
@@ -118,6 +124,12 @@ public class SOBulletStats : ScriptableObject
         get { return pullGameObject; }
         set { pullGameObject = value; }
     }
+    [SerializeField] public GameObject pullFX;
+    public GameObject PullFX
+    {
+        get { return pullFX; }
+        set { pullFX = value; }
+    }
     public float PullShotChance
     {
         get { return pullShotChance; }
@@ -140,6 +152,18 @@ public class SOBulletStats : ScriptableObject
     {
         get { return maxPullTime; }
         set { maxPullTime = value; }
+    }
+    [SerializeField] public float pullDamage;
+    public float PullDamage
+    {
+        get { return pullDamage; }
+        set { pullDamage = value; }
+    }
+    [SerializeField] public float pullDamageInterval;
+    public float PullDamageInterval
+    {
+        get { return pullDamageInterval; }
+        set { pullDamageInterval = value; }
     }
     [Space]
     [Tooltip("Doesn't work. Don't activate.")]
