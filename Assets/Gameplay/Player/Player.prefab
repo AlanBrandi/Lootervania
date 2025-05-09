@@ -3016,7 +3016,7 @@ PrefabInstance:
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: shootFX
       value: 
-      objectReference: {fileID: 3703970013701416737, guid: 155bfa0543f0c444fa20911547b98c63, type: 3}
+      objectReference: {fileID: 7695754298856999829, guid: 155bfa0543f0c444fa20911547b98c63, type: 3}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: ammoText
       value: 
@@ -3029,6 +3029,10 @@ PrefabInstance:
       propertyPath: ReloadPanel
       value: 
       objectReference: {fileID: 5834220963688480271}
+    - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
+      propertyPath: reloadInput
+      value: 
+      objectReference: {fileID: -8927725033201282838, guid: 64449ccd15f37574489db74b02e31e1c, type: 3}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: weaponStats
       value: 
@@ -3205,7 +3209,7 @@ PrefabInstance:
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: shootFX
       value: 
-      objectReference: {fileID: 3703970013701416737, guid: 155bfa0543f0c444fa20911547b98c63, type: 3}
+      objectReference: {fileID: 7695754298856999829, guid: 155bfa0543f0c444fa20911547b98c63, type: 3}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: ammoText
       value: 
@@ -3218,6 +3222,10 @@ PrefabInstance:
       propertyPath: ReloadPanel
       value: 
       objectReference: {fileID: 5834220963688480271}
+    - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
+      propertyPath: reloadInput
+      value: 
+      objectReference: {fileID: -8927725033201282838, guid: 64449ccd15f37574489db74b02e31e1c, type: 3}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: weaponStats
       value: 
@@ -3468,6 +3476,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5834220963688480271}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
+      propertyPath: reloadInput
+      value: 
+      objectReference: {fileID: -8927725033201282838, guid: 64449ccd15f37574489db74b02e31e1c, type: 3}
+    - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: weaponStats
       value: 
       objectReference: {fileID: 11400000, guid: b2b120781a355d34d94395a143c5e244, type: 2}
@@ -3588,7 +3600,7 @@ PrefabInstance:
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: shootFX
       value: 
-      objectReference: {fileID: 3703970013701416737, guid: 155bfa0543f0c444fa20911547b98c63, type: 3}
+      objectReference: {fileID: 7695754298856999829, guid: 155bfa0543f0c444fa20911547b98c63, type: 3}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: ammoText
       value: 
@@ -3601,6 +3613,10 @@ PrefabInstance:
       propertyPath: ReloadPanel
       value: 
       objectReference: {fileID: 5834220963688480271}
+    - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
+      propertyPath: reloadInput
+      value: 
+      objectReference: {fileID: -8927725033201282838, guid: 64449ccd15f37574489db74b02e31e1c, type: 3}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: sliderReload
       value: 
@@ -3759,7 +3775,7 @@ PrefabInstance:
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: shootFX
       value: 
-      objectReference: {fileID: 3703970013701416737, guid: 155bfa0543f0c444fa20911547b98c63, type: 3}
+      objectReference: {fileID: 7695754298856999829, guid: 155bfa0543f0c444fa20911547b98c63, type: 3}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: ammoText
       value: 
@@ -3772,6 +3788,10 @@ PrefabInstance:
       propertyPath: ReloadPanel
       value: 
       objectReference: {fileID: 5834220963688480271}
+    - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
+      propertyPath: reloadInput
+      value: 
+      objectReference: {fileID: -8927725033201282838, guid: 64449ccd15f37574489db74b02e31e1c, type: 3}
     - target: {fileID: 4883712435935806933, guid: a812d990f874f5144880ef022d3ea593, type: 3}
       propertyPath: weaponStats
       value: 

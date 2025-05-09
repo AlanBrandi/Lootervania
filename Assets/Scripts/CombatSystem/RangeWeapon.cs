@@ -84,7 +84,7 @@ public class RangeWeapon : Weapon
             if (isLessAmmoMorePower)
             {
                 float ammoRatio = (float)currentAmmoAmount / maxAmmoAmount;
-                damage *= (1 + ammoPowerMultiplier * (1 - ammoRatio));
+                damage *= (int)(1 + ammoPowerMultiplier * (1 - ammoRatio));
             }
             float spreadAngle = 15f;
         float baseAngle = spawnPoint.rotation.eulerAngles.z;
@@ -96,6 +96,7 @@ public class RangeWeapon : Weapon
             for (int i = 0; i < currentAmountShotsPerTrigger; i++)
             {
                 var bulletTmp = PoolManager.SpawnObject(bullet.gameObject, spawnPoint.position, spawnPoint.rotation);
+                if(bullet == null) continue;
                 float angle = currentAmountShotsPerTrigger > 1 ? startAngle + i * angleStep : baseAngle;
                 bulletTmp.transform.rotation = Quaternion.Euler(0, 0, angle);
                 bulletTmp.GetComponent<Bullet>().Initialize(damage, bulletSize);
@@ -163,7 +164,8 @@ public class RangeWeapon : Weapon
     
     private void OnStartReload()
     {
-        StartCoroutine(ReloadRoutine());
+        if(gameObject.activeSelf)
+            StartCoroutine(ReloadRoutine());
     }
     private void OnReloadFinished()
     {

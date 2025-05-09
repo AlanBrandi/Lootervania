@@ -132,6 +132,8 @@ public class DamageNumberSystem : MonoBehaviour
             numberGameObject = PoolManager.SpawnObject(gameObject, position, Quaternion.identity);
         }
 
+        if (numberGameObject == null) return null;
+        
         numberGameObject.GetComponent<RectTransform>().SetParent(parent.transform);
         DamageNumberSystem damageNumberPopup = numberGameObject.GetComponent<DamageNumberSystem>();
         damageNumberPopup.SetPosition(position, numberGameObject);

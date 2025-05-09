@@ -40,7 +40,7 @@ namespace Utilities.Pool.Core
 		public T GetItem()
 		{
 			ObjectPoolContainer<T> container = null;
-			for (int i = 0; i < list.Count; i++)
+			foreach (var t in list)
 			{
 				lastIndex++;
 				if (lastIndex > list.Count - 1) lastIndex = 0;
@@ -49,17 +49,12 @@ namespace Utilities.Pool.Core
 				{
 					continue;
 				}
-				else
-				{
-					container = list[lastIndex];
-					break;
-				}
+
+				container = list[lastIndex];
+				break;
 			}
 
-			if (container == null)
-			{
-				container = CreateContainer();
-			}
+			container ??= CreateContainer();
 
 			container.Consume();
 			lookup.Add(container.Item, container);

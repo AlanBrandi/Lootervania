@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
 	public PlayerData Data;
 
 	#region COMPONENTS
@@ -110,7 +109,6 @@ public class PlayerMovement : MonoBehaviour
 
 	private void Update()
 	{
-
 		#region TIMERS
 		LastOnGroundTime -= Time.deltaTime;
 		LastOnWallTime -= Time.deltaTime;
@@ -296,22 +294,23 @@ public class PlayerMovement : MonoBehaviour
 	{
 		if (!IsDashing)
 		{
-			if (IsWallJumping)
-				Run(Data.wallJumpRunLerp);
-			else
+			if (!IsWallJumping)
 			{
-				if(!_knockback._isKnockBacking)
-				     Run(1);			
+				Run(Data.wallJumpRunLerp);
+				return;
 			}
+			
+			if(_knockback == null) return;
+			if(!_knockback._isKnockBacking)
+				Run(1);
 		}
-		else if (_isDashAttacking)
+		if(_isDashAttacking)
 		{
 			Run(Data.dashEndRunLerp);
 		}
 
 		if (IsSliding)
 			Slide();
-
 	}
 
 	#region INPUT CALLBACKS

@@ -358,10 +358,13 @@ public class BulletCustom : Bullet
     public override void OnBulletDestroy()
     {
         if (!gameObject.activeSelf) return;
-        if (gameObject != null)
-            if (isAuraShot)
-                Destroy(auraTmp);
-            GameObject tmpDestroy = Instantiate(destroyFX, transform.position, Quaternion.identity);
+        if (gameObject == null) return;
+        
+        if (isAuraShot)
+        {
+            Destroy(auraTmp);
+        }
+        GameObject tmpDestroy = Instantiate(destroyFX, transform.position, Quaternion.identity);
         tmpDestroy.transform.localScale = transform.localScale;
         PoolManager.ReleaseObject(gameObject);
     }

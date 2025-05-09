@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Utilities.Pool.Core
@@ -56,6 +57,8 @@ namespace Utilities.Pool.Core
 			var pool = prefabLookup[prefab];
 
 			var clone = pool.GetItem();
+			if (clone == null) return null;
+			
 			clone.transform.SetPositionAndRotation(position, rotation);
 			clone.SetActive(true);
 
@@ -116,7 +119,8 @@ namespace Utilities.Pool.Core
 
 		public static GameObject SpawnObject(GameObject prefab, Vector3 position, Quaternion rotation)
 		{
-			return Instance.InternalSpawnObject(prefab, position, rotation);
+			var instance = Instance.InternalSpawnObject(prefab, position, rotation);
+			return instance;
 		}
 
 		public static void ReleaseObject(GameObject clone)

@@ -87,7 +87,7 @@ public class HealthController : HealthModel
         {
             onDamageTaken?.Invoke(this, value);
 
-            if (NumberPrefab)
+            if (NumberPrefab != null)
             {
                 NumberPrefab.Spawn(value, transform.position + damageNumberOffSetPosition, gameObject);
             }
