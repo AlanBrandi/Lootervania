@@ -55,7 +55,7 @@ public class FlyingEnemyBehaviour : MonoBehaviour
         }
 
         Vector2 direction = (player.position - transform.position).normalized;
-        rb.velocity = direction * speed;
+        rb.linearVelocity = direction * speed;
 
         if (Vector2.Distance(transform.position, player.position) > detectionRadius)
         {
@@ -66,13 +66,13 @@ public class FlyingEnemyBehaviour : MonoBehaviour
     private void ReturnToStart()
     {
         Vector2 direction = (startPosition - (Vector2)transform.position).normalized;
-        rb.velocity = direction * speed;
+        rb.linearVelocity = direction * speed;
 
         if (Vector2.Distance(transform.position, startPosition) < 0.1f)
         {
             isReturning = false;
             player = null;
-            rb.velocity = Vector2.zero; 
+            rb.linearVelocity = Vector2.zero; 
         }
     }
 
@@ -89,7 +89,7 @@ public class FlyingEnemyBehaviour : MonoBehaviour
     public void StopMovement()
     {
         isKnockback = true;
-        rb.velocity = Vector2.zero;
+        rb.linearVelocity = Vector2.zero;
     }
 
     public void ResumeMovement()

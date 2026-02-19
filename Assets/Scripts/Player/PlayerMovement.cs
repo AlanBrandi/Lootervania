@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
 	public bool IsWallJumping { get; private set; }
 	public bool IsDashing { get; private set; }
 	public bool IsSliding { get; private set; }
+	public bool ExternalToolControlActive { get; private set; }
 	public float LastOnGroundTime { get; private set; }
 	public float LastOnWallTime { get; private set; }
 	public float LastOnWallRightTime { get; private set; }
@@ -126,6 +127,11 @@ public class PlayerMovement : MonoBehaviour
 
 		#endregion
 
+		if (ExternalToolControlActive)
+		{
+			return;
+		}
+
 		#region COLLISION CHECKS
 		if (!IsDashing && !IsJumping)
 		{
@@ -169,7 +175,7 @@ public class PlayerMovement : MonoBehaviour
 		#endregion
 
 		#region JUMP CHECKS
-		if (IsJumping && RB.velocity.y < 0)
+		if (IsJumping && RB.linearVelocity.y < 0)
 		{
 			IsJumping = false;
 
@@ -246,24 +252,24 @@ public class PlayerMovement : MonoBehaviour
 			{
 				SetGravityScale(0);
 			}
-			else if (RB.velocity.y < 0 && _inputController.Vertical < 0)
+			else if (RB.linearVelocity.y < 0 && _inputController.Vertical < 0)
 			{
 				SetGravityScale(Data.gravityScale * Data.fastFallGravityMult);
-				RB.velocity = new Vector2(RB.velocity.x, Mathf.Max(RB.velocity.y, -Data.maxFastFallSpeed));
+				RB.linearVelocity = new Vector2(RB.linearVelocity.x, Mathf.Max(RB.linearVelocity.y, -Data.maxFastFallSpeed));
 			}
 			else if (_isJumpCut)
 			{
 				SetGravityScale(Data.gravityScale * Data.jumpCutGravityMult);
-				RB.velocity = new Vector2(RB.velocity.x, Mathf.Max(RB.velocity.y, -Data.maxFallSpeed));
+				RB.linearVelocity = new Vector2(RB.linearVelocity.x, Mathf.Max(RB.linearVelocity.y, -Data.maxFallSpeed));
 			}
-			else if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(RB.velocity.y) < Data.jumpHangTimeThreshold)
+			else if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(RB.linearVelocity.y) < Data.jumpHangTimeThreshold)
 			{
 				SetGravityScale(Data.gravityScale * Data.jumpHangGravityMult);
 			}
-			else if (RB.velocity.y < 0)
+			else if (RB.linearVelocity.y < 0)
 			{
 				SetGravityScale(Data.gravityScale * Data.fallGravityMult);
-				RB.velocity = new Vector2(RB.velocity.x, Mathf.Max(RB.velocity.y, -Data.maxFallSpeed));
+				RB.linearVelocity = new Vector2(RB.linearVelocity.x, Mathf.Max(RB.linearVelocity.y, -Data.maxFallSpeed));
 			}
 			else
 			{
@@ -277,11 +283,11 @@ public class PlayerMovement : MonoBehaviour
 		#endregion
 
 		#region CAMERA CHECKS
-		if (RB.velocity.y < _fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
+		if (RB.linearVelocity.y < _fallSpeedYDampingChangeThreshold && !CameraManager.instance.IsLerpingYDamping && !CameraManager.instance.LerpedFromPlayerFalling)
 		{
 			CameraManager.instance.LerpYDamping(true);
 		}
-		if(RB.velocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
+		if(RB.linearVelocity.y >= 0f && !CameraManager.instance.IsLerpingYDamping && CameraManager.instance.LerpedFromPlayerFalling)
 		{
 			CameraManager.instance.LerpedFromPlayerFalling = false;
 			CameraManager.instance.LerpYDamping(false);
@@ -292,6 +298,9 @@ public class PlayerMovement : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		if (ExternalToolControlActive)
+			return;
+
 		if (!IsDashing)
 		{
 			if (!IsWallJumping)
@@ -337,13 +346,32 @@ public class PlayerMovement : MonoBehaviour
 	{
 		RB.gravityScale = scale;
 	}
+
+	public void EnableExternalToolControl()
+	{
+		ExternalToolControlActive = true;
+		IsDashing = false;
+		IsJumping = false;
+		IsWallJumping = false;
+		IsSliding = false;
+		_isDashAttacking = false;
+		_trailRenderer.emitting = false;
+		LastPressedDashTime = 0f;
+		LastPressedJumpTime = 0f;
+	}
+
+	public void DisableExternalToolControl()
+	{
+		ExternalToolControlActive = false;
+		SetGravityScale(Data.gravityScale);
+	}
 	#endregion
 
 	#region RUN METHODS
 	private void Run(float lerpAmount)
 	{
 		float targetSpeed = _inputController.Horizontal * Data.runMaxSpeed;
-		targetSpeed = Mathf.Lerp(RB.velocity.x, targetSpeed, lerpAmount);
+		targetSpeed = Mathf.Lerp(RB.linearVelocity.x, targetSpeed, lerpAmount);
 
 		#region Calculate AccelRate
 		float accelRate;
@@ -355,7 +383,7 @@ public class PlayerMovement : MonoBehaviour
 		#endregion
 
 		#region Add Bonus Jump Apex Acceleration
-		if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(RB.velocity.y) < Data.jumpHangTimeThreshold)
+		if ((IsJumping || IsWallJumping || _isJumpFalling) && Mathf.Abs(RB.linearVelocity.y) < Data.jumpHangTimeThreshold)
 		{
 			accelRate *= Data.jumpHangAccelerationMult;
 			targetSpeed *= Data.jumpHangMaxSpeedMult;
@@ -363,13 +391,13 @@ public class PlayerMovement : MonoBehaviour
 		#endregion
 
 		#region Conserve Momentum
-		if (Data.doConserveMomentum && Mathf.Abs(RB.velocity.x) > Mathf.Abs(targetSpeed) && Mathf.Sign(RB.velocity.x) == Mathf.Sign(targetSpeed) && Mathf.Abs(targetSpeed) > 0.01f && LastOnGroundTime < 0)
+		if (Data.doConserveMomentum && Mathf.Abs(RB.linearVelocity.x) > Mathf.Abs(targetSpeed) && Mathf.Sign(RB.linearVelocity.x) == Mathf.Sign(targetSpeed) && Mathf.Abs(targetSpeed) > 0.01f && LastOnGroundTime < 0)
 		{
 			accelRate = 0;
 		}
 		#endregion
 
-		float speedDif = targetSpeed - RB.velocity.x;
+		float speedDif = targetSpeed - RB.linearVelocity.x;
 
 		float movement = speedDif * accelRate;
 
@@ -398,8 +426,8 @@ public class PlayerMovement : MonoBehaviour
 
 		#region Perform Jump
 		float force = Data.jumpForce;
-		if (RB.velocity.y < 0)
-			force -= RB.velocity.y;
+		if (RB.linearVelocity.y < 0)
+			force -= RB.linearVelocity.y;
 
 		RB.AddForce(Vector2.up * force, ForceMode2D.Impulse);
 		#endregion
@@ -416,11 +444,11 @@ public class PlayerMovement : MonoBehaviour
 		Vector2 force = new Vector2(Data.wallJumpForce.x, Data.wallJumpForce.y);
 		force.x *= dir;
 
-		if (Mathf.Sign(RB.velocity.x) != Mathf.Sign(force.x))
-			force.x -= RB.velocity.x;
+		if (Mathf.Sign(RB.linearVelocity.x) != Mathf.Sign(force.x))
+			force.x -= RB.linearVelocity.x;
 
-		if (RB.velocity.y < 0)
-			force.y -= RB.velocity.y;
+		if (RB.linearVelocity.y < 0)
+			force.y -= RB.linearVelocity.y;
 
 		RB.AddForce(force, ForceMode2D.Impulse);
 		#endregion
@@ -444,7 +472,7 @@ public class PlayerMovement : MonoBehaviour
 
 		while (Time.time - startTime <= Data.dashAttackTime)
 		{
-			RB.velocity = dir.normalized * Data.dashSpeed;
+			RB.linearVelocity = dir.normalized * Data.dashSpeed;
 			yield return null;
 		}
 
@@ -453,7 +481,7 @@ public class PlayerMovement : MonoBehaviour
 		_isDashAttacking = false;
 
 		SetGravityScale(Data.gravityScale);
-		RB.velocity = Data.dashEndSpeed * dir.normalized;
+		RB.linearVelocity = Data.dashEndSpeed * dir.normalized;
 
 		while (Time.time - startTime <= Data.dashEndTime)
 		{
@@ -477,12 +505,12 @@ public class PlayerMovement : MonoBehaviour
 	#region OTHER MOVEMENT METHODS
 	private void Slide()
 	{
-		if (RB.velocity.y > 0)
+		if (RB.linearVelocity.y > 0)
 		{
-			RB.AddForce(-RB.velocity.y * Vector2.up, ForceMode2D.Impulse);
+			RB.AddForce(-RB.linearVelocity.y * Vector2.up, ForceMode2D.Impulse);
 		}
 
-		float speedDif = Data.slideSpeed - RB.velocity.y;
+		float speedDif = Data.slideSpeed - RB.linearVelocity.y;
 		float movement = speedDif * Data.slideAccel;
 		movement = Mathf.Clamp(movement, -Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime), Mathf.Abs(speedDif) * (1 / Time.fixedDeltaTime));
 
@@ -517,12 +545,12 @@ public class PlayerMovement : MonoBehaviour
 
 	private bool CanJumpCut()
 	{
-		return IsJumping && RB.velocity.y > 0;
+		return IsJumping && RB.linearVelocity.y > 0;
 	}
 
 	private bool CanWallJumpCut()
 	{
-		return IsWallJumping && RB.velocity.y > 0;
+		return IsWallJumping && RB.linearVelocity.y > 0;
 	}
 
 	private bool CanDash()

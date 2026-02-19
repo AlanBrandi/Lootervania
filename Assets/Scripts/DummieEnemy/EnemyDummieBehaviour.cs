@@ -61,7 +61,7 @@ public class EnemyDummieBehaviour : MonoBehaviour
 
         if (!IsMoving)
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             return;
         } 
         
@@ -76,7 +76,7 @@ public class EnemyDummieBehaviour : MonoBehaviour
             transform.position = new Vector2(startPosition.x - maxDistance, transform.position.y);
             direction = Vector2.right;
         }
-        rb.velocity = direction * speed;
+        rb.linearVelocity = direction * speed;
     }
 
     public void RespawnDummie()
@@ -109,7 +109,7 @@ public class EnemyDummieBehaviour : MonoBehaviour
         Rigidbody2D rb2d = bullet.GetComponent<Rigidbody2D>();
         if (rb2d != null)
         {
-            rb2d.velocity = shootDirection * bulletSpeed;
+            rb2d.linearVelocity = shootDirection * bulletSpeed;
         }
     }
 

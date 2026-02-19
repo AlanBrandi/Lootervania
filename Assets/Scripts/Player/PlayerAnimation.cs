@@ -26,14 +26,14 @@ public class PlayerAnimation : MonoBehaviour
 
     private void UpdateAnimationParameters()
     {
-        _anim.SetFloat("Velocity", _RB.velocity.magnitude);
+        _anim.SetFloat("Velocity", _RB.linearVelocity.magnitude);
         _anim.SetBool("CanJump", _playerMovement.CanJump());
         _anim.SetBool("IsDashing", _playerMovement.IsDashing);
         _anim.SetBool("IsJumping", _playerMovement.IsJumping);
         _anim.SetBool("IsWallJumping", _playerMovement.IsWallJumping);
 
         //Debug.Log(_RB.velocity.magnitude);
-        if (_RB.velocity.magnitude > 0.2f && _playerMovement.CanJump())
+        if (_RB.linearVelocity.magnitude > 0.2f && _playerMovement.CanJump())
         {
             CreateRunDust();
         }

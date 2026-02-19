@@ -92,7 +92,7 @@ public class BulletCustom : Bullet
 
     private void Move()
     {
-        rb.velocity = direction * speed * Time.deltaTime;
+        rb.linearVelocity = direction * speed * Time.deltaTime;
     }
 
     private void LifeTimeCount()

@@ -27,7 +27,7 @@ public class Knockback : MonoBehaviour
 
             if(_timer >= _knockBackTime)
             {
-                _rb.velocity = new Vector2(0f, 0f);
+                _rb.linearVelocity = new Vector2(0f, 0f);
                 _rb.angularVelocity = 0f;
                 _isKnockBacking = false;
                 if(_enemyBehaviour != null)

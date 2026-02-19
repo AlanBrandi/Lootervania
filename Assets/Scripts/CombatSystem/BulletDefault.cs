@@ -15,7 +15,7 @@ public class BulletDefault : Bullet
     [SerializeField] private SOBulletStats bulletStats;
     private void Update()
     {
-        rb.velocity = transform.right * speed;
+        rb.linearVelocity = transform.right * speed;
         elapsedTime = Time.deltaTime;
         if (elapsedTime > lifetime)
         {
